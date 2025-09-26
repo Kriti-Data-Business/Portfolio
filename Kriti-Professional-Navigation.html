@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kriti Yadav - Program Officer Employment Pathways Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #2c3e50;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .presentation-wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            width: 800vw;
+            height: 100vh;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 120px;
+            background: #ffffff;
+            position: relative;
+            overflow-y: auto;
+            border-left: 1px solid #e0e6ed;
+        }
+        
+        .slide:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .slide-header {
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .slide h1 {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        
+        .slide-subtitle {
+            color: #5a6c7d;
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin: 0;
+        }
+        
+        .slide h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 40px 0 25px 0;
+            border-left: 4px solid #2c3e50;
+            padding-left: 20px;
+        }
+        
+        .slide h3 {
+            color: #34495e;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 30px 0 20px 0;
+        }
+        
+        .slide h4 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 20px 0 15px 0;
+        }
+        
+        .slide p {
+            color: #5a6c7d;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .slide ul {
+            margin: 20px 0;
+            padding-left: 0;
+        }
+        
+        .slide li {
+            color: #5a6c7d;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            list-style: none;
+        }
+        
+        .slide li:before {
+            content: "•";
+            color: #2c3e50;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Navigation Menu Styles for Homepage */
+        .navigation-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .nav-link {
+            background: #ffffff;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            padding: 30px;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .nav-link:hover {
+            border-color: #2c3e50;
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.1);
+        }
+        
+        .nav-link h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+        
+        .nav-link p {
+            color: #5a6c7d;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .nav-link-number {
+            background: #2c3e50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        /* Professional containers */
+        .content-section {
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+        }
+        
+        .slide:nth-child(even) .content-section {
+            background: #ffffff;
+            border-color: #d5d9dd;
+        }
+        
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        /* Statistics - professional minimal style */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #5a6c7d;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Timeline - professional horizontal */
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .timeline-card {
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 30px 25px;
+            text-align: left;
+            position: relative;
+        }
+        
+        .timeline-year {
+            color: #2c3e50;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .timeline-title {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-company {
+            color: #5a6c7d;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-description {
+            color: #5a6c7d;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        /* Skills matrix - professional grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        .skill-category {
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 35px;
+        }
+        
+        .skill-category h4 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f2f6;
+        }
+        
+        .skill-category ul {
+            margin: 0;
+        }
+        
+        .skill-category li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f2f6;
+            margin-bottom: 0;
+        }
+        
+        .skill-category li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Comparison layout */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        .comparison-column {
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 35px;
+        }
+        
+        .comparison-title {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f2f6;
+        }
+        
+        .comparison-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #2c3e50;
+        }
+        
+        .comparison-item strong {
+            color: #2c3e50;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        /* Three column layout */
+        .three-column-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .column-card {
+            background: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            padding: 35px 30px;
+        }
+        
+        .column-title {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f2f6;
+        }
+        
+        .column-card ul {
+            margin: 0;
+        }
+        
+        .column-card li {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 4px solid #2c3e50;
+        }
+        
+        /* Professional image styling */
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            max-height: 280px;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #e0e6ed;
+            object-fit: cover;
+        }
+        
+        .image-caption {
+            margin-top: 15px;
+            color: #5a6c7d;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+        
+        /* Navigation - professional minimal */
+        .nav-controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: #2c3e50;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 28px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            background: #34495e;
+        }
+        
+        .nav-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .slide-indicator {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: #2c3e50;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            z-index: 1000;
+        }
+        
+        /* Success indicators */
+        .success-indicator {
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .success-indicator h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .success-indicator p {
+            color: #388e3c;
+            margin: 0;
+        }
+        
+        /* Back to Home Button */
+        .home-btn {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            background: #2c3e50;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            display: none;
+        }
+        
+        .home-btn:hover {
+            background: #34495e;
+        }
+        
+        .home-btn.show {
+            display: block;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .slide {
+                padding: 60px 80px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+            
+            .slide h1 {
+                font-size: 2.2rem;
+            }
+            
+            .navigation-menu,
+            .stats-grid,
+            .timeline-grid,
+            .skills-grid,
+            .comparison-container,
+            .three-column-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-controls {
+                bottom: 20px;
+            }
+            
+            .slide-indicator,
+            .home-btn {
+                top: 20px;
+                right: 20px;
+            }
+            
+            .home-btn {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-wrapper">
+        <div class="slide-container" id="slideContainer">
+            
+            <!-- Slide 1: Homepage with Navigation -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h1>Professional Application Analysis</h1>
+                    <p class="slide-subtitle">Program Officer - Employment Pathways | Wyndham City Council</p>
+                </div>
+                
+                <div class="content-section">
+                    <h3>Candidate Profile</h3>
+                    <p><strong>Name:</strong> Kriti Yadav</p>
+                    <p><strong>Current Position:</strong> Data Science Researcher, RMIT University</p>
+                    <p><strong>Target Role:</strong> Program Officer - Employment Pathways (Part-time, 19 hours per week)</p>
+                    <p><strong>Application Date:</strong> September 2025</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>Executive Summary</h4>
+                    <p>Experienced data science professional with 4+ years of program management expertise seeking to transition technical analytical skills into community-focused employment pathway programs. Proven track record in stakeholder coordination, process optimization, and data-driven program evaluation with direct relevance to Wyndham City Council's Employment Pathways requirements.</p>
+                </div>
+                
+                <h2>Navigation Menu</h2>
+                <div class="navigation-menu">
+                    <a href="#" class="nav-link" onclick="goToSlide(1)">
+                        <div class="nav-link-number">1</div>
+                        <h3>Professional Experience</h3>
+                        <p>Career progression timeline demonstrating program management capabilities and stakeholder coordination experience</p>
+                    </a>
+                    
+                    <a href="#" class="nav-link" onclick="goToSlide(2)">
+                        <div class="nav-link-number">2</div>
+                        <h3>Core Competencies</h3>
+                        <p>Technical-to-community competency mapping showing transferable skills and capabilities</p>
+                    </a>
+                    
+                    <a href="#" class="nav-link" onclick="goToSlide(3)">
+                        <div class="nav-link-number">3</div>
+                        <h3>Role Alignment</h3>
+                        <p>Strategic alignment analysis between candidate capabilities and position requirements</p>
+                    </a>
+                    
+                    <a href="#" class="nav-link" onclick="goToSlide(4)">
+                        <div class="nav-link-number">4</div>
+                        <h3>Educational Expertise</h3>
+                        <p>Academic foundation, community development experience, and student pathway understanding</p>
+                    </a>
+                    
+                    <a href="#" class="nav-link" onclick="goToSlide(5)">
+                        <div class="nav-link-number">5</div>
+                        <h3>Value Proposition</h3>
+                        <p>Strategic enhancement opportunities and projected impact for Employment Pathways programs</p>
+                    </a>
+                    
+                    <a href="#" class="nav-link" onclick="goToSlide(6)">
+                        <div class="nav-link-number">6</div>
+                        <h3>Implementation Plan</h3>
+                        <p>90-day strategic implementation roadmap with structured onboarding and value delivery</p>
+                    </a>
+                </div>
+                
+                <h2>Key Performance Metrics</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">4+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">90%</span>
+                        <span class="stat-label">Process Automation</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">18.3%</span>
+                        <span class="stat-label">Performance Improvement</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50M+</span>
+                        <span class="stat-label">Records Managed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Professional Experience Timeline -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h1>Professional Experience Analysis</h1>
+                    <p class="slide-subtitle">Career progression demonstrating program management capabilities</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Professional Career Development">
+                    <div class="image-caption">Systematic career progression from technical foundation to program leadership</div>
+                </div>
+                
+                <h2>Career Development Framework</h2>
+                <div class="timeline-grid">
+                    <div class="timeline-card">
+                        <div class="timeline-year">2016-2020</div>
+                        <div class="timeline-title">Technical Foundation</div>
+                        <div class="timeline-company">Bachelor of Technology - Computer Science</div>
+                        <div class="timeline-description">Established analytical foundation with statistical analysis, database management, and systematic problem-solving methodologies.</div>
+                    </div>
+                    
+                    <div class="timeline-card">
+                        <div class="timeline-year">2020-2022</div>
+                        <div class="timeline-title">Program Coordination</div>
+                        <div class="timeline-company">Data & AI Analyst - Wunderman Thompson</div>
+                        <div class="timeline-description">Led cross-country platform launches, achieved 90% workflow automation, coordinated multi-team projects across global markets.</div>
+                    </div>
+                    
+                    <div class="timeline-card">
+                        <div class="timeline-year">2022-2024</div>
+                        <div class="timeline-title">Stakeholder Management</div>
+                        <div class="timeline-company">Data Science Associate & Product Lead - Axtria</div>
+                        <div class="timeline-description">Managed multi-million dollar client projects, delivered 18.3% performance improvements, coordinated global pharmaceutical partnerships.</div>
+                    </div>
+                    
+                    <div class="timeline-card">
+                        <div class="timeline-year">2024-Present</div>
+                        <div class="timeline-title">Community & Educational Focus</div>
+                        <div class="timeline-company">Master's Researcher - RMIT University</div>
+                        <div class="timeline-description">Pursuing advanced analytics with focus on community development, educational pathways, and public sector collaboration.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Competency Mapping -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h1>Technical-to-Community Competency Mapping</h1>
+                    <p class="slide-subtitle">Systematic analysis of transferable skills and capabilities</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Professional Skills Analysis">
+                    <div class="image-caption">Data-driven approach to skills assessment and program management</div>
+                </div>
+                
+                <h2>Core Competency Areas</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>Program Management & Delivery</h4>
+                        <ul>
+                            <li>Multi-million dollar project coordination with measurable outcomes</li>
+                            <li>Cross-functional team leadership across diverse stakeholder groups</li>
+                            <li>Timeline and resource management for complex delivery schedules</li>
+                            <li>Process optimization resulting in 90% efficiency improvements</li>
+                            <li>Performance tracking and KPI monitoring for program evaluation</li>
+                            <li>Risk assessment and mitigation strategies</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Stakeholder Engagement & Communication</h4>
+                        <ul>
+                            <li>Global client relationship management across pharmaceutical and retail sectors</li>
+                            <li>Workshop facilitation and training program delivery</li>
+                            <li>Cross-cultural communication with multicultural teams</li>
+                            <li>Expectation alignment and stakeholder negotiation</li>
+                            <li>Conflict resolution and collaborative problem-solving</li>
+                            <li>Public speaking and presentation delivery</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Data Management & Analytics</h4>
+                        <ul>
+                            <li>Large-scale database management (50M+ records)</li>
+                            <li>Automated reporting and comprehensive dashboard creation</li>
+                            <li>Performance metrics development and program evaluation</li>
+                            <li>Data-driven decision making and strategic recommendations</li>
+                            <li>Quality assurance protocols and compliance tracking</li>
+                            <li>Statistical analysis and trend identification</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Administrative Excellence & Operations</h4>
+                        <ul>
+                            <li>Workflow automation reducing manual processes by 90%</li>
+                            <li>Documentation systems and compliance management</li>
+                            <li>System integration and cross-platform coordination</li>
+                            <li>Event planning and logistics coordination</li>
+                            <li>Budget management and resource allocation</li>
+                            <li>Continuous improvement methodology implementation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Role Alignment Analysis -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h1>Employment Pathways Role Alignment</h1>
+                    <p class="slide-subtitle">Direct alignment between candidate capabilities and position requirements</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team Collaboration">
+                    <div class="image-caption">Diverse team engagement and collaborative program management</div>
+                </div>
+                
+                <h2>Strategic Alignment Assessment</h2>
+                <div class="comparison-container">
+                    <div class="comparison-column">
+                        <div class="comparison-title">Core Position Requirements</div>
+                        
+                        <div class="comparison-item">
+                            <strong>Employment Pathway Program Oversight</strong>
+                            Manage Secondary School work experience, Tertiary placements, Traineeships, Apprenticeships, and Graduate Programs with full delivery responsibility.
+                        </div>
+                        
+                        <div class="comparison-item">
+                            <strong>Stakeholder Coordination & Support</strong>
+                            Collaborate with Council departments, assess applications, provide hosting support, ensure compliance, and manage communications.
+                        </div>
+                        
+                        <div class="comparison-item">
+                            <strong>Data Administration & Reporting</strong>
+                            Maintain program administration, track performance data, conduct ongoing evaluations, and prepare comprehensive reports.
+                        </div>
+                        
+                        <div class="comparison-item">
+                            <strong>Administrative & Event Coordination</strong>
+                            Handle enquiries, manage logistics, coordinate events, oversee compliance including police checks and evaluations.
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-column">
+                        <div class="comparison-title">Demonstrated Capabilities</div>
+                        
+                        <div class="comparison-item">
+                            <strong>✓ Proven Program Leadership</strong>
+                            Managed multi-million dollar projects across global markets, delivering measurable outcomes with 18.3% performance improvements and comprehensive stakeholder coordination.
+                        </div>
+                        
+                        <div class="comparison-item">
+                            <strong>✓ Cross-Functional Collaboration Excellence</strong>
+                            Coordinated diverse teams across pharmaceutical and retail clients, facilitated workshops, managed expectations, and delivered training programs.
+                        </div>
+                        
+                        <div class="comparison-item">
+                            <strong>✓ Advanced Data Systems Management</strong>
+                            Built comprehensive reporting systems for 50M+ records, automated processes achieving 90% efficiency gains, created performance dashboards.
+                        </div>
+                        
+                        <div class="comparison-item">
+                            <strong>✓ Administrative Process Optimization</strong>
+                            Reduced processing time by 50%+, implemented workflow automation, managed logistics for cross-country launches, coordinated events and training.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="success-indicator">
+                    <h4>100% Requirement Coverage Achieved</h4>
+                    <p>All essential criteria met with demonstrated excellence and quantified achievements across relevant experience areas.</p>
+                </div>
+            </div>
+
+            <!-- Slide 5: Educational Context & Community Focus -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h1>Educational Pathways Expertise</h1>
+                    <p class="slide-subtitle">Academic foundation and community development experience</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Educational Development">
+                    <div class="image-caption">Comprehensive understanding of educational frameworks and student development pathways</div>
+                </div>
+                
+                <h2>Current Academic Engagement</h2>
+                <div class="content-section">
+                    <h4>Master of Data Science - RMIT University (2024-2026)</h4>
+                    <p><strong>Focus Areas:</strong> Advanced Machine Learning, AI Systems, Computational Modelling, Generative Information Retrieval</p>
+                    <p><strong>Research Emphasis:</strong> Program effectiveness evaluation, systematic analysis methodologies, evidence-based improvement frameworks</p>
+                    <p><strong>Direct Relevance:</strong> Current student perspective provides intimate understanding of educational challenges, pathway requirements, and support system needs across diverse student populations.</p>
+                </div>
+                
+                <h2>Community Development Portfolio</h2>
+                <div class="content-section">
+                    <h4>Public Sector Collaboration</h4>
+                    <p><strong>Nous Group Partnership:</strong> Sustainable infrastructure decision support projects for Victoria state government, demonstrating commitment to public sector impact and community development priorities.</p>
+                    
+                    <h4>Educational Pathway Advocacy</h4>
+                    <p><strong>Student Mentoring:</strong> Active support for undergraduate career development at RMIT, providing practical experience in pathway guidance, career counseling, and academic support coordination.</p>
+                    
+                    <h4>Multicultural Competency</h4>
+                    <p><strong>International Student Experience:</strong> Personal understanding of diverse cultural needs, visa requirements, and integration challenges faced by international students - directly relevant to Wyndham's multicultural community of 270+ nationalities.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>Alignment with Wyndham's Diversity Commitment</h4>
+                    <p>Experience working across multicultural environments and supporting diverse student populations aligns directly with Wyndham City's commitment to inclusion, particularly supporting Aboriginal and Torres Strait Islander communities and celebrating workforce diversity.</p>
+                </div>
+            </div>
+
+            <!-- Slide 6: Value Proposition -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h1>Strategic Value Proposition</h1>
+                    <p class="slide-subtitle">Projected impact and enhancement opportunities for Employment Pathways programs</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Strategic Planning">
+                    <div class="image-caption">Data-driven strategic planning and program optimization expertise</div>
+                </div>
+                
+                <h2>Enhancement Opportunities for Wyndham Employment Pathways</h2>
+                
+                <div class="content-section">
+                    <h4>Process Innovation & Efficiency</h4>
+                    <ul>
+                        <li>Apply data-driven optimization methodologies to streamline application processing and reduce administrative burden</li>
+                        <li>Implement automated workflow systems to enhance program delivery efficiency and participant tracking</li>
+                        <li>Develop predictive analytics for placement success rates and program outcome forecasting</li>
+                        <li>Create comprehensive dashboard systems for real-time program monitoring and performance evaluation</li>
+                    </ul>
+                </div>
+                
+                <div class="content-section">
+                    <h4>Scalability & Future Planning</h4>
+                    <ul>
+                        <li>Design systems and processes supporting Wyndham's projected growth to 500,000 residents by 2040</li>
+                        <li>Develop scalable program frameworks accommodating increased participant volumes</li>
+                        <li>Create standardized evaluation methodologies for consistent program quality across expansion</li>
+                        <li>Establish partnership development strategies for increased host department engagement</li>
+                    </ul>
+                </div>
+                
+                <div class="content-section">
+                    <h4>Community Impact & Inclusion</h4>
+                    <ul>
+                        <li>Leverage multicultural experience to enhance program accessibility for diverse communities</li>
+                        <li>Develop targeted outreach strategies for Aboriginal and Torres Strait Islander participation</li>
+                        <li>Create inclusive program design accommodating various cultural and linguistic backgrounds</li>
+                        <li>Implement comprehensive evaluation frameworks measuring community impact and satisfaction</li>
+                    </ul>
+                </div>
+                
+                <h2>Projected Outcomes</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">30%+</span>
+                        <span class="stat-label">Efficiency Improvement</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">Enhanced</span>
+                        <span class="stat-label">Decision Making</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">Improved</span>
+                        <span class="stat-label">Participant Outcomes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">Scalable</span>
+                        <span class="stat-label">Future Systems</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Implementation Plan -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h1>90-Day Strategic Implementation Plan</h1>
+                    <p class="slide-subtitle">Structured onboarding and value delivery roadmap</p>
+                </div>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1553484771-371a605b060b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Implementation Strategy">
+                    <div class="image-caption">Systematic implementation approach with measurable milestones</div>
+                </div>
+                
+                <h2>Phased Implementation Strategy</h2>
+                <div class="three-column-grid">
+                    <div class="column-card">
+                        <div class="column-title">Days 1-30: Foundation Phase</div>
+                        <ul>
+                            <li>Comprehensive handover with existing Program Officer including process documentation and stakeholder introductions</li>
+                            <li>Complete stakeholder mapping across all Council departments and external partners</li>
+                            <li>Thorough analysis of current processes, systems, and workflow documentation</li>
+                            <li>System familiarization including databases, reporting tools, and communication platforms</li>
+                            <li>Compliance framework understanding including Working with Children Check processes</li>
+                            <li>Initial relationship building with key internal and external stakeholders</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="column-card">
+                        <div class="column-title">Days 31-60: Optimization Phase</div>
+                        <ul>
+                            <li>Process efficiency analysis and identification of improvement opportunities</li>
+                            <li>Enhanced reporting system development with automated data collection protocols</li>
+                            <li>Workflow automation implementation for routine administrative tasks</li>
+                            <li>Performance metrics establishment with baseline measurements and KPI development</li>
+                            <li>Quality assurance protocol development for consistent program delivery</li>
+                            <li>Stakeholder feedback collection and integration into process improvements</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="column-card">
+                        <div class="column-title">Days 61-90: Innovation Phase</div>
+                        <ul>
+                            <li>Strategic program enhancement initiatives based on data analysis and stakeholder input</li>
+                            <li>Comprehensive evaluation framework implementation for ongoing program assessment</li>
+                            <li>Long-term scalability planning supporting Wyndham's growth projections</li>
+                            <li>Partnership expansion recommendations for increased placement opportunities</li>
+                            <li>Best practice documentation and knowledge transfer systems</li>
+                            <li>Continuous improvement methodology establishment for sustained program excellence</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <h4>Candidate Availability & Commitment</h4>
+                    <p><strong>Schedule:</strong> 19 hours per week with flexible day arrangements as specified in position requirements</p>
+                    <p><strong>Working Rights:</strong> Current student visa allows 48 hours per fortnight; full working rights available from November 2025</p>
+                    <p><strong>Start Date:</strong> Immediate availability for position commencement</p>
+                    <p><strong>Long-term Commitment:</strong> Dedicated to supporting Wyndham's Employment Pathways program success and community development objectives</p>
+                </div>
+                
+                <div class="success-indicator">
+                    <h4>Ready to Transform Employment Pathways</h4>
+                    <p>Combining technical expertise, analytical rigor, and community passion to deliver measurable impact for Wyndham's diverse community and future growth.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="previousSlide()">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <!-- Back to Home Button -->
+    <button class="home-btn" id="homeBtn" onclick="goToSlide(0)">← Home</button>
+
+    <!-- Slide Indicator -->
+    <div class="slide-indicator">
+        <span id="slideNumber">1</span> / 7
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 7;
+        const slideContainer = document.getElementById('slideContainer');
+        const slideNumber = document.getElementById('slideNumber');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const homeBtn = document.getElementById('homeBtn');
+
+        function updateSlide() {
+            const translateX = -(currentSlide * 100);
+            slideContainer.style.transform = `translateX(${translateX}vw)`;
+            slideNumber.textContent = currentSlide + 1;
+            
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+            
+            // Show/hide home button
+            if (currentSlide === 0) {
+                homeBtn.classList.remove('show');
+            } else {
+                homeBtn.classList.add('show');
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function goToSlide(slideIndex) {
+            if (slideIndex >= 0 && slideIndex < totalSlides) {
+                currentSlide = slideIndex;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            switch(event.key) {
+                case 'ArrowRight':
+                case ' ':
+                    event.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    previousSlide();
+                    break;
+                case 'Home':
+                    event.preventDefault();
+                    goToSlide(0);
+                    break;
+                case 'End':
+                    event.preventDefault();
+                    goToSlide(totalSlides - 1);
+                    break;
+            }
+        });
+
+        let startX = 0;
+        let startY = 0;
+
+        slideContainer.addEventListener('touchstart', function(event) {
+            startX = event.touches[0].clientX;
+            startY = event.touches[0].clientY;
+        });
+
+        slideContainer.addEventListener('touchend', function(event) {
+            const endX = event.changedTouches[0].clientX;
+            const endY = event.changedTouches[0].clientY;
+            const deltaX = startX - endX;
+            const deltaY = Math.abs(startY - endY);
+
+            if (Math.abs(deltaX) > deltaY && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+        });
+
+        updateSlide();
+    </script>
+</body>
+</html>
