@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kriti Yadav - Professional Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --background: #ffffff;
+            --card-background: #f8fafc;
+            --border-color: #e5e7eb;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --gradient-5: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-roles {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .role-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease 0.4s both;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-image {
+            width: 300px;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeInRight 1s ease 0.6s both;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Professional Journey Section */
+        .journey-section {
+            padding: 5rem 0;
+            background: var(--card-background);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .journey-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .journey-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .journey-item {
+            position: relative;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .journey-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .journey-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .journey-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            width: 45%;
+            position: relative;
+        }
+
+        .journey-item:nth-child(odd) .journey-content {
+            margin-right: 10%;
+        }
+
+        .journey-item:nth-child(even) .journey-content {
+            margin-left: 10%;
+        }
+
+        .journey-date {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .journey-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            z-index: 3;
+            margin-top: 3rem;
+        }
+
+        .journey-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .journey-content .company {
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .journey-achievements {
+            margin-top: 1rem;
+        }
+
+        .achievement {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .achievement::before {
+            content: '▶';
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .project-arrows {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-arrow {
+            background: var(--gradient-2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-arrow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-arrow::after {
+            content: '→';
+            margin-left: 0.5rem;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 5rem 0;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-button.active,
+        .filter-button:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-header {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
+        }
+
+        .project-description {
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            padding: 0.5rem 1rem;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-link.github {
+            background: #333;
+        }
+
+        .project-link.demo {
+            background: var(--success-color);
+        }
+
+        .project-link.case-study {
+            background: var(--warning-color);
+        }
+
+        .project-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .expand-button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .expand-button:hover {
+            color: var(--secondary-color);
+        }
+
+        .case-study {
+            display: none;
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background: var(--card-background);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 5px 5px 0;
+        }
+
+        .case-study h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .case-study p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 5rem 0;
+            background: var(--card-background);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .skill-list {
+            list-style: none;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-list li::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 0;
+            background: var(--gradient-1);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .hero-roles {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                width: 250px;
+                height: 300px;
+                order: -1;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .journey-timeline::before {
+                left: 20px;
+            }
+            
+            .journey-item,
+            .journey-item:nth-child(even) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .journey-content {
+                width: 100%;
+                margin: 0 0 0 40px !important;
+            }
+            
+            .journey-date,
+            .journey-icon {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+
+            .hero-cta-buttons {
+                justify-content: center;
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-content">
+            <div class="logo">Kriti Yadav</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#journey">Journey</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+                <a href="https://github.com/Kriti-Data-Business" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Kriti Yadav</h1>
+                    <p class="hero-subtitle">Data Scientist & AI Analyst</p>
+                    
+                    <div class="hero-roles">
+                        <div class="role-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div>Business Analyst</div>
+                        </div>
+                        <div class="role-card">
+                            <i class="fas fa-database"></i>
+                            <div>Data Analytics</div>
+                        </div>
+                        <div class="role-card">
+                            <i class="fas fa-brain"></i>
+                            <div>Data Science</div>
+                        </div>
+                        <div class="role-card">
+                            <i class="fas fa-robot"></i>
+                            <div>AI Engineer</div>
+                        </div>
+                        <div class="role-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <div>AI Product Management</div>
+                        </div>
+                    </div>
+
+                    <div class="hero-cta-buttons">
+                        <a href="#journey" class="cta-button">
+                            <i class="fas fa-route"></i>
+                            Explore Journey
+                        </a>
+                        <a href="#projects" class="cta-button secondary">
+                            <i class="fas fa-folder-open"></i>
+                            View Projects
+                        </a>
+                        <a href="#case-studies" class="cta-button secondary">
+                            <i class="fas fa-file-alt"></i>
+                            Case Studies
+                        </a>
+                        <a href="#live-demos" class="cta-button secondary">
+                            <i class="fas fa-play-circle"></i>
+                            Live Demos
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <img src="https://via.placeholder.com/300x400/667eea/ffffff?text=Professional+Headshot" alt="Kriti Yadav Professional Photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Journey Section -->
+    <section id="journey" class="journey-section">
+        <div class="container">
+            <h2 class="section-title">My Professional Journey</h2>
+            
+            <div class="journey-timeline">
+                <!-- Current Role -->
+                <div class="journey-item fade-in">
+                    <div class="journey-date">July 2025 - Present</div>
+                    <div class="journey-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="journey-content">
+                        <h3>Research Assistant</h3>
+                        <p class="company">RMIT University, Australia</p>
+                        <p>Evaluating LLM-based retrieval and recommendation systems, focusing on prompt design and model interaction strategies. Leading research on zero-shot scenarios and cross-domain generalization.</p>
+                        
+                        <div class="journey-achievements">
+                            <div class="achievement">Hybrid approaches combining pairwise ranking prompting with knowledge graph reasoning</div>
+                            <div class="achievement">Systematic simulation experiments on AWS cloud infrastructure</div>
+                            <div class="achievement">Multi-dimensional performance metrics development</div>
+                        </div>
+
+                        <div class="project-arrows">
+                            <div class="project-arrow" data-project="llama-code-generation-pipeline">LLM Code Pipeline</div>
+                            <div class="project-arrow" data-project="llama-codegen-project">Llama Codegen</div>
+                            <div class="project-arrow" data-project="prompt-based-llm-vibe-coding-research-1">Prompt Research</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Internships -->
+                <div class="journey-item fade-in">
+                    <div class="journey-date">Nov 2024</div>
+                    <div class="journey-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="journey-content">
+                        <h3>Data Science Intern (Micro-intern)</h3>
+                        <p class="company">Bluerock & Nous Group, Australia</p>
+                        <p>Applied advanced clustering and geospatial AI for business optimization and sustainable infrastructure planning.</p>
+                        
+                        <div class="journey-achievements">
+                            <div class="achievement">K-Means clustering for team capacity optimization at Bluerock</div>
+                            <div class="achievement">Geospatial AI tool for EV charging station placement at Nous Group</div>
+                            <div class="achievement">GIS and predictive modeling for sustainable infrastructure investments</div>
+                        </div>
+
+                        <div class="project-arrows">
+                            <div class="project-arrow" data-project="intelligent-grocery-inventory-management-system">Inventory Management</div>
+                            <div class="project-arrow" data-project="ai-powered-healthcare-analytics-platform">Healthcare Analytics</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Major Role -->
+                <div class="journey-item fade-in">
+                    <div class="journey-date">May 2022 - July 2024</div>
+                    <div class="journey-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="journey-content">
+                        <h3>Data Science Associate & Product Lead</h3>
+                        <p class="company">Axtria, Global Pharma & Retail</p>
+                        <p>Led AI/ML initiatives delivering +18.3% sales uplift through enterprise-grade recommendation systems and marketing mix modeling for global pharma and retail clients.</p>
+                        
+                        <div class="journey-achievements">
+                            <div class="achievement">Architected NBA recommendation engine using LLMs on Databricks</div>
+                            <div class="achievement">Led full-cycle MMM projects with 1-3 year ROI predictions</div>
+                            <div class="achievement">Automated data pipelines reducing processing time by 50%+</div>
+                            <div class="achievement">Designed real-time dashboards in Tableau and Python</div>
+                        </div>
+
+                        <div class="project-arrows">
+                            <div class="project-arrow" data-project="sales-sentiment-analyser">Pharma Sentiment</div>
+                            <div class="project-arrow" data-project="nba-llm-recommendation-system">NBA Recommendation</div>
+                            <div class="project-arrow" data-project="finance-insights-fund-manager-x-funds-chatbot">Finance Chatbot</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Early Career -->
+                <div class="journey-item fade-in">
+                    <div class="journey-date">Sep 2020 - May 2022</div>
+                    <div class="journey-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="journey-content">
+                        <h3>Data & AI Analyst</h3>
+                        <p class="company">Wunderman Thompson (WPP)</p>
+                        <p>Led cross-country e-commerce platform launches for multinational automotive clients, building automated ETL pipelines and executive dashboards.</p>
+                        
+                        <div class="journey-achievements">
+                            <div class="achievement">90% reduction in manual workflows through automation</div>
+                            <div class="achievement">60%+ reduction in error rates with rigorous data validation</div>
+                            <div class="achievement">20%+ acceleration in decision-making through real-time monitoring</div>
+                            <div class="achievement">Executive dashboards in Power BI with advanced DAX measures</div>
+                        </div>
+
+                        <div class="project-arrows">
+                            <div class="project-arrow" data-project="case-study-energy-sector">Energy Sector</div>
+                            <div class="project-arrow" data-project="nlp-based-clothing-recommendation-system">Clothing NLP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="journey-item fade-in">
+                    <div class="journey-date">2016 - 2020</div>
+                    <div class="journey-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="journey-content">
+                        <h3>Bachelor of Technology - Computer Science</h3>
+                        <p class="company">The North Cap University, India</p>
+                        <p>Foundation in cloud computing, algorithms, statistics, and AI. Built strong technical fundamentals that enabled rapid career growth in data science.</p>
+                        
+                        <div class="journey-achievements">
+                            <div class="achievement">Specialized in Cloud Computing, Computer Networks, and AI</div>
+                            <div class="achievement">Strong foundation in Algorithms, Statistics, and Database systems</div>
+                            <div class="achievement">Early exposure to machine learning and data structures</div>
+                        </div>
+
+                        <div class="project-arrows">
+                            <div class="project-arrow" data-project="sequence-alignment-and-optimisation">Sequence Alignment</div>
+                            <div class="project-arrow" data-project="histopathology-cancer-cnn-semisupervised">Cancer CNN</div>
+                            <div class="project-arrow" data-project="machine-learning">ML Projects</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            
+            <div class="filter-buttons">
+                <button class="filter-button active" data-filter="all">All</button>
+                <button class="filter-button" data-filter="Business Analysis">Business Analysis</button>
+                <button class="filter-button" data-filter="Data Analytics">Data Analytics</button>
+                <button class="filter-button" data-filter="Data Science">Data Science</button>
+                <button class="filter-button" data-filter="AI Engineering">AI Engineering</button>
+                <button class="filter-button" data-filter="AI Product Management">AI Product Management</button>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Project 1: Portfolio -->
+                <div class="project-card fade-in" data-categories="AI Product Management,Business Analysis" id="portfolio">
+                    <div class="project-header" style="background: var(--gradient-1);">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Professional Portfolio</h3>
+                        <div class="project-tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">Professional</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Experienced data science professional with 4+ years of program management expertise seeking to transition technical analytical skills into community-focused employment pathway programs.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/Portfolio" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: LLM Code Generation Pipeline -->
+                <div class="project-card fade-in" data-categories="AI Engineering,Data Science" id="llama-code-generation-pipeline">
+                    <div class="project-header" style="background: var(--gradient-2);">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>LLM Code Generation Pipeline</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">LLM</span>
+                            <span class="tag">Code Generation</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Advanced pipeline for automated code generation using Large Language Models. Implements prompt engineering techniques and evaluation frameworks for code quality assessment.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/llama-code-generation-pipeline" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Llama Codegen Project -->
+                <div class="project-card fade-in" data-categories="AI Engineering,Data Science" id="llama-codegen-project">
+                    <div class="project-header" style="background: var(--gradient-3);">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Llama Codegen Project</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Llama</span>
+                            <span class="tag">Development</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Advanced code generation system using Llama models. Focused on creating efficient, readable, and maintainable code through AI-powered development tools.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/llama-codegen-project" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Prompt-based LLM Research -->
+                <div class="project-card fade-in" data-categories="AI Engineering,Data Science" id="prompt-based-llm-vibe-coding-research-1">
+                    <div class="project-header" style="background: var(--gradient-4);">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Prompt-based LLM Research</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Research</span>
+                            <span class="tag">LLM</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Research project exploring prompt engineering techniques for LLM-based coding assistance. Investigating optimal prompt design patterns and evaluation methodologies.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/prompt-based-llm-vibe-coding-research-1" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Sales Sentiment Analyser -->
+                <div class="project-card fade-in" data-categories="AI Engineering,Data Science,Business Analysis,AI Product Management" id="sales-sentiment-analyser">
+                    <div class="project-header" style="background: var(--gradient-5);">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Pharmaceutical Sales Sentiment Analyser</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">NLP</span>
+                            <span class="tag">Pharmaceutical</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Implementation and stakeholder analysis of the Pharmaceutical Sales Sentiment Analyzer, a cutting-edge AI-powered solution that transforms sales communication analysis in the pharmaceutical industry.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/Sales-Sentiment-Analyser" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Resume -->
+                <div class="project-card fade-in" data-categories="AI Product Management" id="resume">
+                    <div class="project-header" style="background: var(--gradient-1);">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Professional Resume</h3>
+                        <div class="project-tags">
+                            <span class="tag">Documentation</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Professional resume showcasing 4+ years of data science and AI expertise across healthcare, retail, and automotive industries.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/resume" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7: Finance Insights Fund Manager Chatbot -->
+                <div class="project-card fade-in" data-categories="AI Engineering,Data Science,Business Analysis" id="finance-insights-fund-manager-x-funds-chatbot">
+                    <div class="project-header" style="background: var(--gradient-2);">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Finance Insights Fund Manager Chatbot</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">MIT License</span>
+                            <span class="tag">Finance</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Building secure fund management chatbot analysing sentiment of fund managers and investors to predict next quarter outcomes based on their conversations.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/Finance-Insights-Fund-Manager-x-Funds-Chatbot" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8: Intelligent Grocery Inventory Management -->
+                <div class="project-card fade-in" data-categories="Data Science,Business Analysis,AI Engineering" id="intelligent-grocery-inventory-management-system">
+                    <div class="project-header" style="background: var(--gradient-3);">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Intelligent Grocery Inventory Management System</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">MIT License</span>
+                            <span class="tag">ML</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Developed multi-tiered inventory optimisation system utilising ensemble machine learning architectures for demand forecasting and waste reduction. Also implemented location-based clustering analysis.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/Intelligent-Grocery-Inventory-Management-System" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 9: NLP-Based Clothing Recommendation System -->
+                <div class="project-card fade-in" data-categories="Data Analytics,Data Science,Business Analysis" id="nlp-based-clothing-recommendation-system">
+                    <div class="project-header" style="background: var(--gradient-4);">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>NLP-Based Clothing Recommendation System</h3>
+                        <div class="project-tags">
+                            <span class="tag">Jupyter Notebook</span>
+                            <span class="tag">NLP</span>
+                            <span class="tag">E-commerce</span>
+                        </div>
+                        <div class="project-description">
+                            <p>E-commerce platforms increasingly rely on product reviews and recommendation systems to personalize customer experiences and improve sales. This project leverages natural language processing to personalize recommendations.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/NLP-Based-Clothing-Recommendation-System" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 10: Sequence Alignment and Optimisation -->
+                <div class="project-card fade-in" data-categories="Data Science,AI Engineering" id="sequence-alignment-and-optimisation">
+                    <div class="project-header" style="background: var(--gradient-5);">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Sequence Alignment and Optimisation</h3>
+                        <div class="project-tags">
+                            <span class="tag">Java</span>
+                            <span class="tag">Bioinformatics</span>
+                            <span class="tag">Algorithms</span>
+                        </div>
+                        <div class="project-description">
+                            <p>This project implements and analyzes three fundamental sequence alignment algorithms in bioinformatics: Needleman-Wunsch (global alignment), Smith-Waterman (local alignment), and Hirschberg's space-efficient algorithm.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/Sequence-Alignment-and-Optimisation" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 11: AI-Powered Healthcare Analytics Platform -->
+                <div class="project-card fade-in" data-categories="AI Engineering,Data Analytics,Business Analysis,AI Product Management" id="ai-powered-healthcare-analytics-platform">
+                    <div class="project-header" style="background: var(--gradient-1);">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>AI-Powered Healthcare Analytics Platform</h3>
+                        <div class="project-tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">Healthcare</span>
+                            <span class="tag">Analytics</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Advanced Multi-Channel Recommendation Engine & Patient Journey Analytics Framework for healthcare systems optimization and patient experience enhancement.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/AI-Powered-Healthcare-Analytics-Platform" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 12: NBA LLM Recommendation System -->
+                <div class="project-card fade-in" data-categories="Data Science,AI Engineering,Data Analytics,AI Product Management" id="nba-llm-recommendation-system">
+                    <div class="project-header" style="background: var(--gradient-2);">
+                        <i class="fas fa-basketball-ball"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>NBA LLM Recommendation System</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">LLM</span>
+                            <span class="tag">Databricks</span>
+                        </div>
+                        <div class="project-description">
+                            <p>An AI-powered recommendation engine that optimizes customer engagement through intelligent next best action predictions across multiple channels. Built with modern ML/AI stack on Databricks platform.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/NBA-LLM-Recommendation-System" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 13: Histopathology Cancer CNN -->
+                <div class="project-card fade-in" data-categories="Data Science,AI Engineering" id="histopathology-cancer-cnn-semisupervised">
+                    <div class="project-header" style="background: var(--gradient-3);">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Histopathology Cancer CNN Semi-supervised</h3>
+                        <div class="project-tags">
+                            <span class="tag">Jupyter Notebook</span>
+                            <span class="tag">CNN</span>
+                            <span class="tag">Healthcare</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Semi-supervised histopathology image classification using a VGG-style CNN. Combined pseudo-labeling with SMOTE to address label scarcity and class imbalance. Incorporated consistency regularization.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/histopathology-cancer-cnn-semisupervised" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 14: Case Study Energy Sector -->
+                <div class="project-card fade-in" data-categories="Business Analysis,Data Analytics,Data Science" id="case-study-energy-sector">
+                    <div class="project-header" style="background: var(--gradient-4);">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Case Study Energy Sector</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Energy</span>
+                            <span class="tag">McKinsey</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Harness AI and data science to revolutionize energy operations! This project optimizes efficiency, detects anomalies, and reduces emissions using advanced machine learning. Inspired by McKinsey's Vision.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/Case-study-energy-sector" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 15: Machine Learning -->
+                <div class="project-card fade-in" data-categories="Data Science,AI Engineering" id="machine-learning">
+                    <div class="project-header" style="background: var(--gradient-5);">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Machine Learning Projects</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">ML</span>
+                            <span class="tag">General</span>
+                        </div>
+                        <div class="project-description">
+                            <p>Collection of machine learning projects covering various algorithms, techniques, and applications across different domains and datasets.</p>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://github.com/Kriti-Data-Business/Machine-Learning" target="_blank" class="project-link github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#live-demo-placeholder" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                            <a href="#case-study-placeholder" class="project-link case-study">
+                                <i class="fas fa-file-alt"></i> Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title">Technical Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Business Analysis</h3>
+                    <ul class="skill-list">
+                        <li>Requirements Gathering & Documentation</li>
+                        <li>Process Mapping & Optimization</li>
+                        <li>Stakeholder Management & Workshops</li>
+                        <li>Business Case Development & ROI Analysis</li>
+                        <li>Gap Analysis & Solution Design</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Data Analytics</h3>
+                    <ul class="skill-list">
+                        <li>Advanced SQL & Database Design</li>
+                        <li>Python, R & Statistical Analysis</li>
+                        <li>Power BI & Tableau Dashboards</li>
+                        <li>Data Visualization & Storytelling</li>
+                        <li>ETL Processes & Data Engineering</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Data Science</h3>
+                    <ul class="skill-list">
+                        <li>Machine Learning & Deep Learning</li>
+                        <li>Predictive Modeling & Forecasting</li>
+                        <li>Feature Engineering & Selection</li>
+                        <li>Model Evaluation & Optimization</li>
+                        <li>Statistical Analysis & A/B Testing</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Engineering</h3>
+                    <ul class="skill-list">
+                        <li>Natural Language Processing (NLP)</li>
+                        <li>Large Language Models (LLM)</li>
+                        <li>MLOps & Model Deployment</li>
+                        <li>Cloud AI Services (AWS, Databricks)</li>
+                        <li>AI System Architecture & Scaling</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>AI Product Management</h3>
+                    <ul class="skill-list">
+                        <li>AI Product Strategy & Roadmapping</li>
+                        <li>Cross-functional Team Leadership</li>
+                        <li>Technical Requirement Translation</li>
+                        <li>AI Ethics & Compliance Management</li>
+                        <li>Data-driven Product Decision Making</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Let's Build Something Amazing Together</h2>
+            <p>Ready to transform your data challenges into competitive advantages? I'd love to discuss how my expertise can drive your business forward.</p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Project Type (Business Analysis, Data Science, AI, etc.)">
+                </div>
+                <div class="form-group">
+                    <textarea rows="5" placeholder="Tell me about your project or challenge" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+
+            <div style="margin-top: 3rem;">
+                <p><strong>Connect with me:</strong></p>
+                <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem;">
+                    <a href="https://au.linkedin.com/in/kriti-yadav-data-science" target="_blank" style="color: white; font-size: 1.5rem;">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Kriti-Data-Business" target="_blank" style="color: white; font-size: 1.5rem;">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:kritiyadav9993@gmail.com" style="color: white; font-size: 1.5rem;">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <p><strong>Email:</strong> kritiyadav9993@gmail.com</p>
+                    <p><strong>Location:</strong> Melbourne, Australia</p>
+                    <p><strong>Education:</strong> Master of Data Science (Research), RMIT University</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Project arrows click functionality
+        document.querySelectorAll('.project-arrow').forEach(arrow => {
+            arrow.addEventListener('click', function() {
+                const projectId = this.dataset.project;
+                const projectElement = document.getElementById(projectId);
+                if (projectElement) {
+                    // Scroll to projects section first
+                    document.getElementById('projects').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Highlight the specific project after a delay
+                    setTimeout(() => {
+                        projectElement.style.transform = 'scale(1.05)';
+                        projectElement.style.boxShadow = '0 25px 50px rgba(37, 99, 235, 0.3)';
+                        
+                        setTimeout(() => {
+                            projectElement.style.transform = '';
+                            projectElement.style.boxShadow = '';
+                        }, 2000);
+                    }, 800);
+                }
+            });
+        });
+
+        // Project filtering functionality
+        document.querySelectorAll('.filter-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                const projectCards = document.querySelectorAll('.project-card');
+                
+                projectCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        const categories = card.dataset.categories;
+                        if (categories && categories.includes(filter)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Live Demo click handlers
+        document.querySelectorAll('.project-link.demo').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Live Demo: This would redirect to the live demonstration of the project. Please add your actual demo URLs.');
+            });
+        });
+
+        // Case Study click handlers
+        document.querySelectorAll('.project-link.case-study').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Case Study: This would show detailed case study documentation. Please add your actual case study links or modal content.');
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Dynamic navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Form submission handler
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
