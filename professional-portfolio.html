@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Professional Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --background: #ffffff;
+            --card-background: #f8fafc;
+            --border-color: #e5e7eb;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-roles {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .role-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 5rem 0;
+            background: var(--card-background);
+        }
+
+        .story-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 2rem;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            flex-grow: 1;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-header {
+            height: 200px;
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-link {
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 5rem 0;
+            background: var(--card-background);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .skill-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .skill-list li {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 0;
+            background: var(--gradient-1);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .hero-roles {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+            }
+            
+            .timeline-icon {
+                margin: 0 auto 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-content">
+            <div class="logo">Your Name</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#story">Story</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your Name</h1>
+                <p class="hero-subtitle">Transforming Data into Strategic Insights</p>
+                
+                <div class="hero-roles">
+                    <div class="role-card">
+                        <i class="fas fa-chart-line"></i>
+                        <div>Business Analyst</div>
+                    </div>
+                    <div class="role-card">
+                        <i class="fas fa-database"></i>
+                        <div>Data Analytics</div>
+                    </div>
+                    <div class="role-card">
+                        <i class="fas fa-brain"></i>
+                        <div>Data Science</div>
+                    </div>
+                    <div class="role-card">
+                        <i class="fas fa-robot"></i>
+                        <div>AI Engineer</div>
+                    </div>
+                </div>
+
+                <a href="#story" class="cta-button">Explore My Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story/Journey Section -->
+    <section id="story" class="story-section">
+        <div class="container">
+            <h2 class="section-title">My Professional Journey</h2>
+            
+            <div class="story-timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>The Problem</h3>
+                        <p>In today's data-driven world, organizations struggle with disconnected systems, inconsistent reporting, and the inability to extract actionable insights from their vast data repositories. Business decisions are often made based on intuition rather than evidence, leading to missed opportunities and inefficient resource allocation.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>The Impact</h3>
+                        <p>Through my multidisciplinary approach combining business analysis, data science, and AI engineering, I bridge the gap between technical capabilities and business objectives. My work has helped organizations increase revenue by 25%, reduce operational costs by 30%, and improve decision-making speed by 60%.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>The Solution</h3>
+                        <p>I deliver end-to-end solutions that encompass strategic business analysis, advanced analytics implementations, predictive modeling, and AI-powered automation systems. My approach ensures sustainable, scalable solutions that evolve with business needs and market dynamics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            
+            <div class="projects-grid">
+                <!-- Business Analysis Project -->
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Revenue Optimization Analysis</h3>
+                        <div class="project-tags">
+                            <span class="tag">Business Analysis</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">Tableau</span>
+                        </div>
+                        <p>Conducted comprehensive business process analysis for a Fortune 500 company, identifying revenue leakage points and optimization opportunities. Delivered actionable recommendations that increased quarterly revenue by $2.3M.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Analytics Project -->
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Customer Segmentation Dashboard</h3>
+                        <div class="project-tags">
+                            <span class="tag">Data Analytics</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Power BI</span>
+                        </div>
+                        <p>Built an interactive analytics dashboard that segments customers based on behavior patterns, enabling targeted marketing campaigns that improved conversion rates by 40% and customer lifetime value by 25%.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Science Project -->
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Predictive Maintenance Model</h3>
+                        <div class="project-tags">
+                            <span class="tag">Data Science</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">TensorFlow</span>
+                        </div>
+                        <p>Developed a predictive maintenance system using IoT sensor data and machine learning algorithms, reducing equipment downtime by 45% and maintenance costs by $500K annually for a manufacturing client.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Engineering Project -->
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Intelligent Document Processing</h3>
+                        <div class="project-tags">
+                            <span class="tag">AI Engineering</span>
+                            <span class="tag">NLP</span>
+                            <span class="tag">Azure AI</span>
+                        </div>
+                        <p>Engineered an AI-powered document processing system using natural language processing and computer vision, automating 80% of manual document workflows and reducing processing time from days to minutes.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cross-functional Project -->
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>End-to-End Analytics Platform</h3>
+                        <div class="project-tags">
+                            <span class="tag">Full Stack</span>
+                            <span class="tag">AWS</span>
+                            <span class="tag">React</span>
+                            <span class="tag">FastAPI</span>
+                        </div>
+                        <p>Architected and deployed a comprehensive analytics platform combining business intelligence, predictive analytics, and real-time monitoring capabilities, serving 10,000+ daily users across multiple business units.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Research Project -->
+                <div class="project-card fade-in">
+                    <div class="project-header">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Market Trend Analysis Research</h3>
+                        <div class="project-tags">
+                            <span class="tag">Research</span>
+                            <span class="tag">Time Series</span>
+                            <span class="tag">Jupyter</span>
+                        </div>
+                        <p>Conducted advanced market trend analysis using statistical modeling and time series forecasting, providing strategic insights that influenced $50M+ investment decisions for multiple stakeholders.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-file-pdf"></i> Research Paper
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title">Technical Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Business Analysis</h3>
+                    <ul class="skill-list">
+                        <li>Requirements Gathering</li>
+                        <li>Process Mapping</li>
+                        <li>Stakeholder Management</li>
+                        <li>Business Case Development</li>
+                        <li>Gap Analysis</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Data Analytics</h3>
+                    <ul class="skill-list">
+                        <li>SQL, Python, R</li>
+                        <li>Tableau, Power BI</li>
+                        <li>Statistical Analysis</li>
+                        <li>Data Visualization</li>
+                        <li>ETL Processes</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Data Science</h3>
+                    <ul class="skill-list">
+                        <li>Machine Learning</li>
+                        <li>Deep Learning</li>
+                        <li>Predictive Modeling</li>
+                        <li>Feature Engineering</li>
+                        <li>Model Deployment</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <div class="skill-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Engineering</h3>
+                    <ul class="skill-list">
+                        <li>Natural Language Processing</li>
+                        <li>Computer Vision</li>
+                        <li>MLOps</li>
+                        <li>Cloud AI Services</li>
+                        <li>AI System Architecture</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Let's Build Something Amazing Together</h2>
+            <p>Ready to transform your data challenges into competitive advantages? I'd love to discuss how my expertise can drive your business forward.</p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Project Type (Business Analysis, Data Science, AI, etc.)">
+                </div>
+                <div class="form-group">
+                    <textarea rows="5" placeholder="Tell me about your project or challenge" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+
+            <div style="margin-top: 3rem;">
+                <p>Connect with me:</p>
+                <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem;">
+                    <a href="#" style="color: white; font-size: 1.5rem;">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" style="color: white; font-size: 1.5rem;">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" style="color: white; font-size: 1.5rem;">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Dynamic navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Form submission (you would connect this to your backend)
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            this.reset();
+        });
+
+        // Interactive typing effect for hero subtitle
+        const subtitleText = 'Transforming Data into Strategic Insights';
+        const heroSubtitle = document.querySelector('.hero-subtitle');
+        let i = 0;
+
+        function typeEffect() {
+            if (i < subtitleText.length) {
+                heroSubtitle.textContent += subtitleText.charAt(i);
+                i++;
+                setTimeout(typeEffect, 100);
+            }
+        }
+
+        // Start typing effect after page load
+        window.addEventListener('load', () => {
+            heroSubtitle.textContent = '';
+            setTimeout(typeEffect, 1000);
+        });
+    </script>
+</body>
+</html>
