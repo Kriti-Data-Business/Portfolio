@@ -1,0 +1,3089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Australian Financial RAG System - Business Analyst RFP Showcase</title>
+    <style>
+        /* Design System Variables */
+        :root {
+            --color-navy-primary: #1e3a8a;
+            --color-navy-dark: #0f172a;
+            --color-blue-accent: #3b82f6;
+            --color-white: #ffffff;
+            --color-gray-light: #f3f4f6;
+            --color-gray-medium: #9ca3af;
+            --color-gray-dark: #374151;
+            --color-green-success: #10b981;
+            --color-gradient-start: #1e3a8a;
+            --color-gradient-end: #3b82f6;
+            
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+            --spacing-3xl: 2.5rem;
+            
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            
+            --transition-fast: 150ms ease;
+            --transition-normal: 250ms ease;
+        }
+        
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: var(--font-family-base);
+            color: var(--color-gray-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: var(--transition-normal);
+        }
+        
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        
+        .nav-brand {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: var(--color-navy-primary);
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-md);
+        }
+        
+        .nav-link {
+            color: var(--color-gray-dark);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            transition: var(--transition-fast);
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--color-blue-accent);
+            background: var(--color-gray-light);
+        }
+        
+        .nav-link.active {
+            color: var(--color-blue-accent);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: var(--spacing-sm);
+            right: var(--spacing-sm);
+            height: 2px;
+            background: var(--color-blue-accent);
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--color-navy-primary);
+            border-radius: 2px;
+            transition: var(--transition-fast);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--color-white);
+            text-align: center;
+            padding: var(--spacing-2xl) 20px;
+            position: relative;
+            overflow: hidden;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+        }
+        
+        /* Animated Gradient Background */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating Financial Symbols */
+        .float-symbol {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.15);
+            font-weight: bold;
+            pointer-events: none;
+            animation: floatUp linear infinite;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.15;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(var(--drift));
+                opacity: 0;
+            }
+        }
+        
+        /* Particle Effect */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleMove linear infinite;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+        }
+        
+        @keyframes particleMove {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--particle-x), var(--particle-y));
+                opacity: 0;
+            }
+        }
+        
+        /* Data Flow Background */
+        .data-flow-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        
+        .flow-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(6, 182, 212, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(30, 58, 138, 0.3);
+            animation: nodePulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes nodePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px 10px rgba(6, 182, 212, 0); }
+        }
+        
+        .flow-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(6, 182, 212, 0) 0%, 
+                rgba(6, 182, 212, 0.5) 50%, 
+                rgba(6, 182, 212, 0) 100%);
+            background-size: 200% 100%;
+            animation: flowLine 3s linear infinite;
+        }
+        
+        @keyframes flowLine {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .hero-content {
+            max-width: 95vw;
+            width: 100%;
+            animation: fadeInUp 1s ease;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-5xl);
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.2;
+            background: linear-gradient(90deg, #ffffff 0%, #60a5fa 50%, #ffffff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeSlideUp 1s ease, textShimmer 3s linear infinite;
+            text-shadow: 0 0 30px rgba(96, 165, 250, 0.5);
+        }
+        
+        @keyframes textShimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: 400;
+            margin-bottom: 8px;
+            opacity: 0.95;
+            animation: fadeSlideLeft 1s ease 0.2s backwards;
+        }
+        
+        @keyframes fadeSlideLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 0.95;
+                transform: translateX(0);
+            }
+        }
+        
+        .hero-tagline {
+            font-size: var(--font-size-xl);
+            margin-bottom: 24px;
+            opacity: 0.9;
+            animation: fadeSlideRight 1s ease 0.4s backwards;
+        }
+        
+        @keyframes fadeSlideRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateX(0);
+            }
+        }
+        
+        .hero-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 24px;
+            max-width: 100%;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: cardFadeUp 0.8s ease backwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .metric-card:nth-child(1) { animation-delay: 0.6s; }
+        .metric-card:nth-child(2) { animation-delay: 0.8s; }
+        .metric-card:nth-child(3) { animation-delay: 1s; }
+        .metric-card:nth-child(4) { animation-delay: 1.2s; }
+        
+        @keyframes cardFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
+                        0 0 30px rgba(59, 130, 246, 0.4);
+        }
+        
+        .metric-value {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .metric-label {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+        }
+        
+        /* CTA Buttons Container */
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-btn {
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 160px;
+            justify-content: center;
+        }
+        
+        .hero-btn-primary {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            background-size: 200% 200%;
+            color: white;
+            border: none;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3), 
+                            0 0 0 0 rgba(37, 99, 235, 0.7);
+            }
+            50% {
+                box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3), 
+                            0 0 20px 10px rgba(37, 99, 235, 0);
+            }
+        }
+        
+        .hero-btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .hero-btn-primary:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .hero-btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.5), 
+                        0 0 30px rgba(59, 130, 246, 0.6);
+            animation: none;
+        }
+        
+        .hero-btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .hero-btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .hero-btn-secondary:hover::before {
+            left: 100%;
+        }
+        
+        .hero-btn-secondary:hover {
+            background: white;
+            color: #1e3a8a;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+            border-color: white;
+        }
+        
+        .hero-btn-secondary:hover span {
+            animation: iconRotate 0.6s ease;
+        }
+        
+        @keyframes iconRotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-left: 2px solid var(--color-white);
+            border-bottom: 2px solid var(--color-white);
+            transform: rotate(-45deg);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 20px var(--spacing-md);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--color-navy-primary);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--color-gray-medium);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        /* Background Colors */
+        .bg-white {
+            background: var(--color-white);
+        }
+        
+        .bg-gray {
+            background: var(--color-gray-light);
+        }
+        
+        .bg-navy {
+            background: var(--color-navy-primary);
+            color: var(--color-white);
+        }
+        
+        .bg-navy .section-title {
+            color: var(--color-white);
+        }
+        
+        /* Executive Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .summary-card {
+            background: var(--color-white);
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .summary-card h3 {
+            font-size: var(--font-size-xl);
+            color: var(--color-navy-primary);
+            margin-bottom: 12px;
+        }
+        
+        .summary-card p {
+            color: var(--color-gray-dark);
+            line-height: 1.7;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 12px;
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-blue-accent);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-medium);
+        }
+        
+        /* BA Process Flow - HORIZONTAL LINEAR FLOW */
+        .process-timeline {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 40px 0;
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+        
+        /* Horizontal Connection Line */
+        .timeline-spine {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 50%, #1e3a8a 100%);
+            transform-origin: left;
+            animation: horizontalLineGrow 1.2s ease-out forwards;
+            box-shadow: 0 0 10px rgba(30, 58, 138, 0.3);
+            z-index: 0;
+        }
+        
+        @keyframes horizontalLineGrow {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                width: 100%;
+                opacity: 1;
+            }
+        }
+        
+        /* Horizontal Phases Container */
+        .process-phases-wrapper {
+            display: flex;
+            gap: 20px;
+            padding: 0 20px;
+            min-width: min-content;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Phase Card Container - HORIZONTAL */
+        .process-phase {
+            position: relative;
+            flex: 0 0 220px;
+            width: 220px;
+            opacity: 0;
+            animation: phaseSlideIn 0.6s ease-out forwards;
+        }
+        
+        /* Remove left/right variants */
+        .process-phase.phase-left,
+        .process-phase.phase-right {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Staggered animation delays */
+        .process-phase:nth-child(1) { animation-delay: 0.1s; }
+        .process-phase:nth-child(2) { animation-delay: 0.2s; }
+        .process-phase:nth-child(3) { animation-delay: 0.3s; }
+        .process-phase:nth-child(4) { animation-delay: 0.4s; }
+        .process-phase:nth-child(5) { animation-delay: 0.5s; }
+        .process-phase:nth-child(6) { animation-delay: 0.6s; }
+        .process-phase:nth-child(7) { animation-delay: 0.7s; }
+        .process-phase:nth-child(8) { animation-delay: 0.8s; }
+        
+        @keyframes phaseSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Phase Card - HORIZONTAL COMPACT */
+        .phase-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: visible;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            bottom: 0;
+            background: var(--phase-color);
+            transition: width 0.3s ease;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15),
+                        0 0 30px var(--phase-color-glow);
+            border-color: var(--phase-color);
+        }
+        
+        .phase-card.expanded {
+            display: none; /* Remove expanded state functionality */
+        }
+        
+        .phase-card:hover::before {
+            width: 8px;
+        }
+        
+
+        
+        /* Horizontal Arrow Connector */
+        .phase-connector {
+            position: absolute;
+            top: 60px;
+            right: -30px;
+            width: 30px;
+            height: 2px;
+            background: var(--phase-color);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .phase-connector::after {
+            content: '→';
+            position: absolute;
+            right: -12px;
+            top: -9px;
+            font-size: 16px;
+            color: var(--phase-color);
+            animation: arrowPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes arrowPulse {
+            0%, 100% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(5px); opacity: 0.7; }
+        }
+        
+        .process-phase:last-child .phase-connector {
+            display: none;
+        }
+        
+        .phase-card:hover .phase-connector {
+            background: var(--phase-color);
+            box-shadow: 0 0 10px var(--phase-color-glow);
+        }
+        
+        /* Phase Badge - HORIZONTAL */
+        .phase-badge {
+            position: absolute;
+            top: 43px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--phase-color) 0%, var(--phase-color-dark) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px var(--phase-color-glow),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            border: 3px solid white;
+            z-index: 10;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes badgePulse {
+            0%, 100% {
+                box-shadow: 0 4px 15px var(--phase-color-glow),
+                            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 25px var(--phase-color-glow),
+                            0 0 20px var(--phase-color-glow),
+                            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            }
+        }
+        
+        .phase-card:hover .phase-badge {
+            transform: scale(1.15);
+            box-shadow: 0 6px 30px var(--phase-color-glow),
+                        0 0 40px var(--phase-color-glow),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Phase Content - HORIZONTAL */
+        .phase-header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-top: 50px;
+        }
+        
+        .phase-icon {
+            font-size: 28px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .phase-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-navy-primary);
+            margin: 0;
+            text-align: center;
+            line-height: 1.3;
+        }
+        
+        .phase-metric {
+            display: block;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--phase-color);
+            margin-bottom: 8px;
+            padding: 6px 8px;
+            background: rgba(107, 114, 128, 0.08);
+            border-radius: 8px;
+            border: 1px solid rgba(107, 114, 128, 0.15);
+            text-align: center;
+        }
+        
+        .phase-duration {
+            display: block;
+            padding: 4px 8px;
+            background: rgba(107, 114, 128, 0.1);
+            color: var(--phase-color);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .phase-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--phase-color);
+            margin: 12px 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .phase-activities,
+        .phase-outcomes {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 12px 0;
+        }
+        
+        .phase-activities li {
+            padding: 3px 0 3px 16px;
+            position: relative;
+            color: var(--color-gray-dark);
+            font-size: 11px;
+            line-height: 1.5;
+            transition: color 0.3s ease;
+        }
+        
+        .phase-activities li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--phase-color);
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .phase-outcomes li {
+            padding: 4px 0 4px 16px;
+            position: relative;
+            color: var(--color-navy-primary);
+            font-size: 11px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        .phase-outcomes li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--phase-color);
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .phase-card:hover .phase-activities li {
+            color: var(--color-navy-primary);
+        }
+        
+        /* Scroll Hint */
+        .scroll-hint {
+            text-align: center;
+            margin-top: 16px;
+            color: var(--color-gray-medium);
+            font-size: 12px;
+            font-style: italic;
+        }
+        
+        /* Responsive Design - HORIZONTAL FLOW */
+        @media (max-width: 1200px) {
+            .process-phase {
+                flex: 0 0 200px;
+                width: 200px;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .process-phases-wrapper {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .process-phase {
+                flex: 0 0 calc(50% - 20px);
+                width: calc(50% - 20px);
+                min-width: 200px;
+                margin-bottom: 80px;
+            }
+            
+            .timeline-spine {
+                display: none;
+            }
+            
+            .phase-connector {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .process-timeline {
+                padding: 30px 0;
+            }
+            
+            .process-phases-wrapper {
+                flex-direction: column;
+                align-items: center;
+                gap: 60px;
+                padding: 0 16px;
+            }
+            
+            .process-phase {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 400px;
+                margin-bottom: 0;
+            }
+            
+            .phase-badge {
+                top: -20px;
+            }
+            
+            .phase-header-content {
+                padding-top: 30px;
+            }
+            
+            .phase-card {
+                padding: 20px;
+            }
+            
+            .phase-title {
+                font-size: 16px;
+            }
+            
+            .phase-icon {
+                font-size: 32px;
+            }
+            
+            .phase-activities li,
+            .phase-outcomes li {
+                font-size: 12px;
+            }
+            
+            .scroll-hint {
+                display: none;
+            }
+        }
+        
+        /* Requirements Grid */
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+        }
+        
+        .requirement-card {
+            background: var(--color-white);
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-normal);
+        }
+        
+        .requirement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .requirement-icon {
+            font-size: var(--font-size-3xl);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .requirement-card h3 {
+            font-size: var(--font-size-lg);
+            color: var(--color-navy-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .requirement-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .requirement-card li {
+            padding: var(--spacing-xs) 0;
+            padding-left: var(--spacing-md);
+            position: relative;
+            color: var(--color-gray-dark);
+            font-size: var(--font-size-sm);
+        }
+        
+        .requirement-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--color-blue-accent);
+        }
+        
+        /* Architecture */
+        .architecture-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .data-sources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .source-card {
+            background: var(--color-white);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: var(--transition-normal);
+        }
+        
+        .source-card:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .source-icon {
+            font-size: var(--font-size-3xl);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .source-abbr {
+            font-weight: 700;
+            color: var(--color-navy-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .source-name {
+            font-size: var(--font-size-xs);
+            color: var(--color-gray-medium);
+        }
+        
+        .pipeline-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .pipeline-step {
+            background: var(--color-white);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .pipeline-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--color-blue-accent);
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto var(--spacing-sm);
+        }
+        
+        .pipeline-step h4 {
+            font-size: var(--font-size-sm);
+            color: var(--color-navy-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .pipeline-step p {
+            font-size: var(--font-size-xs);
+            color: var(--color-gray-medium);
+        }
+        
+        .pipeline-arrow {
+            font-size: var(--font-size-2xl);
+            color: var(--color-blue-accent);
+        }
+        
+        /* Evaluation Table */
+        .eval-table-container {
+            overflow-x: auto;
+        }
+        
+        .eval-table {
+            width: 100%;
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .eval-table th,
+        .eval-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+        }
+        
+        .eval-table thead {
+            background: var(--color-navy-primary);
+            color: var(--color-white);
+        }
+        
+        .eval-table th {
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .eval-table tbody tr {
+            border-bottom: 1px solid var(--color-gray-light);
+            transition: var(--transition-fast);
+        }
+        
+        .eval-table tbody tr:hover {
+            background: var(--color-gray-light);
+        }
+        
+        .eval-table td {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-dark);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+        
+        .status-exceeded {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-green-success);
+        }
+        
+        .status-achieved {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--color-blue-accent);
+        }
+        
+        /* Business Impact */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+        }
+        
+        .impact-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition-normal);
+        }
+        
+        .impact-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .impact-metric {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-white);
+        }
+        
+        .impact-card h3 {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .impact-card p {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+        }
+        
+        /* Deliverables - Interactive Section */
+        .deliverables-container {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .deliverable-phase {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+        
+        .deliverable-phase:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .phase-header {
+            background: var(--color-navy-primary);
+            color: var(--color-white);
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+            user-select: none;
+        }
+        
+        .phase-header:hover {
+            background: var(--color-blue-accent);
+        }
+        
+        .phase-header:focus {
+            outline: 2px solid var(--color-blue-accent);
+            outline-offset: -2px;
+        }
+        
+        .phase-header-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-lg);
+        }
+        
+        .phase-icon {
+            font-size: var(--font-size-2xl);
+        }
+        
+        .phase-toggle {
+            transition: transform 0.3s ease;
+            font-size: var(--font-size-xl);
+            line-height: 1;
+        }
+        
+        .phase-toggle.open {
+            transform: rotate(180deg);
+        }
+        
+        .phase-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .phase-content.open {
+            max-height: 3000px;
+        }
+        
+        .phase-content-inner {
+            padding: var(--spacing-lg);
+        }
+        
+        .deliverable-item {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: var(--color-gray-light);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--color-blue-accent);
+        }
+        
+        .deliverable-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .deliverable-name {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--color-navy-primary);
+            margin-bottom: var(--spacing-xs);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .deliverable-featured {
+            color: #fbbf24;
+            font-size: var(--font-size-base);
+        }
+        
+        .deliverable-description {
+            color: var(--color-gray-dark);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .deliverable-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .deliverable-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-xs) var(--spacing-md);
+            background: var(--color-blue-accent);
+            color: var(--color-white);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+        
+        .deliverable-link:hover {
+            background: var(--color-navy-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .deliverable-diagram {
+            margin-top: var(--spacing-md);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+        
+        .deliverable-diagram:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .deliverable-diagram img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .diagram-caption {
+            font-size: var(--font-size-xs);
+            color: var(--color-gray-medium);
+            text-align: center;
+            margin-top: var(--spacing-xs);
+            font-style: italic;
+        }
+        
+        /* Modal for full-size diagrams */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 95%;
+            max-height: 95%;
+            animation: zoomIn 0.3s ease;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-md);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--color-white);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            z-index: 10001;
+        }
+        
+        .modal-close:hover {
+            color: var(--color-blue-accent);
+            transform: scale(1.2);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); }
+            to { transform: scale(1); }
+        }
+        
+        /* Recommendations */
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 12px;
+        }
+        
+        .recommendations-column {
+            background: var(--color-white);
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .recommendations-column h3 {
+            font-size: var(--font-size-xl);
+            color: var(--color-navy-primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .recommendations-column ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .recommendations-column li {
+            padding: var(--spacing-sm) 0;
+            padding-left: var(--spacing-lg);
+            position: relative;
+            color: var(--color-gray-dark);
+        }
+        
+        .successes li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-green-success);
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+        }
+        
+        .enhancements li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-blue-accent);
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--color-navy-dark);
+            color: var(--color-white);
+            padding: var(--spacing-2xl) var(--spacing-md);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .team-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .team-list li {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+        }
+        
+        .footer-links {
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .footer-links a {
+            color: var(--color-blue-accent);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-white);
+        }
+        
+        .copyright {
+            font-size: var(--font-size-sm);
+            opacity: 0.7;
+            margin-top: var(--spacing-lg);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: var(--font-size-4xl);
+            }
+            
+            .pipeline-arrow {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: var(--color-white);
+                flex-direction: column;
+                padding: var(--spacing-lg);
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition-normal);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hero h1 {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .hero h2 {
+                font-size: var(--font-size-xl);
+            }
+            
+            .hero-tagline {
+                font-size: var(--font-size-base);
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .hero-btn {
+                width: 100%;
+            }
+            
+            .hero {
+                min-height: 60vh;
+                padding: var(--spacing-2xl) 16px;
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-metrics {
+                gap: 16px;
+            }
+            
+            .process-timeline {
+                padding-left: 30px;
+            }
+            
+            .process-timeline::before {
+                left: 10px;
+            }
+            
+            .process-phase::before {
+                left: -30px;
+                width: 24px;
+                height: 24px;
+                font-size: var(--font-size-xs);
+            }
+            
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* YouTube Demo Section */
+        .demo-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 32px;
+            color: var(--color-gray-dark);
+            line-height: 1.7;
+        }
+        
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+        
+        .video-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .video-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--color-navy-primary);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            background: var(--color-gray-light);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .navbar,
+            .scroll-indicator,
+            .hamburger {
+                display: none;
+            }
+            
+            section {
+                page-break-inside: avoid;
+                opacity: 1;
+                transform: none;
+            }
+            
+            .hero {
+                min-height: auto;
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-brand">BA RFP Showcase</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#summary" class="nav-link">Executive Summary</a></li>
+                <li><a href="#demo" class="nav-link">Demo</a></li>
+                <li><a href="#process" class="nav-link">BA Process</a></li>
+                <li><a href="#requirements" class="nav-link">Requirements</a></li>
+                <li><a href="#architecture" class="nav-link">Architecture</a></li>
+                <li><a href="#evaluation" class="nav-link">Evaluation</a></li>
+                <li><a href="#impact" class="nav-link">Impact</a></li>
+                <li><a href="#deliverables" class="nav-link">Deliverables</a></li>
+                <li><a href="#recommendations" class="nav-link">Recommendations</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <!-- Animated Background Layers -->
+        <div class="data-flow-bg" id="dataFlowBg"></div>
+        <div id="floatingSymbols"></div>
+        <div id="particles"></div>
+        
+        <div class="hero-content">
+            <h1>Australian Financial RAG System</h1>
+            <h2>Business Analyst RFP Showcase</h2>
+            <p class="hero-tagline">Transforming Financial Literacy Through AI-Powered Personalization</p>
+            <div class="hero-metrics">
+                <div class="metric-card">
+                    <div class="metric-value">96%</div>
+                    <div class="metric-label">Factual Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">300+</div>
+                    <div class="metric-label">Documents Indexed</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2.4s</div>
+                    <div class="metric-label">Response Time</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">85%</div>
+                    <div class="metric-label">Overall Accuracy</div>
+                </div>
+            </div>
+            <div class="hero-cta">
+                <button class="hero-btn hero-btn-primary" id="viewDemoBtn">
+                    <span>▶</span> View Demo
+                </button>
+                <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-secondary">
+                    <span>&lt;/&gt;</span> View on GitHub
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Executive Summary -->
+    <section class="bg-white" id="summary">
+        <div class="section-container">
+            <h2 class="section-title">Executive Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Problem Statement</h3>
+                    <p><strong>Gap 1: Interpretation &amp; Application Challenge</strong></p>
+                    <p>Official financial information communicated through highly technical language, complex statistical releases, and policy documents designed for financial professionals. Residents lacking formal financial education struggle to understand how RBA decisions affect their financial situation.</p>
+                    <p style="margin-top: 1rem;"><strong>Gap 2: Contextualization &amp; Relevance Problem</strong></p>
+                    <p>Existing financial planning tools operate in isolation from evolving macroeconomic environment. Generic advice doesn't adapt to real-time conditions like inflation, interest rates, or government initiatives, leading to outdated or counterproductive guidance.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Solution Overview</h3>
+                    <p>RAG-based system integrating Australian Bureau of Statistics (ABS), Reserve Bank of Australia (RBA), Australian Prudential Regulation Authority (APRA), and Australian Securities Exchange (ASX) data into unified conversational interface.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Translates technical financial information into clear, actionable guidance</li>
+                        <li>Dynamically integrates macroeconomic trends and policy changes</li>
+                        <li>Provides personalized recommendations based on user profiles</li>
+                        <li>Grounds all responses in authoritative sources with 98% citation accuracy</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">96%</div>
+                    <div class="stat-label">Factual Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2%</div>
+                    <div class="stat-label">Hallucination Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">300+</div>
+                    <div class="stat-label">Documents Indexed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2.4s</div>
+                    <div class="stat-label">Response Time</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Demo & Walkthrough -->
+    <section class="bg-white" id="demo">
+        <div class="section-container">
+            <h2 class="section-title">Project Demo &amp; Walkthrough</h2>
+            <p class="demo-description">
+                Watch comprehensive demonstrations of the Australian Financial RAG System, showcasing the Business Analyst workflow from requirements to implementation.
+            </p>
+            <div class="videos-grid">
+                <div class="video-container">
+                    <h3 class="video-title">System Overview &amp; Features</h3>
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/Uq2Wj7rgJBU" 
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            title="System Overview & Features">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <h3 class="video-title">Technical Architecture Demo</h3>
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/OxUgHgx6IWs" 
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            title="Technical Architecture Demo">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BA Process Flow - Interactive Animated Timeline -->
+    <section class="bg-gray" id="process">
+        <div class="section-container">
+            <h2 class="section-title" style="animation: fadeInUp 0.8s ease; font-weight: 700;">Process Flow</h2>
+            <p class="section-subtitle" style="animation: fadeInUp 0.8s ease 0.2s backwards; margin-bottom: 20px;">Systematic 8-Phase Data Science Methodology</p>
+            <div class="process-timeline">
+                <div class="timeline-spine"></div>
+                <div class="process-phases-wrapper">
+                <!-- Phase 1: Background Research & Domain Understanding -->
+                <div class="process-phase" style="--phase-color: #5b7c99; --phase-color-dark: #4a6b88; --phase-color-glow: rgba(91, 124, 153, 0.3);">
+                    <div class="phase-badge">1</div>
+                    <div class="phase-card">
+                        <div class="phase-header-content">
+                            <span class="phase-icon">📚</span>
+                            <h3 class="phase-title">Background Research</h3>
+                        </div>
+                        <div class="phase-duration">Weeks 1-2</div>
+                        <div class="phase-metric">6 Data Sources</div>
+                        <div class="phase-section-title">Activities:</div>
+                        <ul class="phase-activities">
+                            <li>Analyzed 6 financial sources</li>
+                            <li>Reviewed regulatory compliance</li>
+                            <li>Identified system limitations</li>
+                        </ul>
+                        <div class="phase-section-title">Outcomes:</div>
+                        <ul class="phase-outcomes">
+                            <li>Domain knowledge established</li>
+                            <li>Data framework created</li>
+                            <li>Compliance matrix documented</li>
+                        </ul>
+                    </div>
+                    <div class="phase-connector"></div>
+                </div>
+                
+                <!-- Phase 2: Stakeholder Identification & Engagement -->
+                <div class="process-phase" style="--phase-color: #6b5b85; --phase-color-dark: #5a4a74; --phase-color-glow: rgba(107, 91, 133, 0.3);">
+                    <div class="phase-badge">2</div>
+                    <div class="phase-card">
+                        <div class="phase-header-content">
+                            <span class="phase-icon">👥</span>
+                            <h3 class="phase-title">Stakeholder Identification</h3>
+                        </div>
+                        <div class="phase-duration">Weeks 1-2</div>
+                        <div class="phase-metric">8 Groups</div>
+                        <div class="phase-section-title">Activities:</div>
+                        <ul class="phase-activities">
+                            <li>Mapped 8 stakeholder groups</li>
+                            <li>Conducted interviews</li>
+                            <li>Created engagement plan</li>
+                        </ul>
+                        <div class="phase-section-title">Outcomes:</div>
+                        <ul class="phase-outcomes">
+                            <li>Stakeholder matrix completed</li>
+                            <li>Communication plan established</li>
+                            <li>Engagement strategy defined</li>
+                        </ul>
+                    </div>
+                    <div class="phase-connector"></div>
+                </div>
+                
+                <!-- Phase 3: Requirements Discovery & Elicitation -->
+                <div class="process-phase" style="--phase-color: #7a5a70; --phase-color-dark: #69495f; --phase-color-glow: rgba(122, 90, 112, 0.3);">
+                    <div class="phase-badge">3</div>
+                    <div class="phase-card">
+                        <div class="phase-header-content">
+                            <span class="phase-icon">📝</span>
+                            <h3 class="phase-title">Requirements Discovery</h3>
+                        </div>
+                        <div class="phase-duration">Weeks 3-4</div>
+                        <div class="phase-metric" style="font-size: 16px;">100+ Requirements</div>
+                        <div class="phase-section-title">Activities:</div>
+                        <ul class="phase-activities">
+                            <li>Conducted stakeholder workshops</li>
+                            <li>Gathered functional requirements</li>
+                            <li>Defined non-functional targets</li>
+                        </ul>
+                        <div class="phase-section-title">Outcomes:</div>
+                        <ul class="phase-outcomes">
+                            <li>BRD documentation complete</li>
+                            <li>FRS specification ready</li>
+                            <li>Acceptance criteria defined</li>
+                        </ul>
+                    </div>
+                    <div class="phase-connector"></div>
+                </div>
+                
+                <!-- Phase 4: Analysis & Prioritization -->
+                <div class="process-phase" style="--phase-color: #8b7355; --phase-color-dark: #7a6244; --phase-color-glow: rgba(139, 115, 85, 0.3);">
+                    <div class="phase-badge">4</div>
+                    <div class="phase-card">
+                        <div class="phase-header-content">
+                            <span class="phase-icon">📊</span>
+                            <h3 class="phase-title">Analysis &amp; Prioritization</h3>
+                        </div>
+                        <div class="phase-duration">Week 4</div>
+                        <div class="phase-metric">100 Query Test Set</div>
+                        <div class="phase-section-title">Activities:</div>
+                        <ul class="phase-activities">
+                            <li>Analyzed all requirements</li>
+                            <li>Applied MoSCoW prioritization</li>
+                            <li>Defined success metrics</li>
+                        </ul>
+                        <div class="phase-section-title">Outcomes:</div>
+                        <ul class="phase-outcomes">
+                            <li>Prioritization matrix created</li>
+                            <li>Evaluation framework established</li>
+                            <li>Metric targets defined</li>
+                        </ul>
+                    </div>
+                    <div class="phase-connector"></div>
+                </div>
+                
+                <!-- Phase 5: Scope Definition & Documentation -->
+                <div class="process-phase" style="--phase-color: #5a8072; --phase-color-dark: #496f61; --phase-color-glow: rgba(90, 128, 114, 0.3);">
+                    <div class="phase-badge">5</div>
+                    <div class="phase-card">
+                        <div class="phase-header-content">
+                            <span class="phase-icon">✏️</span>
+                            <h3 class="phase-title">Scope Definition</h3>
+                        </div>
+                        <div class="phase-duration">Week 5</div>
+                        <div class="phase-metric">6 Sources | 4 Profiles</div>
+                        <div class="phase-section-title">Activities:</div>
+                        <ul class="phase-activities">
+                            <li>Defined in-scope components</li>
+                            <li>Specified user profiles</li>
+                            <li>Clarified boundaries</li>
+                        </ul>
+                        <div class="phase-section-title">Outcomes:</div>
+                        <ul class="phase-outcomes">
+                            <li>Scope document complete</li>
+                            <li>Project constraints documented</li>
+                            <li>Data volume estimated</li>
+                        </ul>
+                    </div>
+                    <div class="phase-connector"></div>
+                </div>
+                
+                <!-- Phase 6: Solution Design & Technical Specifications -->
+                <div class="process-phase" style="--phase-color: #5a7a8a; --phase-color-dark: #496979; --phase-color-glow: rgba(90, 122, 138, 0.3);">
+                    <div class="phase-badge">6</div>
+                    <div class="phase-card">
+                        <div class="phase-header-content">
+                            <span class="phase-icon">🎨</span>
+                            <h3 class="phase-title">Solution Design</h3>
+                        </div>
+                        <div class="phase-duration">Weeks 5-6</div>
+                        <div class="phase-metric">768-Dim Embeddings</div>
+                        <div class="phase-section-title">Activities:</div>
+                        <ul class="phase-activities">
+                            <li>Designed RAG architecture</li>
+                            <li>Specified tech stack</li>
+                            <li>Created diagrams</li>
+                        </ul>
+                        <div class="phase-section-title">Outcomes:</div>
+                        <ul class="phase-outcomes">
+                            <li>Architecture diagram complete</li>
+                            <li>UI wireframes ready</li>
+                            <li>Database schema designed</li>
+                        </ul>
+                    </div>
+                    <div class="phase-connector"></div>
+                </div>
+                
+                <!-- Phase 7: Implementation & Development -->
+                <div class="process-phase" style="--phase-color: #6a6a8a; --phase-color-dark: #595979; --phase-color-glow: rgba(106, 106, 138, 0.3);">
+                    <div class="phase-badge">7</div>
+                    <div class="phase-card">
+                        <div class="phase-header-content">
+                            <span class="phase-icon">⚙️</span>
+                            <h3 class="phase-title">Implementation</h3>
+                        </div>
+                        <div class="phase-duration">Weeks 8-9</div>
+                        <div class="phase-metric">Full Pipeline</div>
+                        <div class="phase-section-title">Activities:</div>
+                        <ul class="phase-activities">
+                            <li>Built RAG pipeline</li>
+                            <li>Integrated ChromaDB</li>
+                            <li>Deployed Streamlit UI</li>
+                        </ul>
+                        <div class="phase-section-title">Outcomes:</div>
+                        <ul class="phase-outcomes">
+                            <li>Application deployed</li>
+                            <li>Pipeline production-ready</li>
+                            <li>Documentation complete</li>
+                        </ul>
+                    </div>
+                    <div class="phase-connector"></div>
+                </div>
+                
+                <!-- Phase 8: Evaluation & Validation -->
+                <div class="process-phase" style="--phase-color: #7a6a6a; --phase-color-dark: #696059; --phase-color-glow: rgba(122, 106, 106, 0.3);">
+                    <div class="phase-badge">8</div>
+                    <div class="phase-card">
+                        <div class="phase-header-content">
+                            <span class="phase-icon">✅</span>
+                            <h3 class="phase-title">Evaluation &amp; Validation</h3>
+                        </div>
+                        <div class="phase-duration">Weeks 10-11</div>
+                        <div class="phase-metric">96% Accuracy</div>
+                        <div class="phase-section-title">Activities:</div>
+                        <ul class="phase-activities">
+                            <li>Tested 200 responses</li>
+                            <li>Measured all metrics</li>
+                            <li>Validated targets</li>
+                        </ul>
+                        <div class="phase-section-title">Outcomes:</div>
+                        <ul class="phase-outcomes">
+                            <li>96% Factual Accuracy</li>
+                            <li>2% Hallucination Rate</li>
+                            <li>2.4s Response Time</li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+                <div class="scroll-hint">← Scroll horizontally to view all phases →</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Requirements Gathering -->
+    <section class="bg-white" id="requirements">
+        <div class="section-container">
+            <h2 class="section-title">Requirements Gathering Techniques</h2>
+            <div class="requirements-grid">
+                <div class="requirement-card">
+                    <div class="requirement-icon">💬</div>
+                    <h3>Interviews &amp; Consultations</h3>
+                    <ul>
+                        <li>Weekly mentor meetings for guidance</li>
+                        <li>SME consultations for domain knowledge</li>
+                        <li>User profile development</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <div class="requirement-icon">📄</div>
+                    <h3>Document Analysis</h3>
+                    <ul>
+                        <li>Analyzed ABS, RBA, APRA regulations</li>
+                        <li>Reviewed existing tool documentation</li>
+                        <li>Studied academic RAG literature</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <div class="requirement-icon">👥</div>
+                    <h3>Workshops &amp; Sessions</h3>
+                    <ul>
+                        <li>Weekly team meetings for refinement</li>
+                        <li>Brainstorming for feature prioritization</li>
+                        <li>Architecture design workshops</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <div class="requirement-icon">🎨</div>
+                    <h3>Prototyping</h3>
+                    <ul>
+                        <li>Streamlit UI prototypes for validation</li>
+                        <li>Proof-of-concept RAG pipeline</li>
+                        <li>Iterative refinement from testing</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <div class="requirement-icon">🔍</div>
+                    <h3>Observation &amp; Research</h3>
+                    <ul>
+                        <li>Analyzed user behavior patterns</li>
+                        <li>Studied tool limitations and pain points</li>
+                        <li>Benchmarked market alternatives</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <div class="requirement-icon">✅</div>
+                    <h3>Technical Validation</h3>
+                    <ul>
+                        <li>Feasibility testing of RAG approach</li>
+                        <li>Performance benchmarking</li>
+                        <li>Security and privacy validation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Architecture -->
+    <section class="bg-gray" id="architecture">
+        <div class="section-container">
+            <h2 class="section-title">Solution Design &amp; Technical Architecture</h2>
+            
+            <div class="architecture-section">
+                <h3 style="font-size: 1.5rem; color: var(--color-navy-primary); margin-bottom: 1.5rem; text-align: center;">Data Layer: Integrated Sources</h3>
+                <div class="data-sources">
+                    <div class="source-card">
+                        <div class="source-icon">📊</div>
+                        <div class="source-abbr">ABS</div>
+                        <div class="source-name">Australian Bureau of Statistics</div>
+                    </div>
+                    <div class="source-card">
+                        <div class="source-icon">🏦</div>
+                        <div class="source-abbr">RBA</div>
+                        <div class="source-name">Reserve Bank of Australia</div>
+                    </div>
+                    <div class="source-card">
+                        <div class="source-icon">🛡️</div>
+                        <div class="source-abbr">APRA</div>
+                        <div class="source-name">Australian Prudential Regulation Authority</div>
+                    </div>
+                    <div class="source-card">
+                        <div class="source-icon">📈</div>
+                        <div class="source-abbr">ASX</div>
+                        <div class="source-name">Australian Securities Exchange</div>
+                    </div>
+                    <div class="source-card">
+                        <div class="source-icon">🏛️</div>
+                        <div class="source-abbr">GOV</div>
+                        <div class="source-name">Government Sources</div>
+                    </div>
+                    <div class="source-card">
+                        <div class="source-icon">📰</div>
+                        <div class="source-abbr">NEWS</div>
+                        <div class="source-name">Financial News</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="architecture-section">
+                <h3 style="font-size: 1.5rem; color: var(--color-navy-primary); margin-bottom: 1.5rem; text-align: center;">AI Pipeline: 5-Step Process</h3>
+                <div class="pipeline-flow">
+                    <div class="pipeline-step">
+                        <div class="pipeline-number">1</div>
+                        <h4>Document Chunking &amp; Embedding</h4>
+                        <p>500-1000 token chunks, 768-dim FinLang embeddings</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-number">2</div>
+                        <h4>Vector Storage &amp; Retrieval</h4>
+                        <p>ChromaDB with cosine similarity, top-20 candidates</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-number">3</div>
+                        <h4>Context Assembly &amp; Re-ranking</h4>
+                        <p>Cross-encoder re-ranking, top-5 selection, 1500 chars</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-number">4</div>
+                        <h4>Grounded Generation</h4>
+                        <p>GPT-4/Claude with temp 0.3, personalized responses</p>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-step">
+                        <div class="pipeline-number">5</div>
+                        <h4>Source Attribution</h4>
+                        <p>98% citation accuracy, full traceability</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Evaluation Results -->
+    <section class="bg-white" id="evaluation">
+        <div class="section-container">
+            <h2 class="section-title">Evaluation Metrics &amp; Results</h2>
+            <div class="eval-table-container">
+                <table class="eval-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Score</th>
+                            <th>Target</th>
+                            <th>Status</th>
+                            <th>Interpretation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Retrieval Precision@10</strong></td>
+                            <td>0.87</td>
+                            <td>0.80</td>
+                            <td><span class="status-badge status-exceeded">✓ Exceeded</span></td>
+                            <td>87% of retrieved documents are relevant</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Retrieval Recall@10</strong></td>
+                            <td>0.82</td>
+                            <td>0.75</td>
+                            <td><span class="status-badge status-exceeded">✓ Exceeded</span></td>
+                            <td>System finds 82% of all relevant documents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Factual Accuracy</strong></td>
+                            <td>0.96</td>
+                            <td>0.90</td>
+                            <td><span class="status-badge status-exceeded">✓ Exceeded</span></td>
+                            <td>96% of factual claims align with sources</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Citation Accuracy</strong></td>
+                            <td>0.98</td>
+                            <td>0.85</td>
+                            <td><span class="status-badge status-exceeded">✓ Exceeded</span></td>
+                            <td>98% citation precision and attribution</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hallucination Rate</strong></td>
+                            <td>0.02</td>
+                            <td>&lt;0.10</td>
+                            <td><span class="status-badge status-achieved">✓ Achieved</span></td>
+                            <td>Only 2% hallucination rate</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Response Time</strong></td>
+                            <td>2.4s</td>
+                            <td>&lt;3.0s</td>
+                            <td><span class="status-badge status-achieved">✓ Achieved</span></td>
+                            <td>Fast conversational interaction</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Overall Accuracy</strong></td>
+                            <td>85%</td>
+                            <td>80%</td>
+                            <td><span class="status-badge status-exceeded">✓ Exceeded</span></td>
+                            <td>Strong end-to-end performance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Impact -->
+    <section class="bg-navy" id="impact">
+        <div class="section-container">
+            <h2 class="section-title">Business Value &amp; Impact Analysis</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-metric">96%</div>
+                    <h3>Accessibility &amp; Financial Inclusion</h3>
+                    <p>Democratized access to sophisticated financial planning, eliminating barriers for individuals lacking formal financial education</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-metric">+60%</div>
+                    <h3>Accuracy Improvement</h3>
+                    <p>Improved financial fact accuracy from 60% to 96% compared to standard LLMs without RAG</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-metric">-87%</div>
+                    <h3>Hallucination Reduction</h3>
+                    <p>Reduced false information from 15-25% to only 2% through grounded generation</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-metric">$1,500-$5,000</div>
+                    <h3>Cost Savings</h3>
+                    <p>Eliminated annual financial advisor fees while providing comparable analytical depth</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-metric">100%</div>
+                    <h3>Policy Engagement</h3>
+                    <p>Real-time adaptation to RBA policy changes and government initiatives</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-metric">2.4s</div>
+                    <h3>Performance Efficiency</h3>
+                    <p>Sub-3-second response time with 95% consistency for conversational flow</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Deliverables -->
+    <section class="bg-gray" id="deliverables">
+        <div class="section-container">
+            <h2 class="section-title">Business Analyst Deliverables &amp; Artifacts</h2>
+            <p class="section-subtitle">Interactive Documentation Portfolio with Embedded Diagrams &amp; Links</p>
+            <div class="deliverables-container">
+                <!-- Planning Phase -->
+                <div class="deliverable-phase">
+                    <div class="phase-header" onclick="togglePhase(this)" role="button" tabindex="0" aria-expanded="false">
+                        <span class="phase-header-title">
+                            <span class="phase-icon">📋</span>
+                            <span>Planning Phase</span>
+                        </span>
+                        <span class="phase-toggle">▼</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-content-inner">
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Stakeholder Matrix</div>
+                                <div class="deliverable-description">Identified 8 stakeholder groups mapped by influence and interest</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View on GitHub ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Business Objectives List</div>
+                                <div class="deliverable-description">5 core research questions addressing interpretation and contextualization gaps</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Documentation ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Project Charter</div>
+                                <div class="deliverable-description">13-week structured development plan with 7 distinct phases</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Timeline ↗
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Requirements Phase -->
+                <div class="deliverable-phase">
+                    <div class="phase-header" onclick="togglePhase(this)" role="button" tabindex="0" aria-expanded="false">
+                        <span class="phase-header-title">
+                            <span class="phase-icon">📝</span>
+                            <span>Requirements Phase</span>
+                        </span>
+                        <span class="phase-toggle">▼</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-content-inner">
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Business Requirements Document (BRD)</div>
+                                <div class="deliverable-description">Functional and non-functional requirements for RAG system including chat interface, portfolio analysis, sub-3s response time, 90%+ accuracy</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Requirements ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Functional Requirements Specification (FRS)</div>
+                                <div class="deliverable-description">Detailed feature specifications for each system component</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Specifications ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Technical Requirements Document</div>
+                                <div class="deliverable-description">Technology stack: Streamlit, Python, LangChain, ChromaDB, GPT-4/Claude/Phi</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Tech Stack ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Data Source Integration Specifications</div>
+                                <div class="deliverable-description">Integration approach for 6 major data sources (ABS, RBA, APRA, ASX, Government, News)</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Data Sources ↗
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Design Phase -->
+                <div class="deliverable-phase">
+                    <div class="phase-header" onclick="togglePhase(this)" role="button" tabindex="0" aria-expanded="false">
+                        <span class="phase-header-title">
+                            <span class="phase-icon">🎨</span>
+                            <span>Design Phase</span>
+                        </span>
+                        <span class="phase-toggle">▼</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-content-inner">
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">
+                                    System Architecture Diagram
+                                    <span class="deliverable-featured">⭐</span>
+                                </div>
+                                <div class="deliverable-description">Complete RAG pipeline architecture from data sources to user interface</div>
+                                <div class="deliverable-diagram" onclick="openModal('https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/3f3c47f4b3b85d75d598f68bbc67ff2d/b0890faa-5fec-48e0-b051-2e80f8272080/47ec663e.png')">
+                                    <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/3f3c47f4b3b85d75d598f68bbc67ff2d/b0890faa-5fec-48e0-b051-2e80f8272080/47ec663e.png" alt="System Architecture Diagram">
+                                    <div class="diagram-caption">Click to view full-size diagram</div>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">
+                                    User Interface Wireframes
+                                    <span class="deliverable-featured">⭐</span>
+                                </div>
+                                <div class="deliverable-description">Streamlit application layout with chat, portfolio, and calculator views</div>
+                                <div class="deliverable-diagram" onclick="openModal('https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/3f3c47f4b3b85d75d598f68bbc67ff2d/9aa93fcf-06e4-475b-b8da-b9cd86d553ee/e1a78859.png')">
+                                    <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/3f3c47f4b3b85d75d598f68bbc67ff2d/9aa93fcf-06e4-475b-b8da-b9cd86d553ee/e1a78859.png" alt="User Interface Wireframes">
+                                    <div class="diagram-caption">Click to view full-size wireframe</div>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">
+                                    Database Schema (ChromaDB structure)
+                                    <span class="deliverable-featured">⭐</span>
+                                </div>
+                                <div class="deliverable-description">Vector database organization with 300+ indexed document chunks</div>
+                                <div class="deliverable-diagram" onclick="openModal('https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/3f3c47f4b3b85d75d598f68bbc67ff2d/429c7d37-2e59-40b0-8cf1-cd5428e703dc/1acce6ee.png')">
+                                    <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/3f3c47f4b3b85d75d598f68bbc67ff2d/429c7d37-2e59-40b0-8cf1-cd5428e703dc/1acce6ee.png" alt="ChromaDB Database Schema">
+                                    <div class="diagram-caption">Click to view full-size schema</div>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Integration Specifications</div>
+                                <div class="deliverable-description">API endpoints, data formats, and integration patterns</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View API Docs ↗
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Implementation Phase -->
+                <div class="deliverable-phase">
+                    <div class="phase-header" onclick="togglePhase(this)" role="button" tabindex="0" aria-expanded="false">
+                        <span class="phase-header-title">
+                            <span class="phase-icon">⚙️</span>
+                            <span>Implementation Phase</span>
+                        </span>
+                        <span class="phase-toggle">▼</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-content-inner">
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">User Stories with Acceptance Criteria</div>
+                                <div class="deliverable-description">25+ user stories covering all major features. Example: "As a 25-year-old professional, I want personalized savings recommendations based on my income and goals"</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View User Stories ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Sprint Planning Documentation</div>
+                                <div class="deliverable-description">13-week development timeline with weekly milestones</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Sprints ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Test Plans</div>
+                                <div class="deliverable-description">Comprehensive testing: Retrieval Quality (Precision 0.87, Recall 0.82), Generation Quality (96% accuracy, 2% hallucination), UX (2.4s response)</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Test Results ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Source Code Repository</div>
+                                <div class="deliverable-description">Complete Python codebase with documentation</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Code ↗
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Evaluation Phase -->
+                <div class="deliverable-phase">
+                    <div class="phase-header" onclick="togglePhase(this)" role="button" tabindex="0" aria-expanded="false">
+                        <span class="phase-header-title">
+                            <span class="phase-icon">📊</span>
+                            <span>Evaluation Phase</span>
+                        </span>
+                        <span class="phase-toggle">▼</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-content-inner">
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Evaluation Framework Document</div>
+                                <div class="deliverable-description">Multi-dimensional assessment: Retrieval Quality, Generation Quality, User Experience metrics</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Framework ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Test Results Report</div>
+                                <div class="deliverable-description">Overall Accuracy: 85%, Factual Accuracy: 96%, Hallucination Rate: 2%, Response Time: 2.4s avg - All targets exceeded</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Results ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="deliverable-item">
+                                <div class="deliverable-name">Performance Metrics Dashboard</div>
+                                <div class="deliverable-description">Real-time system performance monitoring</div>
+                                <div class="deliverable-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Australian-Financial-AI-RAG-Application" target="_blank" rel="noopener noreferrer" class="deliverable-link">
+                                        View Metrics ↗
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modal for Full-Size Diagrams -->
+    <div id="diagramModal" class="modal" onclick="closeModal()">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img id="modalImage" src="" alt="Full-size diagram">
+        </div>
+    </div>
+
+    <!-- Recommendations -->
+    <section class="bg-white" id="recommendations">
+        <div class="section-container">
+            <h2 class="section-title">Lessons Learned &amp; Future Enhancements</h2>
+            <div class="recommendations-grid">
+                <div class="recommendations-column successes">
+                    <h3>What Worked Well</h3>
+                    <ul>
+                        <li>Weekly coordination ensured alignment and rapid issue resolution</li>
+                        <li>RAG architecture effectively grounded responses in authoritative sources</li>
+                        <li>Phased approach allowed iterative refinement and early feedback</li>
+                        <li>Multi-source integration provided comprehensive financial context</li>
+                    </ul>
+                </div>
+                <div class="recommendations-column enhancements">
+                    <h3>Future Enhancements</h3>
+                    <ul>
+                        <li>Expand to Mistral 7B for improved multi-turn dialogue capability</li>
+                        <li>Implement proactive alerting for policy changes and opportunities</li>
+                        <li>Conduct longitudinal studies tracking actual financial outcomes</li>
+                        <li>Expand evaluation dataset for greater statistical confidence</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>Australian Financial RAG System</h3>
+            <p style="margin: 1rem 0;">Business Analyst RFP Showcase</p>
+            <ul class="team-list">
+                <li>Kriti Yadav (s4109283)</li>
+            </ul>
+            <div class="footer-links">
+                <p>October 26, 2025</p>
+                <p style="margin-top: 0.5rem;">
+                    <a href="https://github.com/Kriti-Data-Business/Portfolio" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                </p>
+            </div>
+            <p class="copyright">&copy; 2025 Australian Financial RAG System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll behavior
+        const navbar = document.getElementById('navbar');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Active section highlighting
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll with offset for fixed navbar
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                const offsetTop = targetSection.offsetTop - 70;
+
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Deliverables phase toggle - Accordion behavior (only one open at a time)
+        function togglePhase(header) {
+            const clickedPhase = header.parentElement;
+            const clickedContent = header.nextElementSibling;
+            const clickedToggle = header.querySelector('.phase-toggle');
+            const isOpen = clickedContent.classList.contains('open');
+            
+            // Close all phases
+            document.querySelectorAll('.deliverable-phase').forEach(phase => {
+                const content = phase.querySelector('.phase-content');
+                const toggle = phase.querySelector('.phase-toggle');
+                const phaseHeader = phase.querySelector('.phase-header');
+                
+                content.classList.remove('open');
+                toggle.classList.remove('open');
+                phaseHeader.setAttribute('aria-expanded', 'false');
+            });
+            
+            // If the clicked phase was closed, open it
+            if (!isOpen) {
+                clickedContent.classList.add('open');
+                clickedToggle.classList.add('open');
+                header.setAttribute('aria-expanded', 'true');
+            }
+        }
+        
+        // Keyboard navigation for phase headers
+        document.addEventListener('DOMContentLoaded', () => {
+            const phaseHeaders = document.querySelectorAll('.phase-header');
+            phaseHeaders.forEach(header => {
+                header.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        togglePhase(header);
+                    }
+                });
+            });
+        });
+        
+        // Modal functions for full-size diagrams
+        function openModal(imageSrc) {
+            const modal = document.getElementById('diagramModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('diagramModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initial animation for hero
+        window.addEventListener('load', () => {
+            const hero = document.querySelector('.hero');
+            hero.style.opacity = '1';
+        });
+        
+        // View Demo button smooth scroll functionality
+        const viewDemoBtn = document.getElementById('viewDemoBtn');
+        if (viewDemoBtn) {
+            viewDemoBtn.addEventListener('click', () => {
+                const demoSection = document.getElementById('demo');
+                if (demoSection) {
+                    const offsetTop = demoSection.offsetTop - 70;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
+        
+        // Counter Animation for Metric Cards
+        function animateCounter(element, start, end, duration, decimals = 0, suffix = '') {
+            const startTime = performance.now();
+            const range = end - start;
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = start + (range * easeOutQuart);
+                
+                element.textContent = current.toFixed(decimals) + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+        
+        // Initialize counters when page loads
+        window.addEventListener('load', () => {
+            const metricValues = document.querySelectorAll('.metric-value');
+            const counters = [
+                { start: 0, end: 96, suffix: '%', decimals: 0 },
+                { start: 0, end: 300, suffix: '+', decimals: 0 },
+                { start: 0, end: 2.4, suffix: 's', decimals: 1 },
+                { start: 0, end: 85, suffix: '%', decimals: 0 }
+            ];
+            
+            setTimeout(() => {
+                metricValues.forEach((element, index) => {
+                    if (counters[index]) {
+                        animateCounter(
+                            element,
+                            counters[index].start,
+                            counters[index].end,
+                            2000,
+                            counters[index].decimals,
+                            counters[index].suffix
+                        );
+                    }
+                });
+            }, 500);
+        });
+        
+        // Create Floating Financial Symbols
+        const floatingContainer = document.getElementById('floatingSymbols');
+        const symbols = [
+            { text: '$', count: 8, sizes: [20, 30, 40] },
+            { text: 'A$', count: 6, sizes: [24, 32] },
+            { text: '%', count: 5, sizes: [18, 28] },
+            { text: '▲', count: 4, sizes: [16, 24] },
+            { text: '▼', count: 4, sizes: [16, 24] },
+            { text: '●', count: 10, sizes: [8, 12, 16] }
+        ];
+        
+        symbols.forEach(symbol => {
+            for (let i = 0; i < symbol.count; i++) {
+                const elem = document.createElement('div');
+                elem.className = 'float-symbol';
+                elem.textContent = symbol.text;
+                
+                const size = symbol.sizes[Math.floor(Math.random() * symbol.sizes.length)];
+                const left = Math.random() * 100;
+                const duration = 15 + Math.random() * 20;
+                const delay = Math.random() * 10;
+                const drift = (Math.random() - 0.5) * 100;
+                
+                elem.style.fontSize = size + 'px';
+                elem.style.left = left + '%';
+                elem.style.bottom = '-50px';
+                elem.style.animationDuration = duration + 's';
+                elem.style.animationDelay = delay + 's';
+                elem.style.setProperty('--drift', drift + 'px');
+                
+                floatingContainer.appendChild(elem);
+            }
+        });
+        
+        // Create Particle Effect
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const startX = Math.random() * 100;
+            const startY = Math.random() * 100;
+            const endX = (Math.random() - 0.5) * 300;
+            const endY = (Math.random() - 0.5) * 300;
+            const duration = 8 + Math.random() * 12;
+            const delay = Math.random() * 5;
+            const size = 2 + Math.random() * 4;
+            
+            particle.style.left = startX + '%';
+            particle.style.top = startY + '%';
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.animationDuration = duration + 's';
+            particle.style.animationDelay = delay + 's';
+            particle.style.setProperty('--particle-x', endX + 'px');
+            particle.style.setProperty('--particle-y', endY + 'px');
+            
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Create Data Flow Background Visualization
+        const dataFlowBg = document.getElementById('dataFlowBg');
+        const nodes = [
+            { label: 'ABS', x: 15, y: 20 },
+            { label: 'RBA', x: 25, y: 35 },
+            { label: 'APRA', x: 15, y: 60 },
+            { label: 'ASX', x: 25, y: 75 },
+            { label: 'RAG', x: 50, y: 50 },
+            { label: 'LLM', x: 75, y: 50 },
+            { label: 'OUT', x: 90, y: 50 }
+        ];
+        
+        const connections = [
+            { from: 0, to: 4 },
+            { from: 1, to: 4 },
+            { from: 2, to: 4 },
+            { from: 3, to: 4 },
+            { from: 4, to: 5 },
+            { from: 5, to: 6 }
+        ];
+        
+        // Create nodes
+        nodes.forEach(node => {
+            const nodeElem = document.createElement('div');
+            nodeElem.className = 'flow-node';
+            nodeElem.textContent = node.label;
+            nodeElem.style.left = node.x + '%';
+            nodeElem.style.top = node.y + '%';
+            nodeElem.style.animationDelay = Math.random() * 3 + 's';
+            dataFlowBg.appendChild(nodeElem);
+        });
+        
+        // Create connecting lines
+        connections.forEach(conn => {
+            const from = nodes[conn.from];
+            const to = nodes[conn.to];
+            
+            const line = document.createElement('div');
+            line.className = 'flow-line';
+            
+            const deltaX = to.x - from.x;
+            const deltaY = to.y - from.y;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+            
+            line.style.left = from.x + '%';
+            line.style.top = from.y + '%';
+            line.style.width = distance + '%';
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.transformOrigin = '0 0';
+            line.style.animationDelay = Math.random() * 3 + 's';
+            
+            dataFlowBg.appendChild(line);
+        });
+        
+        // Smooth horizontal scroll for process timeline on mobile
+        document.addEventListener('DOMContentLoaded', () => {
+            const timeline = document.querySelector('.process-timeline');
+            if (timeline && window.innerWidth < 1024) {
+                const scrollHint = document.querySelector('.scroll-hint');
+                if (scrollHint) {
+                    scrollHint.style.display = 'block';
+                }
+            }
+        });
+        
+        // Respect prefers-reduced-motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('.float-symbol, .particle, .flow-node, .flow-line, .timeline-spine, .process-phase, .phase-badge').forEach(elem => {
+                elem.style.animation = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
