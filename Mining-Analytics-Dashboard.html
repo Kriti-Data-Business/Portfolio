@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Research Dashboard - Australian Mining Operations</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav" id="topNav">
+        <div class="nav-brand">Mining Analytics Dashboard</div>
+        <div class="nav-menu" id="navMenu"></div>
+        <button class="home-btn" onclick="goToSlide(0)" title="Go to start">🏠</button>
+    </nav>
+
+    <!-- Slide Container -->
+    <div class="slide-container" id="slideContainer">
+        <!-- Slide 1: Title/Cover -->
+        <div class="slide active" data-slide="0">
+            <div class="title-slide">
+                <div class="title-content">
+                    <div class="title-icon">⛏️</div>
+                    <h1 class="main-title">Market Research Dashboard</h1>
+                    <h2 class="subtitle">Australian Mining Operations</h2>
+                    <p class="tagline">Digital Transformation Opportunity Analysis for Haultrax</p>
+                    <div class="author-info">
+                        <p class="author-name">Professional Market Research Analysis</p>
+                        <p class="date">November 2025</p>
+                    </div>
+                    <button class="btn btn--primary btn--lg start-btn" onclick="nextSlide()">Start Presentation →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Executive Summary -->
+        <div class="slide" data-slide="1">
+            <div class="slide-content">
+                <h2 class="slide-title">Executive Summary</h2>
+                <p class="slide-subtitle">Key Performance Indicators</p>
+                <div class="kpi-grid" id="kpiGrid"></div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Research Workflow -->
+        <div class="slide" data-slide="2">
+            <div class="slide-content">
+                <h2 class="slide-title">Research Workflow Overview</h2>
+                <p class="slide-subtitle">8-Phase Systematic Approach</p>
+                <div class="workflow-container" id="workflowContainer"></div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Data Collection -->
+        <div class="slide" data-slide="3">
+            <div class="slide-content">
+                <h2 class="slide-title">Data Collection Methodology</h2>
+                <div class="methodology-layout">
+                    <div class="methodology-left">
+                        <h3>Data Sources</h3>
+                        <div class="source-list">
+                            <div class="source-item">📊 ASX Reports &amp; Filings</div>
+                            <div class="source-item">🌐 Company Websites</div>
+                            <div class="source-item">📰 Industry Publications</div>
+                            <div class="source-item">📈 Financial Databases</div>
+                            <div class="source-item">🏛️ Government Resources</div>
+                        </div>
+                        <div class="quality-score">
+                            <h4>Data Quality Score</h4>
+                            <div class="quality-meter">
+                                <div class="quality-fill" style="width: 98%">98%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="methodology-right">
+                        <h3>Data Points Collected</h3>
+                        <div class="datapoint-grid">
+                            <div class="datapoint">Company Name</div>
+                            <div class="datapoint">Location/State</div>
+                            <div class="datapoint">Primary Commodity</div>
+                            <div class="datapoint">Operational Status</div>
+                            <div class="datapoint">Workforce Size</div>
+                            <div class="datapoint">Fleet Size</div>
+                            <div class="datapoint">Annual Revenue</div>
+                            <div class="datapoint">Safety Incidents</div>
+                            <div class="datapoint">Production Volume</div>
+                            <div class="datapoint">Digital Readiness</div>
+                            <div class="datapoint">Technology Adoption</div>
+                            <div class="datapoint">Expansion Plans</div>
+                            <div class="datapoint">Market Priority</div>
+                            <div class="datapoint">Fit Score</div>
+                            <div class="datapoint">Contact Information</div>
+                            <div class="datapoint">Decision Makers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Geographic Distribution -->
+        <div class="slide" data-slide="4">
+            <div class="slide-content">
+                <h2 class="slide-title">Geographic Distribution Analysis</h2>
+                <div class="chart-controls">
+                    <button class="metric-btn active" data-metric="operations">Operations</button>
+                    <button class="metric-btn" data-metric="workforce">Workforce</button>
+                    <button class="metric-btn" data-metric="fleet">Fleet</button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="geoChart"></canvas>
+                </div>
+                <div class="insight-callout">
+                    <span class="callout-icon">💡</span>
+                    <span class="callout-text">QLD + WA = 82% of market concentration</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Digital Readiness -->
+        <div class="slide" data-slide="5">
+            <div class="slide-content">
+                <h2 class="slide-title">Digital Readiness Assessment</h2>
+                <div class="readiness-layout">
+                    <div class="chart-container pie-container">
+                        <canvas id="readinessChart"></canvas>
+                    </div>
+                    <div class="readiness-details" id="readinessDetails">
+                        <h3>Click a segment for details</h3>
+                        <p>Interactive chart showing digital readiness distribution across 50 mining operations.</p>
+                    </div>
+                </div>
+                <div class="insight-callout highlight">
+                    <span class="callout-icon">🎯</span>
+                    <span class="callout-text">15 operations with LOW readiness = High Opportunity Target</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Commodity Analysis -->
+        <div class="slide" data-slide="6">
+            <div class="slide-content">
+                <h2 class="slide-title">Commodity Distribution Analysis</h2>
+                <p class="slide-subtitle">Primary commodities across all operations</p>
+                <div class="chart-container">
+                    <canvas id="commodityChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Opportunity Matrix -->
+        <div class="slide" data-slide="7">
+            <div class="slide-content">
+                <h2 class="slide-title">Opportunity Matrix</h2>
+                <p class="slide-subtitle">Fleet Size vs Digital Solution Fit Score</p>
+                <div class="chart-container">
+                    <canvas id="scatterChart"></canvas>
+                </div>
+                <div class="legend-row">
+                    <span class="legend-item"><span class="legend-dot" style="background: #dc3545"></span> High Priority</span>
+                    <span class="legend-item"><span class="legend-dot" style="background: #ffc107"></span> Medium Priority</span>
+                    <span class="legend-item"><span class="legend-dot" style="background: #6c757d"></span> Low Priority</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Key Insights -->
+        <div class="slide" data-slide="8">
+            <div class="slide-content">
+                <h2 class="slide-title">Key Insights</h2>
+                <p class="slide-subtitle">Data-Driven Strategic Findings</p>
+                <div class="insights-container" id="insightsContainer"></div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Recommendations -->
+        <div class="slide" data-slide="9">
+            <div class="slide-content">
+                <h2 class="slide-title">Strategic Recommendations</h2>
+                <p class="slide-subtitle">Actionable Next Steps</p>
+                <div class="recommendations-container" id="recommendationsContainer"></div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Top 10 Targets -->
+        <div class="slide" data-slide="10">
+            <div class="slide-content">
+                <h2 class="slide-title">Top 10 Priority Targets</h2>
+                <div class="table-controls">
+                    <input type="text" id="searchTable" class="search-input" placeholder="🔍 Search mines...">
+                    <button class="btn btn--secondary btn--sm" onclick="exportTable()">📥 Export</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table" id="targetsTable">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable(0)">Rank ↕</th>
+                                <th onclick="sortTable(1)">Mine Name ↕</th>
+                                <th onclick="sortTable(2)">State ↕</th>
+                                <th onclick="sortTable(3)">Commodity ↕</th>
+                                <th onclick="sortTable(4)">Status ↕</th>
+                                <th onclick="sortTable(5)">Readiness ↕</th>
+                                <th onclick="sortTable(6)">Fit Score ↕</th>
+                                <th onclick="sortTable(7)">Priority ↕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Technical Skills -->
+        <div class="slide" data-slide="11">
+            <div class="slide-content">
+                <h2 class="slide-title">Technical Skills Demonstrated</h2>
+                <p class="slide-subtitle">Professional Competencies Showcase</p>
+                <div class="skills-container" id="skillsContainer"></div>
+                <div class="badges-container">
+                    <div class="badge">📊 Excel Expert</div>
+                    <div class="badge">📈 Data Analysis</div>
+                    <div class="badge">🔍 Market Research</div>
+                    <div class="badge">💡 Business Intelligence</div>
+                    <div class="badge">🎯 Strategic Thinking</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-btn" id="prevBtn" onclick="prevSlide()">← Previous</button>
+        <div class="slide-counter" id="slideCounter">1 / 12</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <!-- Modal for detailed views -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
