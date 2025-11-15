@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kriti Yadav - Advanced Interactive Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --primary-light: #1e3a8a;
+            --primary-lighter: #3b82f6;
+            --secondary-color: #1e40af;
+            --accent-color: #0369a1;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --background: #ffffff;
+            --card-background: #f1f5f9;
+            --border-color: #cbd5e1;
+            --gradient-1: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            --gradient-2: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Inter, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-lighter));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-light);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Sticky Cert Bar */
+        .cert-bar {
+            position: fixed;
+            top: 60px;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.98) 0%, rgba(59, 130, 246, 0.98) 100%);
+            backdrop-filter: blur(10px);
+            z-index: 1500;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .cert-bar.visible {
+            transform: translateY(0);
+        }
+
+        .cert-bar-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .cert-bar-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cert-bar-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .cert-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.35rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .cert-badge:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .cert-badge i {
+            font-size: 0.9rem;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            padding: 8rem 0 2rem 0;
+            background: var(--gradient-1);
+            color: white;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            z-index: 1;
+            animation: floatBackground 15s ease-in-out infinite;
+        }
+
+        @keyframes floatBackground {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 2.5rem;
+            position: relative;
+            z-index: 20;
+        }
+
+        .hero-left {
+            flex: 2;
+            position: relative;
+            z-index: 20;
+        }
+
+        .hero-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 500;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Expertise */
+        .expertise-section {
+            margin-bottom: 0.6rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .expertise-section h3 {
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+            opacity: 0.85;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .expertise-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.5rem;
+            position: relative;
+            z-index: 200;
+        }
+
+        .expertise-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 0.7rem;
+            border-radius: 12px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+            z-index: 300;
+        }
+
+        .expertise-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+            z-index: 10000;
+        }
+
+        .expertise-card i {
+            font-size: 0.95rem;
+            transition: all 0.4s ease;
+        }
+
+        .expertise-card:hover i {
+            transform: rotateY(360deg) scale(1.2);
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+        }
+
+        .skill-tooltip {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px) scale(0.8);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.95) 100%);
+            color: var(--text-primary);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            min-width: 220px;
+            z-index: 99999;
+            border: 1.5px solid rgba(59, 130, 246, 0.3);
+            pointer-events: none;
+        }
+
+        .expertise-card:hover .skill-tooltip {
+            opacity: 1;
+            visibility: visible;
+            z-index: 99999;
+            transform: translateX(-50%) translateY(0) scale(1);
+        }
+
+        .skill-tooltip-title {
+            font-weight: 800;
+            color: var(--primary-light);
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skill-tags {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.3rem;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+            color: var(--primary-light);
+            padding: 0.3rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-color));
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Professional Summary */
+        .professional-summary {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.9rem 1.1rem;
+            border-radius: 14px;
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 0.6rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .professional-summary h3 {
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .professional-summary p {
+            opacity: 0.85;
+            line-height: 1.4;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+        }
+
+        /* Achievements */
+        .achievements-section {
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .achievements-section h3 {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            opacity: 0.85;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.3rem;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 0.6rem;
+            border-radius: 9px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .achievement-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .achievement-number {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .achievement-text {
+            font-size: 0.6rem;
+            opacity: 0.85;
+        }
+
+        /* Profile Image */
+        .profile-image {
+            width: 200px;
+            height: 260px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s ease;
+        }
+
+        .profile-image:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Certs Section */
+        .certs-section {
+            width: 100%;
+            position: relative;
+            z-index: 500;
+        }
+
+        .certs-section h3 {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .certs-subtitle {
+            opacity: 0.7;
+            font-size: 0.75rem;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .certs-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            position: relative;
+            z-index: 500;
+        }
+
+        .cert-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.55rem 0.7rem;
+            border-radius: 10px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 501;
+            text-decoration: none;
+        }
+
+        .cert-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            z-index: 502;
+        }
+
+        .cert-icon-wrapper {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover .cert-icon-wrapper {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
+        .cert-icon {
+            font-size: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .cert-card:hover .cert-icon {
+            transform: scale(1.15);
+        }
+
+        .cert-name {
+            font-weight: 700;
+            font-size: 0.73rem;
+            text-align: left;
+            flex: 1;
+            color: white;
+        }
+
+        /* Experience Section */
+        .experience-section {
+            padding: 5rem 0;
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            font-weight: 800;
+        }
+
+        .experience-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .experience-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .experience-item {
+            background: linear-gradient(135deg, var(--card-background) 0%, rgba(241, 245, 249, 0.5) 100%);
+            border-radius: 14px;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.08);
+            padding: 1.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .experience-item:hover::before {
+            left: 100%;
+        }
+
+        .experience-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 15px 50px rgba(30, 58, 138, 0.15);
+            border-color: var(--primary-lighter);
+        }
+
+        .company-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--gradient-2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+        }
+
+        .experience-item:hover .company-logo {
+            transform: scale(1.1) rotateZ(5deg);
+        }
+
+        .company-info h4 {
+            font-size: 1.2rem;
+            color: var(--primary-light);
+            margin-bottom: 0.2rem;
+            font-weight: 800;
+        }
+
+        .company-info .role {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .duration {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .achievements-list {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .achievements-list li {
+            font-size: 0.9rem;
+            padding: 0.4rem 0;
+            opacity: 0.92;
+            display: flex;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .achievements-list li:hover {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .achievements-list li::before {
+            content: '→';
+            color: var(--primary-lighter);
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .experience-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .projects-section-header {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .linked-projects-group {
+            background: linear-gradient(135deg, var(--card-background) 0%, rgba(241, 245, 249, 0.5) 100%);
+            border-radius: 14px;
+            border: 1.5px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.08);
+            transition: all 0.4s ease;
+        }
+
+        .linked-projects-group:hover {
+            box-shadow: 0 15px 50px rgba(30, 58, 138, 0.15);
+            border-color: var(--primary-lighter);
+        }
+
+        .projects-group-header {
+            background: var(--gradient-2);
+            color: white;
+            padding: 1rem 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .projects-group-header:hover {
+            padding-left: 1.5rem;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .projects-group-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .projects-group-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 1.3rem;
+        }
+
+        .projects-group-header.active + .projects-group-content {
+            max-height: 2000px;
+            padding: 1.3rem;
+        }
+
+        .project-item {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            padding: 0.9rem;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.1);
+            border-color: var(--primary-lighter);
+        }
+
+        .project-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 0.4rem;
+        }
+
+        .project-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.6rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.4rem 0.8rem;
+            background: var(--primary-light);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Projects Showcase */
+        .projects-showcase-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--card-background) 0%, rgba(241, 245, 249, 0.5) 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            padding: 0.8rem 1.6rem;
+            background: white;
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-2);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .filter-button:hover::before,
+        .filter-button.active::before {
+            left: 0;
+        }
+
+        .filter-button.active,
+        .filter-button:hover {
+            background: var(--primary-light);
+            color: white;
+            border-color: var(--primary-light);
+            transform: scale(1.05);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.1);
+            transition: all 0.4s ease;
+            border: 1.5px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(30, 58, 138, 0.2);
+            border-color: var(--primary-lighter);
+        }
+
+        .project-card-header {
+            padding: 1.5rem;
+            background: var(--gradient-2);
+            color: white;
+        }
+
+        .project-card-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-card-subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .project-card-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-light);
+            padding: 0.35rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .card-links {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .card-link {
+            padding: 0.6rem 1.1rem;
+            background: var(--primary-light);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Education */
+        .education-section {
+            padding: 5rem 0;
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .education-item {
+            background: linear-gradient(135deg, var(--card-background) 0%, rgba(241, 245, 249, 0.5) 100%);
+            border-radius: 14px;
+            border: 1.5px solid var(--border-color);
+            padding: 1.8rem;
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.08);
+            transition: all 0.4s ease;
+        }
+
+        .education-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(30, 58, 138, 0.15);
+            border-color: var(--primary-lighter);
+        }
+
+        .education-item h3 {
+            font-size: 1.1rem;
+            color: var(--primary-light);
+            margin-bottom: 0.3rem;
+            font-weight: 800;
+        }
+
+        .degree {
+            font-size: 0.95rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .edu-duration {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .project-list {
+            list-style: none;
+        }
+
+        .project-list li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .project-list li::before {
+            content: '✓';
+            color: var(--primary-lighter);
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        /* Contact */
+        .contact-section {
+            padding: 6rem 0;
+            background: var(--gradient-2);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: floatBackground 15s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .contact-section > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-section .section-title {
+            color: white;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.4s ease;
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-8px) scale(1.1);
+            border-color: white;
+        }
+
+        @media (max-width: 1024px) {
+            .experience-container {
+                grid-template-columns: 1fr;
+            }
+            .hero-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero {
+                padding: 7rem 0 2rem 0;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">Kriti Yadav</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sticky Certification Bar -->
+    <div class="cert-bar" id="certBar">
+        <div class="cert-bar-content">
+            <span class="cert-bar-title">📜 Certifications:</span>
+            <a href="https://www.udemy.com/share/101xga3@uI2IlE-_-5vxT2WxJZuRXIDiVPz3k0hCsEuZpTdZMZZqFmgVLUSe2kOlAO79OseW/" target="_blank" class="cert-badge"><i class="fas fa-check-square"></i><span>Project Mgmt</span></a>
+            <a href="https://www.linkedin.com/learning/certificates/1c77fc05f18459c7e28b7d7b65f2518fc138f53f95c548d8de56f40c1e304602" target="_blank" class="cert-badge"><i class="fab fa-python"></i><span>Python</span></a>
+            <a href="https://www.udemy.com/certificate/UC-dcd1efcc-4de8-414f-95f3-24b8e2d6e57a/" target="_blank" class="cert-badge"><i class="fab fa-windows"></i><span>Power BI</span></a>
+            <a href="https://certificates.mavenanalytics.io/706b2d85-35aa-46ab-801f-0a071ca4754c" target="_blank" class="cert-badge"><i class="fas fa-database"></i><span>MySQL</span></a>
+            <a href="https://www.aws.training/Transcript/CompletionCertificateHtml?transcriptid=JNjzuj_r4UqDbFoet2YraA2" target="_blank" class="cert-badge"><i class="fab fa-aws"></i><span>AWS ML</span></a>
+            <a href="#" class="cert-badge"><i class="fas fa-robot"></i><span>UiPath</span></a>
+            <a href="https://coursera.org/share/618d72689edb4b53415a369fd3a221db" target="_blank" class="cert-badge"><i class="fas fa-graduation-cap"></i><span>Stanford</span></a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-left">
+                    <h1>Kriti Yadav</h1>
+                    <p class="hero-subtitle">Data Scientist & AI Analyst</p>
+
+                    <div class="expertise-section">
+                        <h3>Expert in</h3>
+                        <div class="expertise-container">
+                            <div class="expertise-card">
+                                <i class="fas fa-robot"></i>
+                                <div>AI Engineering</div>
+                                <div class="skill-tooltip">
+                                    <div class="skill-tooltip-title">AI Engineering</div>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag">NLP</span>
+                                        <span class="skill-tag">LLMs</span>
+                                        <span class="skill-tag">MLOps</span>
+                                        <span class="skill-tag">AWS</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="expertise-card">
+                                <i class="fas fa-brain"></i>
+                                <div>Data Science</div>
+                                <div class="skill-tooltip">
+                                    <div class="skill-tooltip-title">Data Science</div>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag">ML</span>
+                                        <span class="skill-tag">Deep Learning</span>
+                                        <span class="skill-tag">Stats</span>
+                                        <span class="skill-tag">Python</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="expertise-card">
+                                <i class="fas fa-lightbulb"></i>
+                                <div>AI Product</div>
+                                <div class="skill-tooltip">
+                                    <div class="skill-tooltip-title">AI Product</div>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag">Strategy</span>
+                                        <span class="skill-tag">Leadership</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="expertise-card">
+                                <i class="fas fa-database"></i>
+                                <div>Data Analytics</div>
+                                <div class="skill-tooltip">
+                                    <div class="skill-tooltip-title">Data Analytics</div>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag">SQL</span>
+                                        <span class="skill-tag">Power BI</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="expertise-card">
+                                <i class="fas fa-chart-line"></i>
+                                <div>Business</div>
+                                <div class="skill-tooltip">
+                                    <div class="skill-tooltip-title">Business Analysis</div>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag">Strategy</span>
+                                        <span class="skill-tag">ROI</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="professional-summary">
+                        <h3>Professional Summary</h3>
+                        <p><strong>Data Scientist & AI Analyst</strong> with 4+ years developing ML, NLP solutions.</p>
+                        <p><strong>18.3% sales growth</strong> | <strong>90% automation</strong> | <strong>50M+ records</strong></p>
+                    </div>
+
+                    <div class="achievements-section">
+                        <h3>Key Achievements</h3>
+                        <div class="achievements-grid">
+                            <div class="achievement-card"><div class="achievement-number">+18.3%</div><div class="achievement-text">Sales</div></div>
+                            <div class="achievement-card"><div class="achievement-number">90%</div><div class="achievement-text">Auto</div></div>
+                            <div class="achievement-card"><div class="achievement-number">50M+</div><div class="achievement-text">Data</div></div>
+                            <div class="achievement-card"><div class="achievement-number">4+</div><div class="achievement-text">Years</div></div>
+                            <div class="achievement-card"><div class="achievement-number">22%</div><div class="achievement-text">Engage</div></div>
+                            <div class="achievement-card"><div class="achievement-number">100+</div><div class="achievement-text">Train</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div class="profile-image">
+                        <img src="https://via.placeholder.com/260x320/667eea/ffffff?text=Professional+Photo" alt="Kriti Yadav">
+                    </div>
+
+                    <div class="certs-section">
+                        <h3>Certifications</h3>
+                        <p class="certs-subtitle">Professional credentials</p>
+                        <div class="certs-grid">
+                            <a href="https://www.udemy.com/share/101xga3@uI2IlE-_-5vxT2WxJZuRXIDiVPz3k0hCsEuZpTdZMZZqFmgVLUSe2kOlAO79OseW/" target="_blank" class="cert-card">
+                                <div class="cert-icon-wrapper"><i class="fas fa-check-square cert-icon"></i></div>
+                                <div class="cert-name">Project Management</div>
+                            </a>
+                            <a href="https://www.linkedin.com/learning/certificates/1c77fc05f18459c7e28b7d7b65f2518fc138f53f95c548d8de56f40c1e304602" target="_blank" class="cert-card">
+                                <div class="cert-icon-wrapper"><i class="fab fa-python cert-icon"></i></div>
+                                <div class="cert-name">Python Automation</div>
+                            </a>
+                            <a href="https://www.udemy.com/certificate/UC-dcd1efcc-4de8-414f-95f3-24b8e2d6e57a/" target="_blank" class="cert-card">
+                                <div class="cert-icon-wrapper"><i class="fab fa-windows cert-icon"></i></div>
+                                <div class="cert-name">Master Power BI</div>
+                            </a>
+                            <a href="https://certificates.mavenanalytics.io/706b2d85-35aa-46ab-801f-0a071ca4754c" target="_blank" class="cert-card">
+                                <div class="cert-icon-wrapper"><i class="fas fa-database cert-icon"></i></div>
+                                <div class="cert-name">Advanced MySQL</div>
+                            </a>
+                            <a href="https://www.aws.training/Transcript/CompletionCertificateHtml?transcriptid=JNjzuj_r4UqDbFoet2YraA2" target="_blank" class="cert-card">
+                                <div class="cert-icon-wrapper"><i class="fab fa-aws cert-icon"></i></div>
+                                <div class="cert-name">AWS ML & Decision</div>
+                            </a>
+                            <a href="#" class="cert-card">
+                                <div class="cert-icon-wrapper"><i class="fas fa-robot cert-icon"></i></div>
+                                <div class="cert-name">UiPath RPA Developer</div>
+                            </a>
+                            <a href="https://coursera.org/share/618d72689edb4b53415a369fd3a221db" target="_blank" class="cert-card">
+                                <div class="cert-icon-wrapper"><i class="fas fa-graduation-cap cert-icon"></i></div>
+                                <div class="cert-name">Greedy Algorithms</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section with Linked Projects -->
+    <section id="experience" class="experience-section">
+        <div class="container">
+            <h2 class="section-title">Professional Experience & Linked Projects</h2>
+            <div class="experience-container">
+                <!-- LEFT: Companies -->
+                <div class="experience-left">
+                    <div class="experience-item" data-company="rmit">
+                        <div class="company-header">
+                            <div class="company-logo">RM</div>
+                            <div class="company-info">
+                                <h4>RMIT University</h4>
+                                <div class="role">Research Assistant Minor Thesis</div>
+                            </div>
+                        </div>
+                        <div class="duration">July 2025 - Present</div>
+                        <ul class="achievements-list">
+                            <li>Evaluating prompt design, model interaction strategies for LLM-based systems</li>
+                            <li>Zero-shot and cold-start scenarios with cross-domain generalization</li>
+                            <li>Hybrid approaches combining ranking prompting and knowledge graphs</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item" data-company="axtria">
+                        <div class="company-header">
+                            <div class="company-logo">AX</div>
+                            <div class="company-info">
+                                <h4>Axtria Inc</h4>
+                                <div class="role">Data Science Associate Product Lead</div>
+                            </div>
+                        </div>
+                        <div class="duration">May 2022 - July 2024</div>
+                        <ul class="achievements-list">
+                            <li>Delivered 18.3% sales uplift via AI/ML marketing optimization</li>
+                            <li>Architected enterprise recommendation engine using LLMs on Databricks</li>
+                            <li>Led Marketing Mix Modelling using Ridge, Lasso, Random Forest</li>
+                            <li>Built real-time ETL pipelines reducing processing time by 50%</li>
+                            <li>Trained 100+ professionals in advanced SQL</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item" data-company="wpp">
+                        <div class="company-header">
+                            <div class="company-logo">WT</div>
+                            <div class="company-info">
+                                <h4>Wunderman Thompson WPP</h4>
+                                <div class="role">Data & AI Analyst</div>
+                            </div>
+                        </div>
+                        <div class="duration">September 2020 - May 2022</div>
+                        <ul class="achievements-list">
+                            <li>Led multi-country e-commerce platform launches</li>
+                            <li>Engineered automated ETL pipelines integrating analytics, CRM, ads</li>
+                            <li>Python, UiPath, VBA automation cut manual workflows by 90%</li>
+                            <li>Designed Power BI dashboards with advanced DAX measures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Linked Projects -->
+                <div class="experience-right">
+                    <div class="projects-section-header">Related Projects</div>
+
+                    <div class="linked-projects-group" data-company="rmit">
+                        <div class="projects-group-header active">
+                            <span>RMIT Projects</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="projects-group-content" style="display: block;">
+                            <div class="project-item">
+                                <div class="project-title">LLM Code Generation Optimization</div>
+                                <div class="project-description">Multi-layer architectures with task complexity-driven prompt adaptation.</div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Docs</a>
+                                    <a href="#" class="project-link">Code</a>
+                                </div>
+                            </div>
+                            <div class="project-item">
+                                <div class="project-title">Semi-Supervised Cancer Cell Classification</div>
+                                <div class="project-description">Advanced ML for medical imaging with high accuracy on limited labeled data.</div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Code</a>
+                                    <a href="#" class="project-link">Results</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="linked-projects-group" data-company="axtria">
+                        <div class="projects-group-header">
+                            <span>Axtria Projects</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="projects-group-content">
+                            <div class="project-item">
+                                <div class="project-title">AI Pharma Sales Sentiment Analysis</div>
+                                <div class="project-description">NLP-powered chatbot analyzing pharmaceutical sales sentiment.</div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Kriti-Data-Business/Sales-Sentiment-Analyser/blob/main/Demo-output%20of%20the%20analyzer.png" class="project-link" target="_blank">Demo</a>
+                                    <a href="https://github.com/Kriti-Data-Business/Sales-Sentiment-Analyser" class="project-link" target="_blank">Code</a>
+                                </div>
+                            </div>
+                            <div class="project-item">
+                                <div class="project-title">Marketing Mix Modelling</div>
+                                <div class="project-description">Full-cycle MMM for promotional effectiveness and ROI optimization.</div>
+                                <div class="project-links">
+                                    <a href="https://medium.com/@datasciencebusiness/optimising-brand-marketing-strategies-through-data-science-mmx-f28b06c88a69" class="project-link" target="_blank">Project Explanation</a>
+                                </div>
+                            </div>
+                            <div class="project-item">
+                                <div class="project-title">AI NBA & Recommendation System</div>
+                                <div class="project-description">Enterprise-grade LLM recommendation engine on Databricks with PySpark.</div>
+                                <div class="project-links">
+                                    <a href="https://medium.com/@datasciencebusiness/next-best-action-nba-recommendation-system-technical-report-8d9c7bfddf16" class="project-link" target="_blank">Medium</a>
+                                    <a href="#" class="project-link">Code</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="linked-projects-group" data-company="wpp">
+                        <div class="projects-group-header">
+                            <span>WPP Projects</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="projects-group-content">
+                            <div class="project-item">
+                                <div class="project-title">E-commerce Platform Launches</div>
+                                <div class="project-description">Multi-country implementations with automated ETL pipelines.</div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Analytics</a>
+                                </div>
+                            </div>
+                            <div class="project-item">
+                                <div class="project-title">Advanced Automation Suite</div>
+                                <div class="project-description">Python, UiPath RPA, and VBA automation cutting workflows by 90%.</div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Code</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Showcase Section -->
+    <section id="projects" class="projects-showcase-section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+
+            <div class="filter-buttons">
+                <button class="filter-button active" data-filter="all">All</button>
+                <button class="filter-button" data-filter="AI Engineering">AI Engineering</button>
+                <button class="filter-button" data-filter="Data Science">Data Science</button>
+                <button class="filter-button" data-filter="Analytics">Analytics</button>
+            </div>
+
+            <div class="projects-grid">
+                <!-- 1. AI-Powered Pharma Sales Sentiment -->
+                <div class="project-card" data-categories="AI Engineering,Analytics">
+                    <div class="project-card-header">
+                        <div class="project-card-title">AI-Powered Pharma Sales Sentiment</div>
+                        <div class="project-card-subtitle">Axtria</div>
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-description">Advanced AI-driven sentiment analysis platform using Claude Sonnet 4. Multi-dimensional sentiment scoring with interactive dashboard.</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Claude Sonnet 4</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">NLP</span>
+                        </div>
+                        <div class="card-links">
+                            <a href="https://github.com/Kriti-Data-Business/Sales-Sentiment-Analyser" class="card-link" target="_blank">Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Intelligent Grocery Inventory -->
+                <div class="project-card" data-categories="Data Science">
+                    <div class="project-card-header">
+                        <div class="project-card-title">Intelligent Grocery Inventory</div>
+                        <div class="project-card-subtitle">Amazon Blinkit</div>
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-description">Inventory optimization using XGBoost, K-means++. Real-time data pipeline with Apache Spark.</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">XGBoost</span>
+                            <span class="tech-tag">Spark</span>
+                        </div>
+                        <div class="card-links">
+                            <a href="https://github.com/Kriti-Data-Business/Intelligent-Grocery-Inventory-Management-System-" class="card-link" target="_blank">Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Finance Fund Manager Chatbot -->
+                <div class="project-card" data-categories="AI Engineering">
+                    <div class="project-card-header">
+                        <div class="project-card-title">Finance Fund Manager Chatbot</div>
+                        <div class="project-card-subtitle">Vanguard</div>
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-description">Secure fund management chatbot with multi-layer security architecture and real-time risk scoring.</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                        <div class="card-links">
+                            <a href="https://github.com/Kriti-Data-Business/Finance-Insights-Fund-Manager-x-Funds-Chatbot-" class="card-link" target="_blank">Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Healthcare Predictive Analytics -->
+                <div class="project-card" data-categories="Data Science,Analytics">
+                    <div class="project-card-header">
+                        <div class="project-card-title">Healthcare Predictive Analytics</div>
+                        <div class="project-card-subtitle">50M+ Records</div>
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-description">Large-scale predictive analytics processing 50M+ healthcare records with advanced ML models.</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">PySpark</span>
+                            <span class="tech-tag">Databricks</span>
+                        </div>
+                        <div class="card-links">
+                            <a href="https://kriti-data-business.github.io/AI-Powered-Healthcare-Analytics-Platform/" class="card-link" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Marketing Mix Modelling -->
+                <div class="project-card" data-categories="Analytics">
+                    <div class="project-card-header">
+                        <div class="project-card-title">Marketing Mix Modelling</div>
+                        <div class="project-card-subtitle">ROI Optimization</div>
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-description">Full-cycle MMM using Ridge, Lasso, Random Forest for multi-million dollar investment decisions.</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">ML</span>
+                        </div>
+                        <div class="card-links">
+                            <a href="https://medium.com/@datasciencebusiness/marketing-mix-modeling-algorithmic-approach-to-sales-and-revenue-optimisation-74b6d9a1942a" class="card-link" target="_blank">Article</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. E-commerce Analytics -->
+                <div class="project-card" data-categories="Analytics">
+                    <div class="project-card-header">
+                        <div class="project-card-title">E-commerce Analytics</div>
+                        <div class="project-card-subtitle">Multinational Automotive</div>
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-description">Analytics for automotive e-commerce achieving 90% workflow reduction and >99% data accuracy.</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">UiPath</span>
+                        </div>
+                        <div class="card-links">
+                            <a href="#" class="card-link">Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="education-section">
+        <div class="container">
+            <h2 class="section-title">Education & Academic Projects</h2>
+            <div class="education-grid">
+                <div class="education-item">
+                    <h3>RMIT University</h3>
+                    <div class="degree">Master of Data Science (Research)</div>
+                    <div class="edu-duration">2024 - 2026</div>
+                    <ul class="project-list">
+                        <li>Advanced ML, AI Systems, Computational Modelling</li>
+                        <li>GenAI & Information Retrieval</li>
+                        <li>Cutting-edge AI safety research</li>
+                    </ul>
+                </div>
+
+                <div class="education-item">
+                    <h3>The North Cap University</h3>
+                    <div class="degree">Bachelor of Technology - Computer Science</div>
+                    <div class="edu-duration">2016 - 2020</div>
+                    <ul class="project-list">
+                        <li>Cloud Computing, Networking, AI</li>
+                        <li>MATLAB Breast Cancer Detection</li>
+                        <li>Digital Forensics & Network Analysis</li>
+                    </ul>
+                </div>
+
+                <div class="education-item">
+                    <h3>Cloud Computing Project</h3>
+                    <div class="degree">AWS S3, EC2, Kali Linux</div>
+                    <div class="edu-duration">Jul 2019 - Nov 2019</div>
+                    <ul class="project-list">
+                        <li>Static website on AWS S3</li>
+                        <li>Apache EC2 instances</li>
+                        <li>Virtual Linux environment</li>
+                    </ul>
+                </div>
+
+                <div class="education-item">
+                    <h3>Tableau Healthcare Analysis</h3>
+                    <div class="degree">Medicare Provider Data</div>
+                    <div class="edu-duration">Jun 2018 - Nov 2018</div>
+                    <ul class="project-list">
+                        <li>Hospital charge analysis</li>
+                        <li>US cities comparison</li>
+                        <li>Interactive dashboards</li>
+                    </ul>
+                </div>
+
+                <div class="education-item">
+                    <h3>Digital Forensics Project</h3>
+                    <div class="degree">Data Recovery & Network Analysis</div>
+                    <div class="edu-duration">Jan 2020 - Jun 2020</div>
+                    <ul class="project-list">
+                        <li>Disk Drill data recovery</li>
+                        <li>TCP/UDP network traffic analysis</li>
+                        <li>Drive scanning techniques</li>
+                    </ul>
+                </div>
+
+                <div class="education-item">
+                    <h3>Coffee Order System</h3>
+                    <div class="degree">DBMS & Python</div>
+                    <div class="edu-duration">Jul 2017 - Oct 2017</div>
+                    <ul class="project-list">
+                        <li>Database connectivity</li>
+                        <li>Python GUI interface</li>
+                        <li>Automated billing system</li>
+                    </ul>
+                </div>
+
+                <div class="education-item">
+                    <h3>Library Management System</h3>
+                    <div class="degree">Java Application</div>
+                    <div class="edu-duration">Jul 2017 - Oct 2017</div>
+                    <ul class="project-list">
+                        <li>CRUD operations</li>
+                        <li>Database integration</li>
+                        <li>User-friendly UI</li>
+                    </ul>
+                </div>
+
+                <div class="education-item">
+                    <h3>Delhi University Internship</h3>
+                    <div class="degree">Python Developer</div>
+                    <div class="edu-duration">2018</div>
+                    <ul class="project-list">
+                        <li>CRM system development</li>
+                        <li>Python backend</li>
+                        <li>Database optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <p>Ready to transform data challenges into competitive advantages?</p>
+            <div class="contact-links">
+                <a href="https://au.linkedin.com/in/kriti-yadav-data-science" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Kriti-Data-Business" target="_blank" class="contact-link"><i class="fab fa-github"></i></a>
+                <a href="mailto:kritiyadav9993@gmail.com" class="contact-link"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Show cert bar on scroll
+        window.addEventListener('scroll', () => {
+            const certBar = document.getElementById('certBar');
+            const nav = document.querySelector('.nav');
+            
+            if (window.scrollY > 300) {
+                certBar.classList.add('visible');
+                nav.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
+            } else {
+                certBar.classList.remove('visible');
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Toggle Projects
+        document.querySelectorAll('.projects-group-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Filter Projects by Skill
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const skill = this.getAttribute('data-filter');
+                document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
+                
+                document.querySelectorAll('.project-card').forEach(card => {
+                    const techs = card.querySelector('.tech-tags').textContent;
+                    if (techs.includes(skill)) {
+                        card.style.opacity = '1';
+                        card.style.pointerEvents = 'auto';
+                    } else {
+                        card.style.opacity = '0.5';
+                        card.style.pointerEvents = 'none';
+                    }
+                });
+            });
+        });
+
+        // Project Filter Buttons
+        document.querySelectorAll('.filter-button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                document.querySelectorAll('.project-card').forEach(card => {
+                    if (filter === 'all') {
+                        card.style.opacity = '1';
+                        card.style.pointerEvents = 'auto';
+                    } else {
+                        const categories = card.getAttribute('data-categories');
+                        if (categories && categories.includes(filter)) {
+                            card.style.opacity = '1';
+                            card.style.pointerEvents = 'auto';
+                        } else {
+                            card.style.opacity = '0.5';
+                            card.style.pointerEvents = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.href.endsWith('#')) return;
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
