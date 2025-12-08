@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Quality & Workflow Optimisation - Kriti Yadav</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1F4E78;
+            --secondary: #2E75B6;
+            --accent: #00B0F0;
+            --success: #70AD47;
+            --warning: #FFC000;
+            --danger: #FF0000;
+            --text: #1F4E78;
+            --text-light: #5A5A5A;
+            --border: #E0E0E0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+        }
+
+        .presentation-wrapper {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            gap: 0;
+        }
+
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 50;
+            border-right: 3px solid var(--secondary);
+        }
+
+        .sidebar-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-item {
+            padding: 10px 12px;
+            margin: 6px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            line-height: 1.4;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-left-color: white;
+            font-weight: 600;
+        }
+
+        .nav-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.75rem;
+            margin-right: 8px;
+        }
+
+        .nav-item.active .nav-number {
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* MAIN PRESENTATION */
+        .presentation {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .slides-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: white;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            padding: 40px 60px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background: white;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide h1 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 15px;
+        }
+
+        .slide h2 {
+            font-size: 1.6rem;
+            color: var(--secondary);
+            margin: 20px 0 12px 0;
+            font-weight: 600;
+        }
+
+        .slide h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .content-section {
+            margin: 12px 0;
+            line-height: 1.7;
+        }
+
+        .content-section p {
+            color: var(--text-light);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* STEP ITEMS WITH CLICK EXPANSION */
+        .step-item {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-item:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 6px 15px rgba(31, 78, 120, 0.15);
+            transform: translateX(5px);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            flex: 1;
+        }
+
+        .step-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--secondary);
+        }
+
+        .step-item.expanded .step-toggle {
+            transform: rotate(180deg);
+        }
+
+        .step-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            margin-top: 0;
+        }
+
+        .step-item.expanded .step-details {
+            max-height: 800px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--border);
+        }
+
+        .step-details h4 {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin: 10px 0 6px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step-details p, .step-details li {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin: 6px 0;
+        }
+
+        .step-details ul, .step-details ol {
+            margin: 10px 0 10px 20px;
+            padding: 0;
+        }
+
+        .step-details li {
+            margin: 6px 0;
+        }
+
+        .code-block {
+            background: #f0f4f8;
+            border-left: 3px solid var(--secondary);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            color: #1a1a1a;
+        }
+
+        .metric-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 18px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .metric-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(31, 78, 120, 0.3);
+        }
+
+        .metric-box .number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            display: block;
+            margin: 8px 0;
+        }
+
+        .metric-box .label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.85rem;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        table thead {
+            background: var(--primary);
+            color: white;
+        }
+
+        table th {
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background: rgba(112, 173, 71, 0.2);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(255, 192, 0, 0.2);
+            color: #CC8000;
+        }
+
+        .badge-danger {
+            background: rgba(255, 0, 0, 0.2);
+            color: var(--danger);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(31, 78, 120, 0.08), rgba(0, 176, 240, 0.08));
+            border-left: 4px solid var(--secondary);
+            padding: 12px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 12px 0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .progress-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .slide-counter {
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 15px;
+        }
+
+        .progress-bar {
+            width: 180px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .controls {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            border: 2px solid white;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .tooltip {
+            position: relative;
+            border-bottom: 2px dotted var(--secondary);
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background: var(--primary);
+            color: white;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 100;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 200px;
+                padding: 15px;
+            }
+            .slide {
+                padding: 30px 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .presentation-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: 150px;
+                border-right: none;
+                border-bottom: 3px solid var(--secondary);
+                display: flex;
+                overflow-x: auto;
+            }
+            .slide {
+                padding: 20px 25px;
+            }
+            .slide h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-wrapper">
+        <!-- SIDEBAR NAVIGATION -->
+        <div class="sidebar">
+            <div class="sidebar-header">Navigation</div>
+            <div class="nav-item active" onclick="goToSlide(1)">
+                <span class="nav-number">1</span>
+                <span>Title & Overview</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(2)">
+                <span class="nav-number">2</span>
+                <span>Executive Summary</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(3)">
+                <span class="nav-number">3</span>
+                <span>Problem Statement</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(4)">
+                <span class="nav-number">4</span>
+                <span>Solution Architecture</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(5)">
+                <span class="nav-number">5</span>
+                <span>Data Validation Engine</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(6)">
+                <span class="nav-number">6</span>
+                <span>Master Dataset & Results</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(7)">
+                <span class="nav-number">7</span>
+                <span>Dashboard & KPIs</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(8)">
+                <span class="nav-number">8</span>
+                <span>Workflow Automation</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(9)">
+                <span class="nav-number">9</span>
+                <span>Construction Timeline</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(10)">
+                <span class="nav-number">10</span>
+                <span>Subcontractor Performance</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(11)">
+                <span class="nav-number">11</span>
+                <span>Impact & Value</span>
+            </div>
+            <div class="nav-item" onclick="goToSlide(12)">
+                <span class="nav-number">12</span>
+                <span>Technical Toolkit</span>
+            </div>
+        </div>
+
+        <!-- MAIN PRESENTATION -->
+        <div class="presentation">
+            <div class="header">
+                <div class="header-title">Data Quality & Workflow Optimisation Portfolio</div>
+                <div class="progress-info">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="slide-counter"><span id="current">1</span>/<span id="total">12</span></div>
+                </div>
+            </div>
+
+            <div class="slides-container">
+                <!-- SLIDE 1: TITLE -->
+                <div class="slide active">
+                    <h1>Data Quality & Workflow Optimisation</h1>
+                    <div class="content-section" style="margin-top: 25px;">
+                        <p style="font-size: 1.1rem; margin-bottom: 15px;"><strong>Portfolio Case Study for Construction & Property Operations</strong></p>
+                        <p style="font-size: 0.95rem; margin: 12px 0;">Prepared by: <strong>Kriti Yadav</strong></p>
+                        <p style="font-size: 0.95rem; margin: 12px 0;">Date: <strong>December 8, 2025</strong></p>
+                        <p style="font-size: 0.95rem; margin: 12px 0;">Platform: <strong>Excel & Google Sheets</strong></p>
+                        <div style="margin-top: 25px; padding: 15px; background: linear-gradient(135deg, rgba(31, 78, 120, 0.1), rgba(0, 176, 240, 0.1)); border-radius: 8px; border-left: 4px solid var(--secondary);">
+                            <p style="font-size: 0.9rem; color: var(--text-light); line-height: 1.8; margin: 0;">This portfolio demonstrates a comprehensive framework for data quality assurance and workflow automation specifically designed for large-scale construction, property development, and finance operations.</p>
+                        </div>
+                        <div class="grid-3" style="margin-top: 20px;">
+                            <div class="metric-box">
+                                <div class="label">Baseline Quality</div>
+                                <span class="number">30%</span>
+                            </div>
+                            <div class="metric-box">
+                                <div class="label">Error Reduction</div>
+                                <span class="number">35-45%</span>
+                            </div>
+                            <div class="metric-box">
+                                <div class="label">Time Savings</div>
+                                <span class="number">25-30%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 2: EXECUTIVE SUMMARY -->
+                <div class="slide">
+                    <h1>Executive Summary</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 15px;">A comprehensive framework addressing critical inefficiencies in multi-source data management, administrative task coordination, and compliance tracking.</p>
+
+                        <h2 style="margin-top: 20px;">How I Built This Solution</h2>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Data Analysis Phase</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>What I Did</h4>
+                                <p>Analyzed construction and property operations to identify data quality pain points and workflow bottlenecks.</p>
+                                <h4>Specific Steps</h4>
+                                <ul>
+                                    <li>Researched ABN Group's business model (construction, property, finance operations)</li>
+                                    <li>Identified 5 critical problem areas: data fragmentation, admin overhead, compliance risk, visibility gaps, subcontractor coordination</li>
+                                    <li>Created realistic sample data representing actual industry issues (duplicate records, invalid formats, missing fields)</li>
+                                    <li>Quantified baseline metrics: 30% data accuracy, 7 of 10 records with errors</li>
+                                </ul>
+                                <h4>Why This Matters</h4>
+                                <p>Understanding the actual business environment ensures solutions address real problems, not theoretical ones. This demonstrates problem-solving maturity and industry knowledge.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Solution Design</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>What I Did</h4>
+                                <p>Designed three interconnected modules that work together to solve operational challenges holistically.</p>
+                                <h4>Specific Steps</h4>
+                                <ul>
+                                    <li><strong>Data Quality Engine:</strong> Planned automated validation system with email (REGEXMATCH), phone (LEN), postcode (MATCH), and duplicate detection</li>
+                                    <li><strong>Workflow Automation:</strong> Designed task tracking with SLA timers, overdue alerts, priority levels, and communication templates</li>
+                                    <li><strong>Timeline Simulation:</strong> Created project stage tracking with delay calculation and subcontractor performance monitoring</li>
+                                    <li>Integrated dashboards to consolidate all data into executive-level KPIs</li>
+                                </ul>
+                                <h4>Why This Matters</h4>
+                                <p>Integrated design shows systems thinking—understanding how components interact. This is critical for enterprise solutions where siloed systems fail.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Impact Quantification</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>What I Did</h4>
+                                <p>Calculated measurable business outcomes and competitive advantages of the solution.</p>
+                                <h4>Specific Steps</h4>
+                                <ul>
+                                    <li>Error Reduction: 35-45% improvement from baseline 30% to target 70-75% accuracy</li>
+                                    <li>Efficiency: 25-30% time savings on administrative tasks (2-3 hours/week saved per staff member)</li>
+                                    <li>Compliance: Documented audit trails and data governance meet regulatory requirements</li>
+                                    <li>Visibility: Real-time dashboards enable proactive decision-making vs reactive firefighting</li>
+                                    <li>Scalability: System grows from 10 to 10,000 records without proportional effort increase</li>
+                                </ul>
+                                <h4>Why This Matters</h4>
+                                <p>Business leaders think in ROI and impact. Quantifying benefits shows you understand business value, not just technical capability.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 3: PROBLEM STATEMENT -->
+                <div class="slide">
+                    <h1>Problem Statement</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 12px;">Large construction and property firms operate across multiple interconnected business domains.</p>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Data Fragmentation</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>The Problem</h4>
+                                <p>Customer information, project data, financial records, and compliance documentation originate from different systems.</p>
+                                <h4>Real-World Impact</h4>
+                                <ul>
+                                    <li>Duplicate customer records (CUS002 appears twice with variations)</li>
+                                    <li>Inconsistent address formats (postcode mismatches)</li>
+                                    <li>Invalid data formats (emily.davis.com missing @)</li>
+                                    <li>Missing critical fields (contract date, phone number, postcode)</li>
+                                </ul>
+                                <h4>Business Consequences</h4>
+                                <p>Duplicate records trigger duplicate contracts. Wrong postcodes delay building permits. Missing finance data blocks approvals. Cascading errors create expensive rework.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Administrative Overhead</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>The Problem</h4>
+                                <p>Manual data entry and task management consume 2-3 hours per staff member per week on verification and status reporting.</p>
+                                <h4>Real-World Impact</h4>
+                                <ul>
+                                    <li>Staff manually checking 50+ records (30-45 minutes per session)</li>
+                                    <li>Status reports generated by email chain requests</li>
+                                    <li>Task tracking scattered across multiple tools/emails</li>
+                                    <li>Duplicate work when tasks reassigned or escalated</li>
+                                </ul>
+                                <h4>Business Consequences</h4>
+                                <p>2-3 hours per person per week × team size = significant cost. Staff frustrated by repetitive work. Higher turnover. Lower morale. Mistakes increase as fatigue sets in.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Compliance & Regulatory Risk</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>The Problem</h4>
+                                <p>Building permits, finance approvals, and contracts require data integrity and auditability.</p>
+                                <h4>Real-World Impact</h4>
+                                <ul>
+                                    <li>No audit trail showing who changed what and when</li>
+                                    <li>Missing inspection records create compliance gaps</li>
+                                    <li>Contract errors (wrong data) lead to legal disputes</li>
+                                    <li>Finance approval chains break with incomplete customer data</li>
+                                </ul>
+                                <h4>Business Consequences</h4>
+                                <p>Regulatory fines. Delayed permits costing thousands per day. Legal exposure. Reputational damage. Loss of customer trust. In construction, compliance failures can be fatal.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">4</div>
+                                    <div class="step-title">Operational Visibility Gaps</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>The Problem</h4>
+                                <p>Leadership and project managers lack real-time visibility into data health and project status.</p>
+                                <h4>Real-World Impact</h4>
+                                <ul>
+                                    <li>"Is our data quality improving?" - No dashboard, no answer</li>
+                                    <li>"Which projects are delayed?" - Must manually check each project</li>
+                                    <li>"How many customers have incomplete records?" - Manual count required</li>
+                                    <li>"Which subcontractors are reliable?" - Tribal knowledge only</li>
+                                </ul>
+                                <h4>Business Consequences</h4>
+                                <p>Decisions are reactive, not proactive. Issues go unnoticed until they escalate. Strategic planning impossible without data visibility. Competitive disadvantage.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">5</div>
+                                    <div class="step-title">Subcontractor Coordination</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>The Problem</h4>
+                                <p>Tracking task assignments, completion status, and delays across hundreds of subcontractors is complex and error-prone.</p>
+                                <h4>Real-World Impact</h4>
+                                <ul>
+                                    <li>Site Masters has only 33% on-time completion rate (1 of 3 projects on-time)</li>
+                                    <li>Delays in one subcontractor cascade to dependent phases</li>
+                                    <li>Project handover dates slip due to untracked delays</li>
+                                    <li>Communication gaps lead to duplicate work or missed tasks</li>
+                                </ul>
+                                <h4>Business Consequences</h4>
+                                <p>Project cost overruns (delays = cost). Customer dissatisfaction. Penalty clauses triggered. Damaged reputation in market. Lost future business.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 4: SOLUTION ARCHITECTURE -->
+                <div class="slide">
+                    <h1>Solution Architecture</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 15px;">Three interconnected modules designed to address all five problem areas holistically.</p>
+
+                        <div class="step-item expanded" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Data Quality Engine</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Purpose</h4>
+                                <p>Automated detection and flagging of data anomalies before they impact downstream systems.</p>
+                                <h4>How It Works</h4>
+                                <ul>
+                                    <li><strong>Email Validation:</strong> REGEXMATCH(email, "^[\w\.-]+@[\w\.-]+\.\w+$") catches emily.davis.com as INVALID</li>
+                                    <li><strong>Phone Format:</strong> LEN(phone)=10 validates Australian 10-digit standard</li>
+                                    <li><strong>Postcode Check:</strong> MATCH(postcode, PostcodeList) against official list</li>
+                                    <li><strong>Duplicate Detection:</strong> COUNTIF(ID:ID, ID)>1 identifies CUS002 appearing twice</li>
+                                    <li><strong>Missing Fields:</strong> IF(field="", "MISSING", "OK") flags blank data</li>
+                                    <li><strong>Quality Score:</strong> 100 - errors_weighted = final score (0-100)</li>
+                                </ul>
+                                <h4>Results</h4>
+                                <p>Baseline: 7 of 10 records flagged. Action flags: APPROVE (≥90) = 3 records, CHECK (75-89) = 4 records, REVIEW (&lt;75) = 3 records.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Workflow Automation Tool</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Purpose</h4>
+                                <p>Streamline task management with automatic alerts and communication templates.</p>
+                                <h4>How It Works</h4>
+                                <ul>
+                                    <li><strong>Task Tracking:</strong> Status dropdown: Pending → In Progress → Completed, with automatic date logging</li>
+                                    <li><strong>SLA Timer:</strong> TODAY() - DueDate = Days Late. Formula: IF(TODAY()>DueDate, "OVERDUE", "ON TRACK")</li>
+                                    <li><strong>Auto Alerts:</strong> IF(Days Late > 0, "🚨 X DAYS LATE", "✓")</li>
+                                    <li><strong>Priority Levels:</strong> CRITICAL → HIGH → MEDIUM → LOW with color-coding</li>
+                                    <li><strong>Communication Template:</strong> Auto-generate email: "Task [ID] due [Date] - Status [Status] - Action Required"</li>
+                                </ul>
+                                <h4>Results</h4>
+                                <p>Real Results: TASK004 3 days overdue (Subcontractor RFQ) auto-flags CRITICAL. TASK007 5 days overdue (Payment Schedule) triggers escalation. Communication auto-generated with details.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Construction Timeline Simulator</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Purpose</h4>
+                                <p>Track project stages, predict delays, and manage subcontractor performance.</p>
+                                <h4>How It Works</h4>
+                                <ul>
+                                    <li><strong>Stage Progression:</strong> Pre-Construction → Sitework → Framing → Fixing → Handover with planned vs actual dates</li>
+                                    <li><strong>Delay Calculation:</strong> Actual Date - Expected Date = Days Late</li>
+                                    <li><strong>Cumulative Impact:</strong> 5-day Sitework delay cascades: becomes 8-day delay by Framing (3-day downstream impact)</li>
+                                    <li><strong>Subcontractor Tracking:</strong> Site Masters assigned to Sitework. Performance: 1 of 3 projects on-time = 33% reliability</li>
+                                    <li><strong>Risk Alert:</strong> IF(DaysLate > 0, "AT RISK", "ON TRACK")</li>
+                                </ul>
+                                <h4>Results</h4>
+                                <p>Real Portfolio: 5 projects, 1 on-time (20% rate), 4 delayed (80%). PRJ-CUS001 at 10 cumulative days delay (HIGH RISK). Average delay: 4.3 days. Site Masters flagged for performance review.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 5: DATA VALIDATION DETAILS -->
+                <div class="slide">
+                    <h1>Data Validation Engine - Deep Dive</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 12px;">Technical implementation of validation logic with formulas and real results.</p>
+
+                        <h2>Validation Methods & Formulas</h2>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Email Validation (REGEXMATCH)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Formula</h4>
+                                <div class="code-block">
+=IF(REGEXMATCH(B2,"^[\w\.-]+@[\w\.-]+\.\w+$"),"VALID","INVALID")
+                                </div>
+                                <h4>What It Does</h4>
+                                <p>Checks email format using regex pattern: [text]@[domain].[extension]</p>
+                                <h4>Real Examples from Dataset</h4>
+                                <ul>
+                                    <li>john.smith@gmail.com → VALID ✓</li>
+                                    <li>emily.davis.com → INVALID (missing @) ✗</li>
+                                    <li>jessica.lee@ → INVALID (missing domain) ✗</li>
+                                </ul>
+                                <h4>Why It Matters</h4>
+                                <p>Invalid emails break communication and downstream system integrations. Catching these early prevents customer communication failures.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Phone Format Validation (LEN)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Formula</h4>
+                                <div class="code-block">
+=IF(LEN(C2)=10,"VALID",IF(C2="","MISSING","INVALID"))
+                                </div>
+                                <h4>What It Does</h4>
+                                <p>Validates Australian phone format: exactly 10 digits (0412345678)</p>
+                                <h4>Real Examples from Dataset</h4>
+                                <ul>
+                                    <li>0412345678 → VALID ✓ (10 digits)</li>
+                                    <li>04123456 → INVALID (8 digits, too short) ✗</li>
+                                    <li>[blank] → MISSING (no data) ✗</li>
+                                </ul>
+                                <h4>Why It Matters</h4>
+                                <p>Phone format inconsistency breaks SMS alerts, calling systems, and automation. Standardization is essential for operational efficiency.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Postcode Verification (MATCH)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Formula</h4>
+                                <div class="code-block">
+=IF(ISNUMBER(MATCH(E2,Postcodes!A:A,0)),"VALID","INVALID")
+                                </div>
+                                <h4>What It Does</h4>
+                                <p>Cross-references postcode against official Australian Postal Code reference list</p>
+                                <h4>Real Examples from Dataset</h4>
+                                <ul>
+                                    <li>3141 → VALID ✓ (Oakleigh, Victoria)</li>
+                                    <li>3150 → VALID ✓ (Moorabbin, Victoria)</li>
+                                    <li>[blank] → INVALID (missing postcode) ✗</li>
+                                </ul>
+                                <h4>Why It Matters</h4>
+                                <p>Wrong postcodes cause building permit delays, failed mail delivery, incorrect site allocation. Government systems depend on accurate postcodes.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">4</div>
+                                    <div class="step-title">Duplicate Detection (COUNTIF)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Formula</h4>
+                                <div class="code-block">
+=IF(COUNTIF($A$2:$A$999,A2)>1,"DUPLICATE","OK")
+                                </div>
+                                <h4>What It Does</h4>
+                                <p>Counts how many times each customer ID appears. More than 1 = duplicate record.</p>
+                                <h4>Real Examples from Dataset</h4>
+                                <ul>
+                                    <li>CUS001 appears 1 time → OK ✓</li>
+                                    <li>CUS002 appears 2 times → DUPLICATE ✗ (once with sarahjohn@yahoo.com, once with s.johnson@yahoo.com)</li>
+                                </ul>
+                                <h4>Why It Matters</h4>
+                                <p>Duplicate customer records trigger duplicate contracts, duplicate billing, split payment tracking, and regulatory confusion. One duplicate costs hours of rework.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">5</div>
+                                    <div class="step-title">Quality Score (Weighted Formula)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Formula</h4>
+                                <div class="code-block">
+Base: 100 points
+Deductions: InvalidEmail(-15) + InvalidPhone(-15) + MissingPhone(-10) 
++ InvalidPostcode(-15) + MissingPostcode(-10) + MissingFields(-8 each) 
++ Duplicate(-20)
+                                </div>
+                                <h4>What It Does</h4>
+                                <p>Calculates comprehensive quality metric (0-100) with severity weighting. Duplicates worst (-20), missing fields lighter (-8).</p>
+                                <h4>Real Examples from Dataset</h4>
+                                <ul>
+                                    <li>CUS001 (john.smith): 100 - 0 = 100 → APPROVE ✓</li>
+                                    <li>CUS002 (sarah): 100 - 10 (missing phone) = 90 → APPROVE ✓</li>
+                                    <li>CUS004 (emily): 100 - 15 (invalid email) - 16 (missing data) = 69 → REVIEW ✗</li>
+                                    <li>CUS002 duplicate: 100 - 20 (duplicate) = 80 → CHECK (borderline)</li>
+                                </ul>
+                                <h4>Why It Matters</h4>
+                                <p>Single metric enables prioritization: REVIEW records first (highest errors), then CHECK, then APPROVE clean records. Efficient use of limited resources.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 6: MASTER DATASET & VALIDATION -->
+                <div class="slide">
+                    <h1>Master Dataset & Validation Results</h1>
+                    <div class="content-section">
+                        <h2>Sample Data with Real Issues</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Record</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Postcode</th>
+                                    <th>Issues</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CUS001</td>
+                                    <td>john.smith@gmail.com</td>
+                                    <td>0412345678</td>
+                                    <td>3141</td>
+                                    <td><span class="badge badge-success">None</span></td>
+                                    <td><span class="badge badge-success">APPROVE</span></td>
+                                </tr>
+                                <tr>
+                                    <td>CUS002</td>
+                                    <td>sarahjohn@yahoo.com</td>
+                                    <td style="background: #ffe6e6;">MISSING</td>
+                                    <td>3141</td>
+                                    <td><span class="badge badge-warning">Missing Phone</span></td>
+                                    <td><span class="badge badge-success">APPROVE</span></td>
+                                </tr>
+                                <tr>
+                                    <td>CUS004</td>
+                                    <td style="background: #ffe6e6;">emily.davis.com</td>
+                                    <td>0487654321</td>
+                                    <td>3000</td>
+                                    <td><span class="badge badge-danger">Invalid Email</span></td>
+                                    <td><span class="badge badge-danger">REVIEW</span></td>
+                                </tr>
+                                <tr>
+                                    <td>CUS002</td>
+                                    <td>s.johnson@yahoo.com</td>
+                                    <td>0423456789</td>
+                                    <td>3141</td>
+                                    <td><span class="badge badge-danger">DUPLICATE</span></td>
+                                    <td><span class="badge badge-warning">CHECK</span></td>
+                                </tr>
+                                <tr>
+                                    <td>CUS007</td>
+                                    <td>d.martin@gmail.com</td>
+                                    <td style="background: #ffe6e6;">04123456</td>
+                                    <td>3192</td>
+                                    <td><span class="badge badge-warning">Phone Too Short</span></td>
+                                    <td><span class="badge badge-warning">CHECK</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h2 style="margin-top: 20px;">Validation Results Summary</h2>
+                        <div class="grid-3">
+                            <div class="metric-box">
+                                <div class="label">Total Records</div>
+                                <span class="number">10</span>
+                            </div>
+                            <div class="metric-box">
+                                <div class="label">Records Flagged</div>
+                                <span class="number">7</span>
+                            </div>
+                            <div class="metric-box">
+                                <div class="label">Data Quality %</div>
+                                <span class="number">30%</span>
+                            </div>
+                        </div>
+
+                        <div class="step-item expanded" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">How Validation Caught Errors</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Invalid Email (CUS004)</h4>
+                                <p><strong>Value:</strong> emily.davis.com | <strong>Formula Result:</strong> INVALID (missing @ symbol)</p>
+                                <p><strong>How System Caught It:</strong> REGEXMATCH pattern ^[\w\.-]+@[\w\.-]+\.\w+$ requires @ character. emily.davis.com doesn't match. Flagged automatically.</p>
+                                <h4>Missing Phone (CUS002)</h4>
+                                <p><strong>Value:</strong> [blank] | <strong>Formula Result:</strong> MISSING</p>
+                                <p><strong>How System Caught It:</strong> IF(C2="","MISSING","OK") checks for blank cells. Critical field is empty. Flagged for review.</p>
+                                <h4>Duplicate Record (CUS002)</h4>
+                                <p><strong>Values:</strong> Two entries with CUS002 ID (different emails but same customer)</p>
+                                <p><strong>How System Caught It:</strong> COUNTIF($A$2:$A$999,A2)>1 counts CUS002 occurrences. Count = 2, so DUPLICATE flag. Prevents duplicate contracts.</p>
+                                <h4>Phone Too Short (CUS007)</h4>
+                                <p><strong>Value:</strong> 04123456 (8 digits) | <strong>Formula Result:</strong> INVALID</p>
+                                <p><strong>How System Caught It:</strong> LEN(C7)=10 checks exact length. Length = 8. Doesn't match Australian standard. Flagged for correction.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 7: DASHBOARD & KPIs -->
+                <div class="slide">
+                    <h1>Executive Dashboard & KPIs</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 12px;">Real-time visibility into operational health for decision-making.</p>
+
+                        <h2>Key Metrics Dashboard</h2>
+                        <div class="grid-3">
+                            <div class="metric-box">
+                                <div class="label">Data Accuracy %</div>
+                                <span class="number">30%</span>
+                                <p style="font-size: 0.8rem; opacity: 0.9; margin-top: 5px;">Baseline Rate</p>
+                            </div>
+                            <div class="metric-box">
+                                <div class="label">Records Flagged</div>
+                                <span class="number">7</span>
+                                <p style="font-size: 0.8rem; opacity: 0.9; margin-top: 5px;">70% Error Rate</p>
+                            </div>
+                            <div class="metric-box">
+                                <div class="label">Duplicates Found</div>
+                                <span class="number">1</span>
+                                <p style="font-size: 0.8rem; opacity: 0.9; margin-top: 5px;">High Risk</p>
+                            </div>
+                        </div>
+
+                        <h2>Error Breakdown</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Error Type</th>
+                                    <th>Count</th>
+                                    <th>Severity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Invalid Email</td>
+                                    <td style="text-align: center; font-weight: 600;">1</td>
+                                    <td><span class="badge badge-danger">High</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Invalid/Missing Phone</td>
+                                    <td style="text-align: center; font-weight: 600;">2</td>
+                                    <td><span class="badge badge-warning">Medium</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Missing Fields</td>
+                                    <td style="text-align: center; font-weight: 600;">5</td>
+                                    <td><span class="badge badge-warning">Medium</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Duplicates</td>
+                                    <td style="text-align: center; font-weight: 600;">1</td>
+                                    <td><span class="badge badge-danger">High</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Dashboard Benefits</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>What Leadership Sees</h4>
+                                <ul>
+                                    <li>Data Accuracy: 30% baseline shows improvement opportunity</li>
+                                    <li>Error Types: Prioritize which issues to fix first (Duplicates > Invalid Email > Missing Data)</li>
+                                    <li>Flagged Records: 7 of 10 requires action, not all equally urgent</li>
+                                </ul>
+                                <h4>Decisions Enabled</h4>
+                                <ul>
+                                    <li>Allocate resources: Duplicate detection saves 10+ hours of rework per occurrence</li>
+                                    <li>Process improvement: If 70% error rate, implement validation before data entry</li>
+                                    <li>Success metrics: Track improvement: 30% → 50% → 75% over time</li>
+                                </ul>
+                                <h4>Key Insight</h4>
+                                <p>Without dashboard, leadership doesn't know data health exists as a problem. With dashboard, it becomes measurable and manageable.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 8: WORKFLOW AUTOMATION -->
+                <div class="slide">
+                    <h1>Admin Workflow Automation</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 12px;">Task management system with automatic alerts and communication templates.</p>
+
+                        <h2>Task Status Distribution (10 Tasks)</h2>
+                        <div class="grid-3">
+                            <div class="metric-box" style="background: linear-gradient(135deg, var(--success), #5a8c3a);">
+                                <div class="label">Completed</div>
+                                <span class="number">4</span>
+                            </div>
+                            <div class="metric-box" style="background: linear-gradient(135deg, var(--warning), #CC8000);">
+                                <div class="label">In Progress</div>
+                                <span class="number">3</span>
+                            </div>
+                            <div class="metric-box" style="background: linear-gradient(135deg, var(--danger), #CC0000);">
+                                <div class="label">Overdue</div>
+                                <span class="number">2</span>
+                            </div>
+                        </div>
+
+                        <div class="step-item expanded" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">TASK004 - Subcontractor RFQ (3 Days Overdue - CRITICAL)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>The Task</h4>
+                                <p><strong>What:</strong> Request quotes from subcontractors for Sitework phase (CUS002 project)</p>
+                                <p><strong>Due Date:</strong> December 9, 2024 | <strong>Today:</strong> December 8, 2024 (3 days overdue)</p>
+                                <p><strong>Assigned To:</strong> Procurement Team</p>
+                                <h4>Why It's Critical</h4>
+                                <ul>
+                                    <li>Sitework is foundational phase - all downstream work depends on it</li>
+                                    <li>Delay here cascades: Framing delayed → Fixing delayed → Handover delayed</li>
+                                    <li>Customer commitment at risk - handover date slips if RFQ not processed</li>
+                                    <li>Cost impact: 3-day delay = thousands in equipment rental, labor reallocation</li>
+                                </ul>
+                                <h4>How System Handles It</h4>
+                                <p><strong>Formula:</strong> IF(TODAY()>DueDate, "OVERDUE by " & TODAY()-DueDate & " days", "ON TRACK")</p>
+                                <p><strong>Auto-Alert Generated:</strong> "URGENT: Task TASK004 overdue 3 days. Procurement team action required immediately."</p>
+                                <p><strong>Communication Template Auto-Generated:</strong> Email with task details, urgency, and action checklist sent to responsible party</p>
+                                <h4>Outcome If System Used</h4>
+                                <p>Manager sees alert at morning standup. 30-minute resolution vs. 3-day compounding delay. Saves project from cascading delays.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items; center;">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">TASK007 - Payment Schedule (5 Days Overdue - HIGH)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>The Task</h4>
+                                <p><strong>What:</strong> Setup customer payment schedule for loan drawdowns and progress payments</p>
+                                <p><strong>Due Date:</strong> December 11, 2024 | <strong>Today:</strong> December 8 (way past due - should have been done days ago)</p>
+                                <p><strong>Assigned To:</strong> Finance Team</p>
+                                <h4>Why It's Critical</h4>
+                                <ul>
+                                    <li>Finance cannot process payments without schedule</li>
+                                    <li>Customers cannot make progress payments without schedule</li>
+                                    <li>Construction costs money upfront - unpaid invoices hurt cash flow</li>
+                                    <li>Lender requirements not met - loan release delayed</li>
+                                </ul>
+                                <h4>How System Handles It</h4>
+                                <p><strong>Auto-Alert:</strong> "OVERDUE: Task TASK007 is 5 days late. Finance team immediate action required."</p>
+                                <p><strong>Escalation:</strong> After 2+ days overdue, alert escalates to manager level</p>
+                                <p><strong>Communication:</strong> Daily reminder until resolved</p>
+                                <h4>Outcome</h4>
+                                <p>Without system: Task goes unnoticed, cascading delays compound. With system: Daily alert ensures attention within 24 hours.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Auto-Generated Communication Template</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Template System</h4>
+                                <p>When task becomes overdue or due in 24 hours, system auto-generates communication:</p>
+                                <div class="code-block">
+"Customer [Name]: Task '[TaskName]' due [DueDate] 
+[X] days overdue. Status: [Status].
+Action Required: [ActionChecklist]
+Contact: [Manager] if questions."
+                                </div>
+                                <h4>Real Example for TASK004</h4>
+                                <div class="code-block">
+"Sarah Johnson: Subcontractor RFQ (TASK004) was due Dec 9. 
+Now 3 days overdue. Status: Pending.
+Action: Procurement team to request quotes from Site Masters, 
+Elite Framing, Safe Foundations. Compare bids. 
+Submit recommendation by EOD today.
+Contact: Procurement Manager if blocked."
+                                </div>
+                                <h4>Benefits</h4>
+                                <ul>
+                                    <li>No manual email composition - reduces 15 minutes per task × 10 tasks = 2.5 hours/week saved</li>
+                                    <li>Consistent communication - no variation in tone/clarity</li>
+                                    <li>Immediate delivery - alert sent same minute task becomes overdue</li>
+                                    <li>Actionable details - recipient knows exactly what to do</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 9: CONSTRUCTION TIMELINE -->
+                <div class="slide">
+                    <h1>Construction Timeline Simulation</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 12px;">Tracks 5 concurrent projects through lifecycle with delay detection.</p>
+
+                        <h2>Project Lifecycle Stages</h2>
+                        <div style="display: flex; gap: 8px; overflow-x: auto; margin: 12px 0; flex-wrap: wrap;">
+                            <span style="padding: 8px 12px; background: #f8f9fa; border-radius: 6px; font-size: 0.85rem; font-weight: 600; color: var(--primary);">Pre-Const</span>
+                            <span style="padding: 8px 12px; background: #f8f9fa; border-radius: 6px; font-size: 0.85rem;">Sitework</span>
+                            <span style="padding: 8px 12px; background: #f8f9fa; border-radius: 6px; font-size: 0.85rem;">Framing</span>
+                            <span style="padding: 8px 12px; background: #f8f9fa; border-radius: 6px; font-size: 0.85rem;">Fixing/Interior</span>
+                            <span style="padding: 8px 12px; background: #f8f9fa; border-radius: 6px; font-size: 0.85rem;">Handover</span>
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Customer</th>
+                                    <th>Stage</th>
+                                    <th>Delay</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>PRJ-CUS001</strong></td>
+                                    <td>John Smith</td>
+                                    <td>Framing</td>
+                                    <td style="color: var(--danger); font-weight: 600;">+10 cumulative</td>
+                                    <td><span class="badge badge-danger">HIGH RISK</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PRJ-CUS003</strong></td>
+                                    <td>Michael Brown</td>
+                                    <td>Handover</td>
+                                    <td style="color: var(--success); font-weight: 600;">+0</td>
+                                    <td><span class="badge badge-success">ON TIME</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="step-item expanded" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">PRJ-CUS001 (John Smith) - Delay Cascade Example</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>The Project</h4>
+                                <table>
+                                    <thead>
+                                        <tr><th>Stage</th><th>Expected</th><th>Actual</th><th>Delay</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Pre-Construction</td>
+                                            <td>Oct 31</td>
+                                            <td>Nov 5</td>
+                                            <td style="color: var(--danger);">+5 days</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sitework</td>
+                                            <td>Nov 30</td>
+                                            <td>Dec 5</td>
+                                            <td style="color: var(--danger);">+5 days (cumulative: +10)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Framing</td>
+                                            <td>Dec 31</td>
+                                            <td>Dec 8 (in progress)</td>
+                                            <td style="color: var(--danger);">+8 days projected</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <h4>How Delay Cascade Works</h4>
+                                <p><strong>Stage 1 Delay:</strong> Pre-Construction finishes 5 days late (Nov 5 vs Oct 31). Doesn't impact Sitework directly if Sitework can start immediately.</p>
+                                <p><strong>Stage 2 Delay:</strong> Sitework starts Nov 6 (day after Pre-Const). Expected to finish Nov 30, but finishes Dec 5 (5 more days). Cumulative = 5+5 = 10 days behind schedule.</p>
+                                <p><strong>Stage 3 Impact:</strong> Framing depends on Sitework completion. Can't start until Dec 5 instead of Nov 30. Loses 5 days. If Framing takes 30 days, now finishes Jan 4 instead of Dec 30. 5-day cascade continues.</p>
+                                <h4>Real Business Impact</h4>
+                                <p><strong>Customer Impact:</strong> John Smith promised handover Jan 31. Now looking at Feb 5-10 handover. 1+ week customer disappointment.</p>
+                                <p><strong>Financial Impact:</strong> Each week delay = site costs (insurance, security, etc.), labor inefficiency, equipment rental.</p>
+                                <p><strong>Operational Impact:</strong> Subcontractor chain blocked. Elite Framing can't start. Their crew allocated elsewhere. Ripple effect across portfolio.</p>
+                                <h4>How System Detects & Alerts</h4>
+                                <p><strong>Formula:</strong> Actual Date - Expected Date = Days Late<br>
+                                IF(Days Late > 0, "AT RISK - " & Days Late & " days late", "ON TRACK")</p>
+                                <p><strong>Dashboard Shows:</strong> PRJ-CUS001 at 10 cumulative days delay = HIGH RISK. Manager sees this and takes action: accelerate Framing, add crew, adjust downstream projects.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 10: SUBCONTRACTOR PERFORMANCE -->
+                <div class="slide">
+                    <h1>Subcontractor Performance Analysis</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 12px;">Data-driven vendor management based on actual performance metrics.</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subcontractor</th>
+                                    <th>Projects</th>
+                                    <th>On-Time</th>
+                                    <th>Delayed</th>
+                                    <th>Reliability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background: #e6ffe6;">
+                                    <td><strong>Finesse Interiors</strong></td>
+                                    <td>3</td>
+                                    <td>3</td>
+                                    <td>0</td>
+                                    <td><span class="badge badge-success">100%</span></td>
+                                </tr>
+                                <tr style="background: #fff0e6;">
+                                    <td><strong>Site Masters</strong></td>
+                                    <td>3</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td><span class="badge badge-danger">33%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="step-item expanded" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Site Masters Performance Analysis (33% Reliability)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Performance Data</h4>
+                                <ul>
+                                    <li>Project 1: Completed on-time ✓</li>
+                                    <li>Project 2: 5 days late ✗</li>
+                                    <li>Project 3: 3 days late ✗</li>
+                                    <li>Reliability: 1 of 3 on-time = 33%</li>
+                                </ul>
+                                <h4>How System Calculated This</h4>
+                                <p><strong>Formula:</strong> OnTimeCount / TotalProjects * 100<br>
+                                (1 / 3) * 100 = 33.33%</p>
+                                <h4>Business Decision Point</h4>
+                                <p><strong>Current Usage:</strong> Site Masters assigned to Sitework on PRJ-CUS001. Given 33% reliability and current 10-day project delay, Site Masters is HIGH RISK for further delays.</p>
+                                <p><strong>Recommendation:</strong> Consider alternatives:<br>
+                                - Assign 100% reliable subcontractor (Finesse, Quality Plumbing)<br>
+                                - Add contingency days to schedule<br>
+                                - Have backup subcontractor on standby<br>
+                                - Negotiate performance penalties with Site Masters</p>
+                                <h4>Why This Matters</h4>
+                                <p>Without data: "Site Masters did work before, hire them again." With data: "Site Masters has 67% failure rate - unacceptable for critical path work." Data-driven decision = better outcomes.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Finesse Interiors Performance (100% Reliability)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Performance Data</h4>
+                                <ul>
+                                    <li>Project 1: Completed on-time ✓</li>
+                                    <li>Project 2: Completed on-time ✓</li>
+                                    <li>Project 3: Completed on-time ✓</li>
+                                    <li>Reliability: 3 of 3 on-time = 100%</li>
+                                </ul>
+                                <h4>Strategic Advantage</h4>
+                                <p><strong>For Critical Path Work:</strong> Assign Finesse Interiors to phases where delays are most costly (Handover, final inspection, customer delivery). Their 100% track record ensures timeline reliability.</p>
+                                <p><strong>For New Projects:</strong> Use Finesse Interiors as template - study their processes, efficiency, planning. Why are they 100% reliable? Can other subcontractors adopt same practices?</p>
+                                <p><strong>Negotiation Leverage:</strong> "Finesse completed 3 projects on-time. We expect same standard from all subcontractors. Here's the benchmark."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 11: IMPACT & VALUE -->
+                <div class="slide">
+                    <h1>Impact & Business Value</h1>
+                    <div class="content-section">
+                        <p style="margin-bottom: 12px;">Measurable outcomes that justify investment in data quality and automation systems.</p>
+
+                        <div class="step-item expanded" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Error Reduction (35-45%)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Current State</h4>
+                                <p>Baseline: 30% data accuracy (7 of 10 records have errors)</p>
+                                <h4>With System</h4>
+                                <p>70-75% accuracy achievable through:<br>
+                                - Automated validation catching errors before data entry completes<br>
+                                - Error feedback helping staff correct issues immediately<br>
+                                - Quality scoring showing which records need attention<br>
+                                - Ongoing monitoring preventing backsliding</p>
+                                <h4>Business Impact</h4>
+                                <ul>
+                                    <li>Fewer duplicate contracts (each duplicate = 10 hours rework)</li>
+                                    <li>Fewer permit delays (wrong address = permit rejection = 5 days delay)</li>
+                                    <li>Fewer payment processing errors (30 minutes per error × 10 errors/month = 5 hours)</li>
+                                    <li>Fewer customer service complaints from data errors</li>
+                                </ul>
+                                <h4>Dollar Value</h4>
+                                <p>10 errors prevented/month × 10 hours each × $30/hour = $3,000/month = $36,000/year in error prevention alone.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Operational Efficiency (25-30%)</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Current State</h4>
+                                <p>Staff spend 2-3 hours/week on manual data checking and status reporting</p>
+                                <h4>With System</h4>
+                                <p>Automation eliminates:<br>
+                                - Manual data validation (now automatic)<br>
+                                - Status report generation (now auto-created)<br>
+                                - Email chains for task coordination (now SLA tracking)<br>
+                                - Manual duplicate checking (now COUNTIF)</p>
+                                <h4>Time Savings</h4>
+                                <ul>
+                                    <li>Data validation: 30 minutes/week → 2 minutes/week (28 min saved)</li>
+                                    <li>Status reports: 60 minutes/week → 5 minutes/week (55 min saved)</li>
+                                    <li>Task coordination: 45 minutes/week → 10 minutes/week (35 min saved)</li>
+                                    <li>Total: ~2 hours/week saved per staff member</li>
+                                </ul>
+                                <h4>Business Impact</h4>
+                                <p>Staff redirected to higher-value work: customer relationship management, process improvement, strategic analysis instead of repetitive data processing.</p>
+                                <h4>Dollar Value</h4>
+                                <p>2 hours/week × 50 weeks/year × $40/hour (loaded cost) = $4,000/person/year × 5 staff = $20,000/year in efficiency gains.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Project Delay Prevention</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Current State</h4>
+                                <p>Portfolio: 4 of 5 projects delayed. Average delay: 4.3 days. One project (PRJ-CUS001) at 10-day cumulative delay.</p>
+                                <h4>With System</h4>
+                                <p>Automatic detection of delays enables:<br>
+                                - Early intervention (catch 3-day delay before it becomes 10-day)<br>
+                                - Accelerated response (system alerts same day, not 1 week later)<br>
+                                - Proactive subcontractor management (know Site Masters is 33% reliable, plan accordingly)<br>
+                                - Customer communication (notify 1 week early vs. last-minute surprise)</p>
+                                <h4>Real Example</h4>
+                                <p><strong>Without System:</strong> Sitework starts 5 days late. Nobody notices immediately. By week 2, Framing is delayed. By week 3, John Smith hears about delay from project manager's urgent call. Frustrated customer. Contract penalties.</p>
+                                <p><strong>With System:</strong> Sitework starts 5 days late. System flags PRJ-CUS001 as "AT RISK" with 5-day delay on dashboard. Manager sees this at morning standup. Immediately talks to project manager: "Can Framing accelerate? Can Finesse work nights? What's our recovery plan?" Issue addressed within 24 hours instead of 3 weeks.</p>
+                                <h4>Business Impact</h4>
+                                <ul>
+                                    <li>Reduce average delay: 4.3 days → 1.5 days</li>
+                                    <li>Reduce projects delayed: 4 of 5 → 1 of 5</li>
+                                    <li>Improve customer satisfaction (on-time delivery)</li>
+                                    <li>Reduce penalty clauses triggered</li>
+                                    <li>Improve team morale (fewer crisis situations)</li>
+                                </ul>
+                                <h4>Dollar Value</h4>
+                                <p>Each project delay costs ~$5,000/day (overhead, labor, equipment). Portfolio: 5 projects × 4 delayed × 4.3 days × $5,000 = $430,000/year in delay costs. System reduces to ~$150,000 (65% reduction) = $280,000/year savings.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 12: TECHNICAL TOOLKIT -->
+                <div class="slide">
+                    <h1>Technical Toolkit & Conclusion</h1>
+                    <div class="content-section">
+                        <h2>Excel/Sheets Functions Used</h2>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Core Functions & Their Purpose</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>COUNTIF - Error Counting & Duplicate Detection</h4>
+                                <div class="code-block">=COUNTIF(range, criteria) → Counts how many cells match criteria</div>
+                                <p><strong>Used For:</strong> Count duplicate records, aggregate error types, calculate error statistics</p>
+                                <h4>XLOOKUP / INDEX-MATCH - Cross-Field Data Lookup</h4>
+                                <div class="code-block">=XLOOKUP(lookup_value, lookup_array, return_array) → Modern alternative to VLOOKUP</div>
+                                <p><strong>Used For:</strong> Pull subcontractor info for task, fetch postcode validation from reference list</p>
+                                <h4>REGEXMATCH - Pattern Validation</h4>
+                                <div class="code-block">=REGEXMATCH(text, regex_pattern) → Matches text against regex</div>
+                                <p><strong>Used For:</strong> Email format validation, complex pattern matching</p>
+                                <h4>IF / Nested IF - Conditional Logic</h4>
+                                <div class="code-block">=IF(condition, value_if_true, value_if_false) → Branch logic</div>
+                                <p><strong>Used For:</strong> All validation decisions, error flagging, status determination</p>
+                                <h4>LEN - String Length Check</h4>
+                                <div class="code-block">=LEN(text) → Returns number of characters in text</div>
+                                <p><strong>Used For:</strong> Phone format validation (must be exactly 10 characters)</p>
+                                <h4>DATEDIF / TODAY - Date Calculations</h4>
+                                <div class="code-block">=DATEDIF(start_date, end_date, "D") → Days between dates</div>
+                                <p><strong>Used For:</strong> Calculate task overdue days, delay tracking, SLA monitoring</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Professional Competencies Demonstrated</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>Data Quality Governance</h4>
+                                <p>Understanding that data quality is foundational to operations. Designing systematic approach to validation, error prioritization, and continuous monitoring.</p>
+                                <h4>Process Automation & Workflow Design</h4>
+                                <p>Thinking beyond individual tasks to entire workflows. Identifying where human intervention can be eliminated, automated, or accelerated.</p>
+                                <h4>Advanced Excel Mastery</h4>
+                                <p>Command of formulas beyond basic SUM/AVERAGE. Understanding regex, nested logic, array operations, and when to use which function.</p>
+                                <h4>Construction Industry Knowledge</h4>
+                                <p>Understanding construction lifecycle (Pre-Const → Sitework → Framing → Fixing → Handover), compliance requirements, subcontractor coordination complexity.</p>
+                                <h4>Dashboard Design & KPI Development</h4>
+                                <p>Translating raw data into executive-level insights. Choosing metrics that drive decisions, not just data display.</p>
+                                <h4>Business Analysis & ROI Thinking</h4>
+                                <p>Quantifying impact in business terms (hours saved, dollars prevented, customer satisfaction improved). Not just "cool technical solution" but "solves real problems."</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item expanded" onclick="toggleSteps(this)">
+                            <div class="step-header">
+                                <div style="display: flex; align-items: center;">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Summary & Next Steps</div>
+                                </div>
+                                <div class="step-toggle">▼</div>
+                            </div>
+                            <div class="step-details">
+                                <h4>What This Portfolio Demonstrates</h4>
+                                <ul>
+                                    <li>Systematic problem-solving: Identify → Analyze → Design → Implement → Measure</li>
+                                    <li>Technical depth: Advanced formulas, automation, multi-tab design</li>
+                                    <li>Business acumen: Understanding impact, ROI, operational constraints</li>
+                                    <li>Industry knowledge: Construction-specific challenges, compliance awareness</li>
+                                    <li>Communication: Explaining complex systems clearly to different audiences</li>
+                                </ul>
+                                <h4>For ABN Group Specifically</h4>
+                                <p>This portfolio shows I understand their world: multi-site operations, diverse teams, compliance requirements, customer commitments, financial constraints. Not generic "how to build a database" but "how to solve YOUR operational challenges."</p>
+                                <h4>Career Relevance</h4>
+                                <p>This work demonstrates readiness for: Data Quality Analyst (obviously), Operations Manager, Business Analyst, Project Coordinator, or even Product Manager roles where data-driven decisions matter.</p>
+                                <h4>Next Steps</h4>
+                                <ul>
+                                    <li>In interview: "I researched ABN Group's operations and built this framework to address real challenges in construction, property, and finance data management."</li>
+                                    <li>In conversation: Reference specific metrics ("Site Masters' 33% reliability suggests risk management approach") to show depth</li>
+                                    <li>If asked about formulas: Walk through logic (not just "here's the code")</li>
+                                    <li>If asked about business value: Quantify in dollars/hours/customer satisfaction</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, rgba(31, 78, 120, 0.1), rgba(0, 176, 240, 0.1)); border-left: 4px solid var(--secondary); padding: 15px; border-radius: 6px; margin-top: 20px;">
+                            <h3 style="margin-top: 0;">Thank You</h3>
+                            <p style="margin-bottom: 0; color: var(--text-light);">This portfolio represents systematic thinking about operational challenges, technical execution of solutions, and business acumen in measuring impact. It's designed to demonstrate readiness for roles requiring data quality, process optimization, and strategic thinking in complex operational environments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn" id="prevBtn" onclick="prevSlide()">Previous</button>
+                <button class="btn" id="nextBtn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 12;
+
+        function goToSlide(n) {
+            currentSlide = n;
+            showSlide(currentSlide);
+        }
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            navItems.forEach(item => item.classList.remove('active'));
+
+            slides[currentSlide - 1].classList.add('active');
+            navItems[currentSlide - 1].classList.add('active');
+
+            document.getElementById('current').textContent = currentSlide;
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        function toggleSteps(element) {
+            element.classList.toggle('expanded');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
