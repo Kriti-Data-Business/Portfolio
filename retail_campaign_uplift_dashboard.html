@@ -173,12 +173,12 @@
           <div class="method-card ab">
             <div class="method-label">A/B uplift (true incremental)</div>
             <div class="method-val" id="ab-lift"></div>
-            <div class="method-sub">Exposed vs control — removes baseline growth</div>
+            <div class="method-sub">Exposed vs control : removes baseline growth</div>
           </div>
           <div class="method-card pp">
             <div class="method-label">Pre/post uplift (incl. natural growth)</div>
             <div class="method-val" id="pp-lift"></div>
-            <div class="method-sub">Before vs after — overstates true effect</div>
+            <div class="method-sub">Before vs after : overstates true effect</div>
           </div>
         </div>
         <div class="method-row">
@@ -239,7 +239,7 @@
 
     <div class="two-col">
       <div class="card">
-        <div class="card-title">ROAS vs uplift — channel positioning</div>
+        <div class="card-title">ROAS vs uplift : channel positioning</div>
         <div class="chart-wrap" style="height:260px">
           <canvas id="scatterChart" role="img" aria-label="Scatter chart plotting ROAS against A/B uplift percentage for each campaign channel. Bubble size represents budget.">ROAS vs uplift scatter.</canvas>
         </div>
@@ -261,12 +261,12 @@
       <div class="card-title">Recommended actions for next campaign wave</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
         <div class="insight-box">
-          <strong>Scale — Email + In-store</strong><br>
+          <strong>Scale : Email + In-store</strong><br>
           Email (13.0x ROAS, +17.5%) and In-store Display (9.9x ROAS, +19.9%) both exceed the scale threshold. Recommend increasing Email budget by 40% and In-store by 25% for the next wave. Email's efficiency advantage makes it the priority allocation.
         </div>
         <div class="insight-box" style="border-left-color:#378ADD">
-          <strong>Optimise — Digital + Loyalty App</strong><br>
-          Digital Display and Loyalty App both sit at ~10% A/B lift with ROAS of 6–7x. Recommend A/B creative testing before scaling. For Digital, test category-specific creative. For Loyalty App, test offer value thresholds (currently 8% true uplift — room to improve).
+          <strong>Optimise : Digital + Loyalty App</strong><br>
+          Digital Display and Loyalty App both sit at ~10% A/B lift with ROAS of 6–7x. Recommend A/B creative testing before scaling. For Digital, test category-specific creative. For Loyalty App, test offer value thresholds (currently 8% true uplift : room to improve).
         </div>
       </div>
     </div>
@@ -352,7 +352,7 @@ function buildCampView(){
   document.getElementById('did-val').textContent='$+'+Math.round(c.did);
   document.getElementById('ci-val').textContent='$'+Math.round(c.ci_lo)+' – $'+Math.round(c.ci_hi);
   const gap=(c.pp_lift-c.ab_lift).toFixed(1);
-  document.getElementById('camp-insight').innerHTML=`<strong>Measurement gap: ${gap}pp</strong> — Pre/post overstates true lift by ${gap} percentage points due to natural post-March spend growth affecting all customers. The A/B estimate of +${c.ab_lift.toFixed(1)}% isolates the true incremental effect. Recommendation: <strong>${c.action}</strong>.`;
+  document.getElementById('camp-insight').innerHTML=`<strong>Measurement gap: ${gap}pp</strong> : Pre/post overstates true lift by ${gap} percentage points due to natural post-March spend growth affecting all customers. The A/B estimate of +${c.ab_lift.toFixed(1)}% isolates the true incremental effect. Recommendation: <strong>${c.action}</strong>.`;
   destroyChart('spend');
   chartRefs['spend']=new Chart(document.getElementById('spendChart'),{
     type:'bar',
