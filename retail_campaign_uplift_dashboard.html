@@ -1,0 +1,448 @@
+
+<h2 class="sr-only">Retail Campaign Uplift Analyser — interactive dashboard showing A/B test results, ROAS, incremental revenue, and segment performance across four campaigns</h2>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.dash{font-family:var(--font-sans);color:var(--color-text-primary);padding:0 0 2rem}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 0 1rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.5rem}
+.topbar-title{font-size:15px;font-weight:500}
+.topbar-meta{font-size:12px;color:var(--color-text-secondary)}
+.nav{display:flex;gap:2px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:3px}
+.nav-btn{font-size:12px;padding:5px 14px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:var(--color-text-secondary);font-family:var(--font-sans);transition:all .15s}
+.nav-btn.active{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border:0.5px solid var(--color-border-tertiary)}
+.nav-btn:hover:not(.active){color:var(--color-text-primary)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px 16px}
+.kpi-label{font-size:11px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.kpi-value{font-size:22px;font-weight:500;line-height:1}
+.kpi-sub{font-size:11px;color:var(--color-text-secondary);margin-top:4px}
+.kpi-pos{color:#0F6E56}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem}
+.card-title{font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:1rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.full-col{margin-bottom:12px}
+.chart-wrap{position:relative;width:100%}
+.scorecard{width:100%;border-collapse:collapse;font-size:13px}
+.scorecard th{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;padding:6px 10px;text-align:left;border-bottom:0.5px solid var(--color-border-tertiary)}
+.scorecard td{padding:10px 10px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle}
+.scorecard tr:last-child td{border-bottom:none}
+.scorecard tr:hover td{background:var(--color-background-secondary)}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px}
+.badge-scale{background:#E1F5EE;color:#085041}
+.badge-opt{background:#FAEEDA;color:#633806}
+.badge-sig{background:#E6F1FB;color:#0C447C}
+.slicer{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.slicer-btn{font-size:12px;padding:5px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;color:var(--color-text-secondary);font-family:var(--font-sans)}
+.slicer-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info);font-weight:500}
+.slicer-btn:hover:not(.active){background:var(--color-background-secondary);color:var(--color-text-primary)}
+.method-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.method-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;border-left:3px solid transparent}
+.method-card.ab{border-left-color:#1D9E75}
+.method-card.pp{border-left-color:#378ADD}
+.method-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.method-val{font-size:20px;font-weight:500}
+.method-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.insight-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px;font-size:13px;line-height:1.6;color:var(--color-text-secondary);border-left:3px solid #1D9E75}
+.insight-box strong{color:var(--color-text-primary);font-weight:500}
+.seg-bar-wrap{margin-bottom:10px}
+.seg-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.seg-bar-bg{background:var(--color-background-secondary);border-radius:2px;height:8px;width:100%;overflow:hidden}
+.seg-bar-fill{height:100%;border-radius:2px;transition:width .4s ease}
+.page{display:none}
+.page.active{display:block}
+.legend-row{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.divider{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1rem 0}
+.opt-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.opt-row:last-child{border-bottom:none}
+.opt-name{font-size:13px;font-weight:500;min-width:180px}
+.opt-channel{font-size:11px;color:var(--color-text-secondary);min-width:120px}
+.opt-bar-wrap{flex:1;background:var(--color-background-secondary);border-radius:2px;height:8px;position:relative}
+.opt-bar{height:100%;border-radius:2px}
+.opt-val{font-size:12px;font-weight:500;min-width:50px;text-align:right}
+.opt-action{min-width:70px;text-align:right}
+</style>
+
+<div class="dash">
+
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">Retail Campaign Uplift Analyser</div>
+      <div class="topbar-meta">March 2024 &nbsp;·&nbsp; 4 campaigns &nbsp;·&nbsp; 5,000 customers &nbsp;·&nbsp; A/B methodology</div>
+    </div>
+    <div class="nav">
+      <button class="nav-btn active" onclick="showPage('exec')">Executive summary</button>
+      <button class="nav-btn" onclick="showPage('campaign')">Campaign performance</button>
+      <button class="nav-btn" onclick="showPage('segment')">Customer behaviour</button>
+      <button class="nav-btn" onclick="showPage('optimise')">Optimisation</button>
+    </div>
+  </div>
+
+  <!-- PAGE 1: EXECUTIVE SUMMARY -->
+  <div id="page-exec" class="page active">
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">Total incremental revenue</div>
+        <div class="kpi-value">$2.05M</div>
+        <div class="kpi-sub kpi-pos">+14.5% vs control baseline</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Blended ROAS</div>
+        <div class="kpi-value">8.7x</div>
+        <div class="kpi-sub">$235K total campaign spend</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Campaigns significant</div>
+        <div class="kpi-value">4 / 4</div>
+        <div class="kpi-sub">All p &lt; 0.001</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Avg customers lifted</div>
+        <div class="kpi-value">94.2%</div>
+        <div class="kpi-sub">Of exposed customers</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Incremental revenue by campaign</div>
+        <div class="legend-row">
+          <span class="legend-item"><span class="legend-dot" style="background:#1D9E75"></span>Scale</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#378ADD"></span>Optimise</span>
+        </div>
+        <div class="chart-wrap" style="height:220px">
+          <canvas id="revenueChart" role="img" aria-label="Bar chart showing incremental revenue by campaign. Fresh Food $842K, Email $495K, Digital $380K, Loyalty $332K.">Fresh Food: $842K, Email: $495K, Digital: $380K, Loyalty: $332K.</canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">A/B uplift % by campaign</div>
+        <div class="legend-row">
+          <span class="legend-item"><span class="legend-dot" style="background:#1D9E75"></span>A/B (true incremental)</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#B5D4F4;border:0.5px solid #85B7EB"></span>Pre/post (incl. natural growth)</span>
+        </div>
+        <div class="chart-wrap" style="height:220px">
+          <canvas id="upliftChart" role="img" aria-label="Grouped bar chart comparing A/B uplift vs pre/post uplift per campaign. Pre/post overstates true lift by approximately 25 percentage points.">A/B: Fresh Food 19.9%, Email 17.5%, Digital 10.4%, Loyalty 10.1%. Pre/Post: 40%, 47%, 39%, 38%.</canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card full-col">
+      <div class="card-title">Campaign scorecard</div>
+      <table class="scorecard">
+        <thead>
+          <tr>
+            <th>Campaign</th>
+            <th>Channel</th>
+            <th>Exposed</th>
+            <th>A/B lift</th>
+            <th>Incr. revenue</th>
+            <th>ROAS</th>
+            <th>Significance</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Fresh Food Spring Push</strong></td><td style="color:var(--color-text-secondary)">In-store Display</td><td>2,773</td><td style="color:#0F6E56;font-weight:500">+19.9%</td><td>$841,972</td><td>9.9x</td><td><span class="badge badge-sig">p &lt; 0.001</span></td><td><span class="badge badge-scale">Scale</span></td></tr>
+          <tr><td><strong>Snacks &amp; Confectionery EDM</strong></td><td style="color:var(--color-text-secondary)">Email</td><td>1,769</td><td style="color:#0F6E56;font-weight:500">+17.5%</td><td>$494,573</td><td>13.0x</td><td><span class="badge badge-sig">p &lt; 0.001</span></td><td><span class="badge badge-scale">Scale</span></td></tr>
+          <tr><td><strong>Pantry Staples Digital</strong></td><td style="color:var(--color-text-secondary)">Digital Display</td><td>2,246</td><td style="color:#0F6E56;font-weight:500">+10.4%</td><td>$379,524</td><td>6.1x</td><td><span class="badge badge-sig">p &lt; 0.001</span></td><td><span class="badge badge-opt">Optimise</span></td></tr>
+          <tr><td><strong>Household Essentials Loyalty</strong></td><td style="color:var(--color-text-secondary)">Loyalty App</td><td>2,023</td><td style="color:#0F6E56;font-weight:500">+10.1%</td><td>$331,811</td><td>6.6x</td><td><span class="badge badge-sig">p &lt; 0.001</span></td><td><span class="badge badge-opt">Optimise</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- PAGE 2: CAMPAIGN PERFORMANCE -->
+  <div id="page-campaign" class="page">
+
+    <div class="slicer" id="campSlicer">
+      <button class="slicer-btn active" onclick="selectCamp(0)">Fresh Food Spring Push</button>
+      <button class="slicer-btn" onclick="selectCamp(1)">Snacks &amp; Confectionery EDM</button>
+      <button class="slicer-btn" onclick="selectCamp(2)">Pantry Staples Digital</button>
+      <button class="slicer-btn" onclick="selectCamp(3)">Household Essentials Loyalty</button>
+    </div>
+
+    <div class="kpi-grid" id="campKpis" style="grid-template-columns:repeat(4,1fr)"></div>
+
+    <div class="two-col" style="margin-top:12px">
+      <div class="card">
+        <div class="card-title">Measurement comparison</div>
+        <div class="method-row">
+          <div class="method-card ab">
+            <div class="method-label">A/B uplift (true incremental)</div>
+            <div class="method-val" id="ab-lift"></div>
+            <div class="method-sub">Exposed vs control — removes baseline growth</div>
+          </div>
+          <div class="method-card pp">
+            <div class="method-label">Pre/post uplift (incl. natural growth)</div>
+            <div class="method-val" id="pp-lift"></div>
+            <div class="method-sub">Before vs after — overstates true effect</div>
+          </div>
+        </div>
+        <div class="method-row">
+          <div class="method-card ab">
+            <div class="method-label">DiD estimate</div>
+            <div class="method-val" id="did-val"></div>
+            <div class="method-sub">Difference-in-differences cross-check</div>
+          </div>
+          <div class="method-card pp">
+            <div class="method-label">95% confidence interval</div>
+            <div class="method-val" id="ci-val"></div>
+            <div class="method-sub">Range of plausible true lift</div>
+          </div>
+        </div>
+        <div class="insight-box" id="camp-insight"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Post-period spend distribution</div>
+        <div class="legend-row">
+          <span class="legend-item"><span class="legend-dot" style="background:#1D9E75"></span>Exposed group</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#B5D4F4;border:0.5px solid #85B7EB"></span>Control group</span>
+        </div>
+        <div class="chart-wrap" style="height:260px">
+          <canvas id="spendChart" role="img" aria-label="Bar chart comparing exposed vs control group mean post-campaign spend for the selected campaign.">Spend comparison by group.</canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PAGE 3: CUSTOMER BEHAVIOUR -->
+  <div id="page-segment" class="page">
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Uplift % by customer segment (avg across campaigns)</div>
+        <div id="seg-bars"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Incremental revenue by segment</div>
+        <div class="chart-wrap" style="height:280px">
+          <canvas id="segRevChart" role="img" aria-label="Horizontal bar chart showing incremental revenue contribution by customer segment across all campaigns.">Segment revenue breakdown.</canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card full-col" style="margin-top:12px">
+      <div class="card-title">Segment response by campaign</div>
+      <div class="chart-wrap" style="height:280px">
+        <canvas id="heatChart" role="img" aria-label="Grouped bar chart showing mean uplift percentage by segment for each of the four campaigns.">Segment vs campaign heatmap.</canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PAGE 4: OPTIMISATION -->
+  <div id="page-optimise" class="page">
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">ROAS vs uplift — channel positioning</div>
+        <div class="chart-wrap" style="height:260px">
+          <canvas id="scatterChart" role="img" aria-label="Scatter chart plotting ROAS against A/B uplift percentage for each campaign channel. Bubble size represents budget.">ROAS vs uplift scatter.</canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Budget vs incremental revenue</div>
+        <div class="chart-wrap" style="height:260px">
+          <canvas id="budgetChart" role="img" aria-label="Grouped bar chart comparing campaign budget against incremental revenue generated for each campaign.">Budget vs revenue comparison.</canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card full-col" style="margin-top:12px">
+      <div class="card-title">Channel efficiency ranking</div>
+      <div id="opt-rows"></div>
+    </div>
+
+    <div class="card full-col" style="margin-top:12px">
+      <div class="card-title">Recommended actions for next campaign wave</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+        <div class="insight-box">
+          <strong>Scale — Email + In-store</strong><br>
+          Email (13.0x ROAS, +17.5%) and In-store Display (9.9x ROAS, +19.9%) both exceed the scale threshold. Recommend increasing Email budget by 40% and In-store by 25% for the next wave. Email's efficiency advantage makes it the priority allocation.
+        </div>
+        <div class="insight-box" style="border-left-color:#378ADD">
+          <strong>Optimise — Digital + Loyalty App</strong><br>
+          Digital Display and Loyalty App both sit at ~10% A/B lift with ROAS of 6–7x. Recommend A/B creative testing before scaling. For Digital, test category-specific creative. For Loyalty App, test offer value thresholds (currently 8% true uplift — room to improve).
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const CAMPAIGNS = [
+  {name:'Fresh Food Spring Push',channel:'In-store Display',budget:85000,exposed:2773,control:2227,ab_lift:19.87,pp_lift:40.43,incr_rev:841972,roas:9.91,ci_lo:264.82,ci_hi:342.45,did:273.28,post_exp:1831.93,post_ctl:1528.29,action:'Scale',true_up:15.0},
+  {name:'Snacks & Confectionery EDM',channel:'Email',budget:38000,exposed:1769,control:3231,ab_lift:17.50,pp_lift:47.23,incr_rev:494573,roas:13.02,ci_lo:228.77,ci_hi:330.38,did:304.27,post_exp:1877.35,post_ctl:1597.77,action:'Scale',true_up:18.0},
+  {name:'Pantry Staples Digital',channel:'Digital Display',budget:62000,exposed:2246,control:2754,ab_lift:10.43,pp_lift:39.17,incr_rev:379524,roas:6.12,ci_lo:125.77,ci_hi:212.19,did:178.07,post_exp:1789.76,post_ctl:1620.78,action:'Optimise',true_up:10.0},
+  {name:'Household Essentials Loyalty',channel:'Loyalty App',budget:50000,exposed:2023,control:2977,ab_lift:10.06,pp_lift:38.36,incr_rev:331811,roas:6.64,ci_lo:118.77,ci_hi:209.27,did:154.17,post_exp:1794.35,post_ctl:1630.33,action:'Optimise',true_up:8.0},
+];
+
+const SEGMENTS = ['Budget Conscious','Family Shopper','Premium Buyer','Convenience Seeker'];
+const SEG_DATA = {
+  'C001':{avg_lifts:[50.09,39.75,44.14,47.90],rev:[165770,618272,551590,126782]},
+  'C002':{avg_lifts:[50.37,38.79,42.72,45.33],rev:[139466,475474,416947,99504]},
+  'C003':{avg_lifts:[57.62,46.69,51.57,53.29],rev:[128134,446912,393641,96735]},
+  'C004':{avg_lifts:[47.32,37.85,42.14,43.76],rev:[115581,422569,380516,87668]},
+};
+
+const C_GREEN='#1D9E75', C_BLUE='#378ADD', C_BLUE_LIGHT='#B5D4F4', C_GREEN_LIGHT='#9FE1CB';
+const C_AMBER='#BA7517', C_GRAY='#888780';
+const CAMP_COLORS=['#1D9E75','#1D9E75','#378ADD','#378ADD'];
+
+let selectedCamp = 0;
+let chartRefs = {};
+
+function fmt(n){return n>=1e6?'$'+(n/1e6).toFixed(2)+'M':n>=1000?'$'+(n/1000).toFixed(0)+'K':'$'+Math.round(n);}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='exec') buildExecCharts();
+  if(id==='campaign') buildCampView();
+  if(id==='segment') buildSegCharts();
+  if(id==='optimise') buildOptCharts();
+}
+
+function destroyChart(id){if(chartRefs[id]){chartRefs[id].destroy();delete chartRefs[id];}}
+
+function buildExecCharts(){
+  destroyChart('revenue'); destroyChart('uplift');
+  const labels = CAMPAIGNS.map(c=>c.channel);
+  chartRefs['revenue']=new Chart(document.getElementById('revenueChart'),{
+    type:'bar',
+    data:{labels,datasets:[{data:CAMPAIGNS.map(c=>c.incr_rev),backgroundColor:CAMP_COLORS,borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:v=>fmt(v.raw)}}},scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>fmt(v),font:{size:11}},border:{display:false}}}}
+  });
+  chartRefs['uplift']=new Chart(document.getElementById('upliftChart'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'A/B uplift',data:CAMPAIGNS.map(c=>c.ab_lift),backgroundColor:C_GREEN,borderRadius:3},
+      {label:'Pre/post',data:CAMPAIGNS.map(c=>c.pp_lift),backgroundColor:C_BLUE_LIGHT,borderRadius:3},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:v=>v.dataset.label+': '+v.raw.toFixed(1)+'%'}}},scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>v+'%',font:{size:11}},border:{display:false}}}}
+  });
+}
+
+function selectCamp(i){
+  selectedCamp=i;
+  document.querySelectorAll('#campSlicer .slicer-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  buildCampView();
+}
+
+function buildCampView(){
+  const c=CAMPAIGNS[selectedCamp];
+  const kpiEl=document.getElementById('campKpis');
+  kpiEl.innerHTML=`
+    <div class="kpi"><div class="kpi-label">A/B uplift</div><div class="kpi-value" style="color:#0F6E56">+${c.ab_lift.toFixed(1)}%</div><div class="kpi-sub">vs control group</div></div>
+    <div class="kpi"><div class="kpi-label">Incremental revenue</div><div class="kpi-value">${fmt(c.incr_rev)}</div><div class="kpi-sub">true incremental</div></div>
+    <div class="kpi"><div class="kpi-label">ROAS</div><div class="kpi-value">${c.roas.toFixed(1)}x</div><div class="kpi-sub">${fmt(c.budget)} budget</div></div>
+    <div class="kpi"><div class="kpi-label">Effect size</div><div class="kpi-value">${c.ab_lift>=15?'Medium':'Small'}</div><div class="kpi-sub">Cohen's d</div></div>
+  `;
+  document.getElementById('ab-lift').textContent='+'+c.ab_lift.toFixed(1)+'%';
+  document.getElementById('pp-lift').textContent='+'+c.pp_lift.toFixed(1)+'%';
+  document.getElementById('did-val').textContent='$+'+Math.round(c.did);
+  document.getElementById('ci-val').textContent='$'+Math.round(c.ci_lo)+' – $'+Math.round(c.ci_hi);
+  const gap=(c.pp_lift-c.ab_lift).toFixed(1);
+  document.getElementById('camp-insight').innerHTML=`<strong>Measurement gap: ${gap}pp</strong> — Pre/post overstates true lift by ${gap} percentage points due to natural post-March spend growth affecting all customers. The A/B estimate of +${c.ab_lift.toFixed(1)}% isolates the true incremental effect. Recommendation: <strong>${c.action}</strong>.`;
+  destroyChart('spend');
+  chartRefs['spend']=new Chart(document.getElementById('spendChart'),{
+    type:'bar',
+    data:{
+      labels:['Exposed','Control'],
+      datasets:[{data:[c.post_exp,c.post_ctl],backgroundColor:[C_GREEN,C_BLUE_LIGHT],borderRadius:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:v=>'$'+v.raw.toFixed(0)+' avg post spend'}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>'$'+v.toFixed(0)},border:{display:false},min:Math.round(Math.min(c.post_exp,c.post_ctl)*0.85)}}}
+  });
+}
+
+function buildSegCharts(){
+  const avgLifts=SEGMENTS.map((_,si)=>{
+    const vals=['C001','C002','C003','C004'].map(cid=>SEG_DATA[cid].avg_lifts[si]);
+    return vals.reduce((a,b)=>a+b,0)/vals.length;
+  });
+  const maxLift=Math.max(...avgLifts);
+  const segBars=document.getElementById('seg-bars');
+  segBars.innerHTML=SEGMENTS.map((seg,i)=>`
+    <div class="seg-bar-wrap">
+      <div class="seg-label"><span>${seg}</span><span style="font-weight:500">${avgLifts[i].toFixed(1)}%</span></div>
+      <div class="seg-bar-bg"><div class="seg-bar-fill" style="width:${(avgLifts[i]/maxLift*100).toFixed(1)}%;background:${i===0?C_BLUE:i===1?C_GREEN:i===2?'#BA7517':'#533AB7'}"></div></div>
+    </div>
+  `).join('');
+
+  const segTotals=SEGMENTS.map((_,si)=>['C001','C002','C003','C004'].reduce((sum,cid)=>sum+SEG_DATA[cid].rev[si],0));
+  destroyChart('segRev');
+  chartRefs['segRev']=new Chart(document.getElementById('segRevChart'),{
+    type:'bar',
+    data:{labels:SEGMENTS.map(s=>s.split(' ')[0]),datasets:[{data:segTotals,backgroundColor:[C_BLUE,C_GREEN,C_AMBER,'#7F77DD'],borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:v=>fmt(v.raw)}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>fmt(v)},border:{display:false}}}}
+  });
+
+  destroyChart('heat');
+  const campNames=CAMPAIGNS.map(c=>c.channel);
+  const colors=[C_BLUE,C_GREEN,C_AMBER,'#7F77DD'];
+  chartRefs['heat']=new Chart(document.getElementById('heatChart'),{
+    type:'bar',
+    data:{
+      labels:campNames,
+      datasets:SEGMENTS.map((seg,si)=>({
+        label:seg.split(' ')[0],
+        data:['C001','C002','C003','C004'].map(cid=>SEG_DATA[cid].avg_lifts[si]),
+        backgroundColor:colors[si],borderRadius:2
+      }))
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:v=>v.dataset.label+': '+v.raw.toFixed(1)+'%'}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>v+'%'},border:{display:false}}}}
+  });
+}
+
+function buildOptCharts(){
+  destroyChart('scatter'); destroyChart('budget');
+  chartRefs['scatter']=new Chart(document.getElementById('scatterChart'),{
+    type:'bubble',
+    data:{datasets:CAMPAIGNS.map((c,i)=>({
+      label:c.channel,
+      data:[{x:c.ab_lift,y:c.roas,r:Math.sqrt(c.budget/1000)*1.8}],
+      backgroundColor:CAMP_COLORS[i]+'CC',borderColor:CAMP_COLORS[i],borderWidth:1
+    }))},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:v=>`${v.dataset.label}: ${v.raw.x.toFixed(1)}% lift, ${v.raw.y.toFixed(1)}x ROAS`}}},scales:{x:{title:{display:true,text:'A/B uplift %',font:{size:11}},grid:{color:'rgba(128,128,128,.1)'},border:{display:false}},y:{title:{display:true,text:'ROAS',font:{size:11}},grid:{color:'rgba(128,128,128,.1)'},border:{display:false},min:4,max:16}}}
+  });
+
+  chartRefs['budget']=new Chart(document.getElementById('budgetChart'),{
+    type:'bar',
+    data:{
+      labels:CAMPAIGNS.map(c=>c.channel),
+      datasets:[
+        {label:'Budget',data:CAMPAIGNS.map(c=>c.budget),backgroundColor:C_BLUE_LIGHT,borderRadius:3},
+        {label:'Incr. Revenue',data:CAMPAIGNS.map(c=>c.incr_rev),backgroundColor:CAMP_COLORS,borderRadius:3},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:v=>v.dataset.label+': '+fmt(v.raw)}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:'rgba(128,128,128,.1)'},ticks:{callback:v=>fmt(v)},border:{display:false}}}}
+  });
+
+  const optRows=document.getElementById('opt-rows');
+  const sorted=[...CAMPAIGNS].sort((a,b)=>b.roas-a.roas);
+  const maxRoas=sorted[0].roas;
+  optRows.innerHTML=sorted.map(c=>`
+    <div class="opt-row">
+      <div class="opt-name">${c.name}</div>
+      <div class="opt-channel">${c.channel}</div>
+      <div class="opt-bar-wrap">
+        <div class="opt-bar" style="width:${(c.roas/maxRoas*100).toFixed(0)}%;background:${c.action==='Scale'?C_GREEN:C_BLUE}"></div>
+      </div>
+      <div class="opt-val">${c.roas.toFixed(1)}x</div>
+      <div class="opt-action"><span class="badge ${c.action==='Scale'?'badge-scale':'badge-opt'}">${c.action}</span></div>
+    </div>
+  `).join('');
+}
+
+buildExecCharts();
+buildCampView();
+</script>
